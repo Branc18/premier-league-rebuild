@@ -461,9 +461,8 @@ function renderLineup() {
 
   $("#lineupCount").textContent = `${team.starters.length} / ${team.total} STARTING`;
   $("#shareBtn").disabled = !team.complete;
-  $("#graphicBtn").disabled = !team.complete;
   $("#shareNotice").textContent = team.complete
-    ? "Copy your team as text or download a pitch graphic to share."
+    ? "Open your team graphic to copy or download it."
     : `Fill all ${team.total} starting slots to share your team.`;
   $("#benchCount").textContent = team.bench.length + (team.bench.length === 1 ? " player" : " players");
   $("#lineupBench").innerHTML = team.groups.map(({ position, label, players }) => {
@@ -481,44 +480,16 @@ function renderLineup() {
   selectLineupPlayer(null);
 }
 
-$("#shareBtn").addEventListener("click", async () => {
-  const team = lineupTeam();
-  if (!team.complete) return;
-
-  const starters = team.starters.map(({ position, player }) => `${position} — ${player.name}`);
-  const bench = team.groups.map(({ position, label, players }) =>
-    [`${position} — ${label}`, ...players.map(player => player.name)].join("\n")
-  );
-  const summary = [
-    "MY MANCHESTER UNITED REBUILD",
-    "Formation: " + state.formation,
-    "Budget remaining: " + money(budget()),
-    "",
-    "Starting XI:",
-    ...starters,
-    "",
-    "Bench:",
-    bench.join("\n\n") || "No players on the bench.",
-    "",
-    "Built with Premier League Rebuild"
-  ].join("\n");
-
-  try {
-    await navigator.clipboard.writeText(summary);
-    toast("Team and bench copied to clipboard.");
-  } catch {
-    toast("Clipboard unavailable in this browser.");
-  }
-});
-
 const graphicDialog = $("#graphicDialog");
 const graphicPreview = $("#graphicPreview");
 const graphicDownload = $("#graphicDownload");
+const graphicCopy = $("#graphicCopy");
 const graphicStatus = $("#graphicStatus");
 let graphicRequest = 0;
 let graphicUrl;
+let graphicBlob;
 
-$("#graphicBtn").addEventListener("click", async () => {
+$("#shareBtn").addEventListener("click", async () => {
   const team = lineupTeam();
   if (!team.complete) return;
 
@@ -541,20 +512,40 @@ $("#graphicBtn").addEventListener("click", async () => {
     });
     if (request !== graphicRequest || !graphicDialog.open) return;
     graphicUrl = URL.createObjectURL(graphic);
+    graphicBlob = graphic;
     graphicPreview.src = graphicUrl;
     graphicPreview.hidden = false;
     graphicDownload.href = graphicUrl;
     graphicDownload.hidden = false;
+    graphicCopy.hidden = false;
     graphicStatus.hidden = true;
   } catch {
     if (request === graphicRequest) graphicStatus.textContent = "The graphic could not be generated. Close this window and try again.";
   }
 });
 
+graphicCopy.addEventListener("click", async () => {
+  if (!graphicBlob) return;
+  const request = graphicRequest;
+  let message = "Team graphic copied to clipboard.";
+
+  try {
+    await navigator.clipboard.write([new ClipboardItem({ "image/png": graphicBlob })]);
+  } catch {
+    message = "Couldn’t copy the image. Use Download PNG to save it.";
+  }
+
+  if (request !== graphicRequest || !graphicDialog.open) return;
+  graphicStatus.textContent = message;
+  graphicStatus.hidden = false;
+});
+
 graphicDialog.addEventListener("close", () => {
   graphicRequest++;
   if (graphicUrl) URL.revokeObjectURL(graphicUrl);
   graphicUrl = undefined;
+  graphicBlob = undefined;
+  graphicCopy.hidden = true;
   graphicPreview.removeAttribute("src");
   graphicPreview.hidden = true;
   graphicDownload.removeAttribute("href");

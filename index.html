@@ -6,7 +6,7 @@
 <title>Premier League Rebuild — Manchester United</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=10">
+<link rel="stylesheet" href="styles.css?v=11">
 </head>
 <body>
 <div class="app-shell">
@@ -48,7 +48,7 @@
  <div class="market-summary"><span id="marketCount">TRANSFER TARGETS</span><span>SELECT A PLAYER TO SIGN</span></div><div class="player-grid" id="marketGrid"></div>
 </section>
 <section id="panel-lineup" class="panel">
- <div class="section-head"><div><div class="eyebrow">TACTICAL BOARD</div><h2>YOUR UNITED XI.</h2><p>Drag players by their grip to a matching position, or select a player and then a slot.</p></div><div class="head-actions"><button class="btn btn-ghost" id="shareBtn" type="button" aria-describedby="shareNotice" disabled>↗ SHARE TEAM</button><button class="btn btn-primary" id="graphicBtn" type="button" aria-describedby="shareNotice" disabled>TEAM GRAPHIC</button></div></div>
+ <div class="section-head"><div><div class="eyebrow">TACTICAL BOARD</div><h2>YOUR UNITED XI.</h2><p>Drag players by their grip to a matching position, or select a player and then a slot.</p></div><div class="head-actions"><button class="btn btn-primary" id="shareBtn" type="button" aria-haspopup="dialog" aria-describedby="shareNotice" disabled>↗ SHARE TEAM</button></div></div>
  <div class="lineup-toolbar"><label>FORMATION <select id="formation"><option>4-3-3</option><option>4-2-3-1</option><option>4-4-2</option><option>3-5-2</option></select></label><span id="lineupCount">0 / 11 STARTING</span></div>
  <div id="lineupDragLabel" class="lineup-drag-label" aria-hidden="true" hidden></div>
  <div class="lineup-controls">
@@ -77,6 +77,7 @@
  <header class="graphic-toolbar">
   <div><p class="eyebrow">TACTICAL BOARD</p><h2 id="graphicHeading">YOUR TEAM GRAPHIC</h2></div>
   <div class="graphic-actions">
+   <button type="button" class="btn btn-ghost" id="graphicCopy" hidden>COPY IMAGE</button>
    <a class="btn btn-primary" id="graphicDownload" download="manchester-united-rebuild.png" hidden>DOWNLOAD PNG</a>
    <form method="dialog"><button class="btn btn-ghost" autofocus>CLOSE</button></form>
   </div>
@@ -86,5 +87,5 @@
 </dialog>
 <script src="portraits.js?v=2"></script>
 <script src="team-graphic.js?v=2"></script>
-<script src="app.js?v=9"></script>
+<script src="app.js?v=10"></script>
 </body></html>

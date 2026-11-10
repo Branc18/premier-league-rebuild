@@ -303,7 +303,6 @@
   font-weight: 800;
 }
 
-#panel-lineup .head-actions,
 .graphic-actions {
   display: flex;
   flex-wrap: wrap;
@@ -314,13 +313,6 @@
 
 #panel-lineup .head-actions {
   flex: none;
-}
-
-#graphicBtn:disabled {
-  background: var(--panel2);
-  border-color: var(--line);
-  color: var(--muted);
-  cursor: default;
 }
 
 .graphic-dialog {
