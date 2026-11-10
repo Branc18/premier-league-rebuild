@@ -140,3 +140,8 @@ function rivalTransferTargets(activeClub) {
   }
   return [...targets.values()];
 }
+
+for (const club of clubs) {
+  const data = clubData.get(club.id);
+  if (data) data.market = rivalTransferTargets(club);
+}

@@ -1,5 +1,5 @@
 const initialSquad = activeClubData.squad;
-const market = rivalTransferTargets(activeClub);
+const market = activeClubData.market;
 
 const $ = s => document.querySelector(s);
 const saveKey = clubSaveKey(activeClub.id);
