@@ -133,8 +133,8 @@ const playerPhotos = new Map([
 // Center and zoom for source photos that show more than a typical headshot.
 const portraitFraming = {
   bou52570: [.50, .22, 1.65], // Fraser Forster
-  bou654539: [.50, .19, 1.65], // Adrien Truffert
-  bou711337: [.50, .17, 1.65], // Evanilson
+  bou654539: [.44, .26, 1.65], // Adrien Truffert
+  bou711337: [.50, .29, 1.65], // Evanilson
   bou61841: [.50, .25, 2.10], // Adam Smith
   bou277033: [.50, .25, 1.90], // David Brooks
   bou330659: [.50, .23, 1.70], // Justin Kluivert
