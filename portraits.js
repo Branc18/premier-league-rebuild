@@ -119,7 +119,31 @@ const playerPhotos = new Map([
   ["bou332705","8/81","Tyler_Adams_WC2022.jpg","U.S. Department of State","Public domain"],
   ["bou463605","e/e0","Bafodé_Diakité_asse_losc_2425_(cropped).jpg","Paté kroute","CC0"],
   ["bou330659","4/41","Justin_Kluivert_09052026_(1).jpg","Timmy96","CC0"],
-  ["bou532776","f/ff","Amine_Adli_27122025_(4).jpg","Timmy96","CC0"]
+  ["bou532776","f/ff","Amine_Adli_27122025_(4).jpg","Timmy96","CC0"],
+  ["bre340918","3/35","Caoimhín_Kelleher.jpg","Timmy96","CC BY-SA 4.0"],
+  ["bre488935","1/11","Hákon_Valdimarsson_29112025_(1).jpg","Timmy96","CC0"],
+  ["bre456292","9/92","Ellery_Balcombe.jpg","Timmy96","CC BY-SA 4.0"],
+  ["bre541231","e/eb","Sepp_van_den_Berg_and_Nathan_Collins_29112025_(2)_(Sepp_van_den_Berg).jpg","Timmy96","CC0"],
+  ["bre469050","2/22","Nathan_Collins_05092026_(1).jpg","Timmy96","CC0"],
+  ["bre328658","6/67","Kristoffer_Vassbakk_Ajer_France_v_Norway_26_June_26-013.jpg","Bryan Berlin","CC BY-SA 4.0"],
+  ["bre915418","c/c9","FC_Red_Bull_Salzburg_gegen_Grazer_AK_(2025-08-09_Bundesliga_Zweite_Runde)_13.jpg","Werner100359","CC BY 4.0"],
+  ["bre1111589","f/f2","El_Hadji_Malick_Diouf_France_v_Senegal_16_June_2026-384_(cropped).jpg","Bryan Berlin","CC BY-SA 4.0"],
+  ["bre644401","1/10","Keane_Lewis-Potter_02082025_(2).jpg","Timmy96","CC0"],
+  ["bre339556","6/65","Rico_Henry,_Brentford_F.C._footballer,_December_2025.jpg","Timmy96","CC0"],
+  ["bre823486","9/97","Brentford_v_AFC_Bournemouth_27122025_(Kayode).jpg","Timmy96","CC0"],
+  ["bre591949","f/ff","Aaron_Hickey_Scotland_v_Bolivia_6_June_2026-87_(cropped).jpg","Bryan Berlin","CC BY-SA 4.0"],
+  ["bre270171","c/c6","Vitaly_Janelt.jpg","Timmy96","CC BY-SA 4.0"],
+  ["bre808348","4/41","Mamadou_Sangare_(2023-11-25).jpg","Werner100359","CC BY 4.0"],
+  ["bre717411","6/6b","Yehor_Yarmolyuk,_Brentford_F.C._footballer,_November_2025.jpg","Timmy96","CC0"],
+  ["bre319859","c/c8","Mathias_Jensen_27122025_(2).jpg","Timmy96","CC0"],
+  ["bre540941","e/eb","Mikkel_Damsgaard.jpg","Timmy96","CC BY-SA 4.0"],
+  ["bre559263","8/86","2022-07-21_Fabio_Carvalho_(cropped).jpg","Steffen Prößdorf","CC BY-SA 4.0"],
+  ["bre473050","5/5a","Kevin_Schade_02082025_(1).jpg","Timmy96","CC0"],
+  ["bre684210","3/34","Jaidon_Anthony_05092026_(1).jpg","Timmy96","CC0"],
+  ["bre1086375","0/0a","Gustavo_Nunes_18102026_(4).jpg","Timmy96","CC0"],
+  ["bre823231","b/b2","Dango_Ouattara_29112025_(1).jpg","Timmy96","CC0"],
+  ["bre739443","f/fb","Igor_Thiago_Brazil_V_Morocco_13_June_2026-120_(cropped).jpg","Bryan Berlin","CC BY-SA 4.0"],
+  ["bre123682","4/47","Callum_Wilson_2023.png","TNT Sports","CC BY 3.0"]
 ].map(([id, path, file, author, license]) => {
   const name = encodeURIComponent(file).replace(/[()']/g, char => "%" + char.charCodeAt(0).toString(16).toUpperCase());
   return [id, {

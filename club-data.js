@@ -162,6 +162,46 @@ clubData.set("bournemouth", {
   checkedOn: "11 November 2026"
 });
 
+// Transfermarkt 2026/27 squad snapshot. Amounts are whole euros.
+clubData.set("brentford", {
+  squad: [
+    ["bre340918","Caoimhín Kelleher","GK",1,32000000,"/caoimhin-kelleher/profil/spieler/340918"],
+    ["bre488935","Hákon Valdimarsson","GK",12,2500000,"/hakon-valdimarsson/profil/spieler/488935"],
+    ["bre456292","Ellery Balcombe","GK",31,400000,"/ellery-balcombe/profil/spieler/456292"],
+    ["bre541231","Sepp van den Berg","DEF",4,32000000,"/sepp-van-den-berg/profil/spieler/541231"],
+    ["bre469050","Nathan Collins","DEF",22,30000000,"/nathan-collins/profil/spieler/469050"],
+    ["bre328658","Kristoffer Ajer","DEF",20,25000000,"/kristoffer-ajer/profil/spieler/328658"],
+    ["bre915418","Jannik Schuster","DEF",44,22000000,"/jannik-schuster/profil/spieler/915418"],
+    ["bre709767","Ji-soo Kim","DEF",36,1800000,"/ji-soo-kim/profil/spieler/709767"],
+    ["bre1071138","Benjamin Fredrick","DEF",48,600000,"/benjamin-fredrick/profil/spieler/1071138"],
+    ["bre1111589","El Hadji Malick Diouf","DEF",25,35000000,"/el-hadji-malick-diouf/profil/spieler/1111589"],
+    ["bre644401","Keane Lewis-Potter","DEF",23,30000000,"/keane-lewis-potter/profil/spieler/644401"],
+    ["bre339556","Rico Henry","DEF",3,10000000,"/rico-henry/profil/spieler/339556"],
+    ["bre823486","Michael Kayode","DEF",33,40000000,"/michael-kayode/profil/spieler/823486"],
+    ["bre591949","Aaron Hickey","DEF",2,20000000,"/aaron-hickey/profil/spieler/591949"],
+    ["bre270171","Vitaly Janelt","MID",27,20000000,"/vitaly-janelt/profil/spieler/270171"],
+    ["bre808348","Mamadou Sangaré","MID",18,50000000,"/mamadou-sangare/profil/spieler/808348"],
+    ["bre717411","Yehor Yarmoliuk","MID",6,32000000,"/yegor-yarmolyuk/profil/spieler/717411"],
+    ["bre319859","Mathias Jensen","MID",8,8000000,"/mathias-jensen/profil/spieler/319859"],
+    ["bre340321","Josh Dasilva","MID",10,1500000,"/josh-dasilva/profil/spieler/340321"],
+    ["bre540941","Mikkel Damsgaard","MID",24,30000000,"/mikkel-damsgaard/profil/spieler/540941"],
+    ["bre683620","Antoni Milambo","MID",17,15000000,"/antoni-milambo/profil/spieler/683620"],
+    ["bre559263","Fábio Carvalho","MID",14,8000000,"/fabio-carvalho/profil/spieler/559263"],
+    ["bre473050","Kevin Schade","FWD",7,50000000,"/kevin-schade/profil/spieler/473050"],
+    ["bre684210","Jaidon Anthony","FWD",19,20000000,"/jaidon-anthony/profil/spieler/684210"],
+    ["bre1086375","Gustavo Nunes","FWD",39,6000000,"/gustavo-nunes/profil/spieler/1086375"],
+    ["bre823231","Dango Ouattara","FWD",11,35000000,"/dango-ouattara/profil/spieler/823231"],
+    ["bre739443","Igor Thiago","FWD",9,65000000,"/igor-thiago/profil/spieler/739443"],
+    ["bre1011936","Kaye Furo","FWD",47,8000000,"/kaye-furo/profil/spieler/1011936"],
+    ["bre123682","Callum Wilson","FWD",13,4000000,"/callum-wilson/profil/spieler/123682"]
+  ].map(([id, name, pos, number, value, profile]) => ({
+    id, name, pos, number, value, profile, status: "undecided"
+  })),
+  stadium: "Gtech Community Stadium · London",
+  squadSource: "https://www.transfermarkt.com/brentford-fc/kader/verein/1148/saison_id/2026",
+  checkedOn: "11 November 2026"
+});
+
 const featuredTargets = [
   ["t0","Gianluigi Donnarumma","GK","Manchester City",45000000,"2026-06-03","/gianluigi-donnarumma/profil/spieler/315858"],
   ["t1","James Trafford","GK","Leeds United",35000000,"2026-10-07","/james-trafford/profil/spieler/566799"],
