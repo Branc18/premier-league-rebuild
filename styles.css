@@ -54,11 +54,6 @@
   gap: 8px 12px;
 }
 
-.squad-group .shirt {
-  grid-row: span 2;
-  align-self: start;
-}
-
 .squad-group .player-info strong {
   white-space: normal;
 }
@@ -249,4 +244,149 @@
   color: var(--white);
   font-size: 12px;
   font-weight: 800;
+}
+
+.portrait-tile {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 43px;
+  height: 53px;
+  flex: none;
+}
+
+.player-portrait {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 1px solid #626773;
+  border-radius: 6px;
+  background: #23262e;
+  object-fit: cover;
+  object-position: center 22%;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.player-portrait.portrait-loaded {
+  opacity: 1;
+}
+
+.squad-group .portrait-tile {
+  grid-row: span 2;
+  align-self: start;
+}
+
+.slot .portrait-tile {
+  width: 28px;
+  height: 30px;
+}
+
+.slot-photo-fallback {
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 27px;
+  background: var(--red2);
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 800;
+}
+
+#panel-lineup .head-actions,
+.graphic-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 6px;
+}
+
+#panel-lineup .head-actions {
+  flex: none;
+}
+
+#graphicBtn:disabled {
+  background: var(--panel2);
+  border-color: var(--line);
+  color: var(--muted);
+  cursor: default;
+}
+
+.graphic-dialog {
+  width: min(760px, calc(100% - 24px));
+  max-height: 92vh;
+  padding: 0 16px 16px;
+  border: 1px solid var(--line);
+  background: var(--panel);
+  color: var(--white);
+}
+
+.graphic-dialog::backdrop {
+  background: #090a0de0;
+}
+
+.graphic-toolbar {
+  position: sticky;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 14px 0;
+  background: var(--panel);
+}
+
+.graphic-toolbar h2 {
+  margin: 0;
+  font: 800 26px/1 'Barlow Condensed', sans-serif;
+}
+
+.graphic-toolbar .eyebrow {
+  margin: 0 0 4px;
+}
+
+.graphic-actions a {
+  text-decoration: none;
+}
+
+.graphic-status {
+  color: #c3c6cc;
+  padding: 10px 0;
+  margin: 0;
+}
+
+.graphic-preview {
+  width: 100%;
+  height: auto;
+  vertical-align: top;
+}
+
+.photo-credits {
+  margin: 14px 0 24px;
+  color: #b9bdc7;
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+.photo-credits summary {
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.photo-credits p {
+  margin: 6px 0;
+}
+
+.photo-credits a {
+  color: var(--white);
+}
+
+@media (max-width: 600px) {
+  #panel-lineup .section-head {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
 }

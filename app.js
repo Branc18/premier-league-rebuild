@@ -182,8 +182,18 @@ function save() {
 }
 function toast(t){const el=$("#toast");el.textContent=t;el.classList.add("show");setTimeout(()=>el.classList.remove("show"),2200)}
 function updateStats(){let decided=state.squad.filter(p=>p.status!=="undecided").length;$("#budgetStat").textContent=money(budget());$("#marketBudget").textContent=money(budget());$("#squadStat").innerHTML=owned().length+' <i>/ 25</i>';$("#decidedStat").innerHTML=decided+' <i>/ '+state.squad.length+'</i>';$("#spendStat").textContent=money(spend());$("#squadTabCount").textContent=state.squad.length;let unlocked=decided===state.squad.length;$("#marketTab").classList.toggle("locked",!unlocked);$("#marketTab b").textContent=unlocked?"OPEN":"LOCKED";$("#decisionNotice").innerHTML=unlocked?"<b>MARKET UNLOCKED:</b> Your squad decisions are complete. Build your new team with the budget you created.":"<b>YOUR JOB:</b> Decide the future of every player to unlock the transfer market. "+decided+" of "+state.squad.length+" decisions made.";save();}
+function portraitMarkup(player, fallback) {
+  const photo = playerPhotos.get(player.id);
+  const image = photo ? `<img class="player-portrait" src="${photo.url}" crossorigin="anonymous" alt="" loading="lazy" decoding="async">` : "";
+  return `<span class="portrait-tile">${fallback}${image}</span>`;
+}
+
+document.addEventListener("load", e => {
+  if (e.target.classList?.contains("player-portrait")) e.target.classList.add("portrait-loaded");
+}, true);
+
 function card(p,marketCard=false){let status=p.status||"";let actions=marketCard?'<button class="buy-btn" data-buy="'+p.id+'" '+(!canSign(p)?"disabled":"")+'>SIGN PLAYER</button>':(status==="undecided"?'<button class="action keep" data-choice="keep" data-id="'+p.id+'">KEEP</button><button class="action sell" data-choice="sell" data-id="'+p.id+'">SELL</button>':status==="keep"?'<button class="action keep selected" data-choice="undecided" data-id="'+p.id+'">KEPT ✓</button><button class="action sell" data-choice="sell" data-id="'+p.id+'">SELL</button>':'<button class="action keep" data-choice="keep" data-id="'+p.id+'">KEEP</button><button class="action sell selected" data-choice="undecided" data-id="'+p.id+'">FOR SALE ✓</button>');
-return '<article class="player-card '+(marketCard?'market-card':status==="keep"?'kept':status==="sell"?'sold':'')+'"><div class="shirt">'+(p.number||"＋")+'</div><div class="player-info"><span class="position">'+p.pos+' · '+(marketCard?p.club:"MANCHESTER UNITED")+'</span><strong>'+p.name+'</strong><small>'+(marketCard?(hasValue(p)?"AVAILABLE TO BUY":"SIGNING UNAVAILABLE"):status==="keep"?"IN YOUR SQUAD":status==="sell"?(hasValue(p)?"SALE VALUE ADDED TO BUDGET":"NO PROCEEDS ADDED"):"UNDECIDED")+'</small></div><div class="player-value"><strong>'+(hasValue(p)?money(p.value):"Unavailable")+'</strong><small><a href="'+transfermarkt+p.profile+'" target="_blank" rel="noopener">Transfermarkt</a>'+(p.valueDate?'<time datetime="'+p.valueDate+'">'+dateFormat.format(new Date(p.valueDate))+'</time>':'')+'</small></div><div class="card-actions">'+actions+'</div></article>'}
+return '<article class="player-card '+(marketCard?'market-card':status==="keep"?'kept':status==="sell"?'sold':'')+'">'+portraitMarkup(p, '<span class="shirt">'+(p.number||"＋")+'</span>')+'<div class="player-info"><span class="position">'+p.pos+' · '+(marketCard?p.club:"MANCHESTER UNITED")+'</span><strong>'+p.name+'</strong><small>'+(marketCard?(hasValue(p)?"AVAILABLE TO BUY":"SIGNING UNAVAILABLE"):status==="keep"?"IN YOUR SQUAD":status==="sell"?(hasValue(p)?"SALE VALUE ADDED TO BUDGET":"NO PROCEEDS ADDED"):"UNDECIDED")+'</small></div><div class="player-value"><strong>'+(hasValue(p)?money(p.value):"Unavailable")+'</strong><small><a href="'+transfermarkt+p.profile+'" target="_blank" rel="noopener">Transfermarkt</a>'+(p.valueDate?'<time datetime="'+p.valueDate+'">'+dateFormat.format(new Date(p.valueDate))+'</time>':'')+'</small></div><div class="card-actions">'+actions+'</div></article>'}
 const squadPositions = [
   ["GK", "Goalkeepers"],
   ["DEF", "Defenders"],
@@ -431,6 +441,7 @@ function renderLineup() {
       return `<button type="button" class="slot" data-slot="${key}" ${source}
         aria-label="${position} slot ${colIndex + 1}, ${player?.name ?? "empty"}" title="${player?.name ?? position}">
         ${player ? '<span class="lineup-grip" aria-hidden="true">⠿</span>' : ""}
+        ${player ? portraitMarkup(player, `<span class="slot-photo-fallback">${player.number || position}</span>`) : ""}
         <small>${position}</small>
         <strong>${player?.name ?? "EMPTY"}</strong>
       </button>`;
@@ -440,8 +451,9 @@ function renderLineup() {
 
   $("#lineupCount").textContent = `${team.starters.length} / ${team.total} STARTING`;
   $("#shareBtn").disabled = !team.complete;
+  $("#graphicBtn").disabled = !team.complete;
   $("#shareNotice").textContent = team.complete
-    ? "Share Team copies your formation, Starting XI and bench as text."
+    ? "Copy your team as text or download a pitch graphic to share."
     : `Fill all ${team.total} starting slots to share your team.`;
   $("#benchCount").textContent = team.bench.length + (team.bench.length === 1 ? " player" : " players");
   $("#lineupBench").innerHTML = team.groups.map(({ position, label, players }) => {
@@ -488,4 +500,60 @@ $("#shareBtn").addEventListener("click", async () => {
     toast("Clipboard unavailable in this browser.");
   }
 });
+
+const graphicDialog = $("#graphicDialog");
+const graphicPreview = $("#graphicPreview");
+const graphicDownload = $("#graphicDownload");
+const graphicStatus = $("#graphicStatus");
+let graphicRequest = 0;
+let graphicUrl;
+
+$("#graphicBtn").addEventListener("click", async () => {
+  const team = lineupTeam();
+  if (!team.complete) return;
+
+  const request = ++graphicRequest;
+  graphicStatus.hidden = false;
+  graphicStatus.textContent = "Building your team graphic…";
+  graphicDialog.showModal();
+
+  try {
+    const graphic = await makeTeamGraphic({
+      rows: team.rows,
+      formation: state.formation,
+      budget: money(budget()),
+      spend: money(spend()),
+      signings: state.buys.map(player => ({ name: player.name, fee: money(player.value) })),
+      sales: state.squad.filter(player => player.status === "sell").map(player => ({
+        name: player.name,
+        fee: hasValue(player) ? money(player.value) : "No proceeds"
+      }))
+    });
+    if (request !== graphicRequest || !graphicDialog.open) return;
+    graphicUrl = URL.createObjectURL(graphic);
+    graphicPreview.src = graphicUrl;
+    graphicPreview.hidden = false;
+    graphicDownload.href = graphicUrl;
+    graphicDownload.hidden = false;
+    graphicStatus.hidden = true;
+  } catch {
+    if (request === graphicRequest) graphicStatus.textContent = "The graphic could not be generated. Close this window and try again.";
+  }
+});
+
+graphicDialog.addEventListener("close", () => {
+  graphicRequest++;
+  if (graphicUrl) URL.revokeObjectURL(graphicUrl);
+  graphicUrl = undefined;
+  graphicPreview.removeAttribute("src");
+  graphicPreview.hidden = true;
+  graphicDownload.removeAttribute("href");
+  graphicDownload.hidden = true;
+});
+
+$("#photoCreditList").innerHTML = [...initialSquad, ...market].filter(player => playerPhotos.has(player.id)).map(player => {
+  const { source, author, license } = playerPhotos.get(player.id);
+  return `<li><a href="${source}" target="_blank" rel="noopener">${player.name}</a> · ${author} · ${license}</li>`;
+}).join("");
+
 renderSquad();renderMarket();renderLineup();
