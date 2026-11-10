@@ -50,7 +50,11 @@
 </section>
 <section id="panel-lineup" class="panel">
  <div class="section-head"><div><div class="eyebrow">TACTICAL BOARD</div><h2>YOUR UNITED XI.</h2><p>Drag players by their grip to a matching position, or select a player and then a slot.</p></div><div class="head-actions"><button class="btn btn-primary" id="shareBtn" type="button" aria-haspopup="dialog" aria-describedby="shareNotice" disabled>↗ SHARE TEAM</button></div></div>
- <div class="lineup-toolbar"><label>FORMATION <select id="formation"><option>4-3-3</option><option>4-2-3-1</option><option>4-4-2</option><option>3-5-2</option><option>3-4-3</option><option>4-5-1</option><option>5-2-3</option></select></label><span id="lineupCount">0 / 11 STARTING</span></div>
+ <div class="lineup-toolbar"><label>FORMATION <select id="formation">
+   <optgroup label="3 at the back"><option>3-4-3</option><option>3-5-2</option></optgroup>
+   <optgroup label="4 at the back"><option>4-2-3-1</option><option selected>4-3-3</option><option>4-4-2</option><option>4-5-1</option></optgroup>
+   <optgroup label="5 at the back"><option>5-2-3</option></optgroup>
+  </select></label><span id="lineupCount">0 / 11 STARTING</span></div>
  <div id="lineupDragLabel" class="lineup-drag-label" aria-hidden="true" hidden></div>
  <div class="lineup-controls">
   <p id="lineupPrompt" role="status"></p>
