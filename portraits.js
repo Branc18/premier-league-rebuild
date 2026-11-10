@@ -101,7 +101,9 @@ const playerPhotos = new Map([
   ["av1185888","6/6f","Ibrahim_Mbaye_France_v_Senegal_16_June_2026-256.jpg","Bryan Berlin","CC BY-SA 4.0"],
   ["av776890","3/35","Nicolas_Jackson_France_v_Senegal_16_June_2026-369_(cropped).jpg","Bryan Berlin","CC BY-SA 4.0"],
   ["av1226357","e/eb","Brian_Madjo_July_2026_(cropped).jpg","MintyGel","CC BY 4.0"],
-  ["av331726","8/8f","FC_Salzburg_gegen_AS_Roma_(UEFA_Euroleague_play-off,_2023-02-16)_39_(cropped2).jpg","Werner100359","CC BY-SA 4.0"]
+  ["av331726","8/8f","FC_Salzburg_gegen_AS_Roma_(UEFA_Euroleague_play-off,_2023-02-16)_39_(cropped2).jpg","Werner100359","CC BY-SA 4.0"],
+  ["av616631","2/29","Next_Generation_Trophy_2017_Dritter_Tag_05.jpg","Werner100359","CC BY-SA 4.0"],
+  ["av735570","5/56","João_Gomes_01112025_(7)_(croped).jpg","Timmy96","CC0"]
 ].map(([id, path, file, author, license]) => {
   const name = encodeURIComponent(file).replace(/[()']/g, char => "%" + char.charCodeAt(0).toString(16).toUpperCase());
   return [id, {
@@ -114,6 +116,8 @@ const playerPhotos = new Map([
 
 // Center and zoom for source photos that show more than a typical headshot.
 const portraitFraming = {
+  av616631: [.41, .18, 1.43], // Matteo Ruggeri
+  av735570: [.40, .22, 1.38], // João Gomes
   mu4: [.50, .25, 1.50], // Diogo Dalot
   mu9: [.54, .34, 3.40], // Patrick Dorgu
   mu10: [.57, .24, 1.65], // Leny Yoro
