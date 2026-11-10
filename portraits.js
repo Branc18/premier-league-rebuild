@@ -124,7 +124,7 @@ const playerPhotos = new Map([
   ["bre488935","1/11","Hákon_Valdimarsson_29112025_(1).jpg","Timmy96","CC0"],
   ["bre456292","9/92","Ellery_Balcombe.jpg","Timmy96","CC BY-SA 4.0"],
   ["bre541231","e/eb","Sepp_van_den_Berg_and_Nathan_Collins_29112025_(2)_(Sepp_van_den_Berg).jpg","Timmy96","CC0"],
-  ["bre469050","2/22","Nathan_Collins_05092026_(1).jpg","Timmy96","CC0"],
+  ["bre469050","c/cf","Nathan_Collins,_Brentford_F.C._footballer,_August_2025.jpg","Timmy96","CC0"],
   ["bre328658","6/67","Kristoffer_Vassbakk_Ajer_France_v_Norway_26_June_26-013.jpg","Bryan Berlin","CC BY-SA 4.0"],
   ["bre915418","c/c9","FC_Red_Bull_Salzburg_gegen_Grazer_AK_(2025-08-09_Bundesliga_Zweite_Runde)_13.jpg","Werner100359","CC BY 4.0"],
   ["bre1111589","f/f2","El_Hadji_Malick_Diouf_France_v_Senegal_16_June_2026-384_(cropped).jpg","Bryan Berlin","CC BY-SA 4.0"],
@@ -156,6 +156,9 @@ const playerPhotos = new Map([
 
 // Center and zoom for source photos that show more than a typical headshot.
 const portraitFraming = {
+  bre540941: [.50, .21, 1.14], // Mikkel Damsgaard
+  bre808348: [.50, .43, 1.14], // Mamadou Sangaré
+  bre823231: [.62, .40, 1.40], // Dango Ouattara
   bou52570: [.50, .22, 1.65], // Fraser Forster
   bou654539: [.44, .26, 1.65], // Adrien Truffert
   bou711337: [.50, .29, 1.65], // Evanilson
