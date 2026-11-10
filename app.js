@@ -201,12 +201,47 @@ function renderMarket() {
   $("#marketCount").textContent = players.length + " TRANSFER TARGETS";
   updateStats();
 }
-function setTab(tab){if(tab==="market"&&state.squad.some(p=>p.status==="undecided")){toast("Decide every squad player's future first.");return}document.querySelectorAll(".tab").forEach(b=>b.classList.toggle("active",b.dataset.tab===tab));document.querySelectorAll(".panel").forEach(p=>p.classList.toggle("active",p.id==="panel-"+tab));if(tab==="market")renderMarket();if(tab==="lineup")renderLineup();}
+function setTab(tab){if(tab==="market"&&state.squad.some(p=>p.status==="undecided")){toast("Decide every squad player's future first.");return}document.querySelectorAll(".tab").forEach(b=>b.classList.toggle("active",b.dataset.tab===tab));document.querySelectorAll(".panel").forEach(p=>p.classList.toggle("active",p.id==="panel-"+tab));if(tab==="market"){ $("#marketTab").classList.remove("just-unlocked"); renderMarket(); }if(tab==="lineup")renderLineup();}
 document.querySelectorAll(".tab").forEach(b=>b.addEventListener("click",()=>setTab(b.dataset.tab)));
 function removeFromLineup(playerId) {
   for (const slot of Object.keys(state.slots)) {
     if (state.slots[slot] === playerId) delete state.slots[slot];
   }
+}
+
+function revealOpenMarket(squadGrid, startY) {
+  const marketTab = $("#marketTab");
+  marketTab.classList.add("just-unlocked");
+  marketTab.focus({ preventScroll: true });
+
+  const scrollTo = top => window.scrollTo({ top, behavior: "instant" });
+  scrollTo(startY);
+  const from = window.scrollY;
+  const bounds = marketTab.getBoundingClientRect();
+  const target = Math.max(0, from + bounds.top + bounds.height / 2 - window.innerHeight / 2);
+  const finish = () => { squadGrid.style.minHeight = ""; };
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches || Math.abs(target - from) < 1) {
+    scrollTo(target);
+    finish();
+    return;
+  }
+
+  const duration = 900;
+  const start = performance.now();
+  let expectedY = from;
+  function animate(now) {
+    if (Math.abs(window.scrollY - expectedY) > 3 || !marketTab.classList.contains("just-unlocked")) {
+      finish();
+      return;
+    }
+    const progress = Math.min(1, Math.max(0, (now - start) / duration));
+    const eased = progress * progress * (3 - 2 * progress);
+    scrollTo(from + (target - from) * eased);
+    expectedY = window.scrollY;
+    if (progress < 1) requestAnimationFrame(animate);
+    else finish();
+  }
+  requestAnimationFrame(animate);
 }
 
 $("#squadGrid").addEventListener("click", e => {
@@ -227,16 +262,18 @@ $("#squadGrid").addEventListener("click", e => {
   }
   const completesSquad = player.status === "undecided" && status !== "undecided" &&
     state.squad.every(p => p === player || p.status !== "undecided");
+  const squadGrid = $("#squadGrid");
+  const startY = window.scrollY;
+  if (completesSquad) {
+    // Preserve the page height while the last filtered card disappears.
+    squadGrid.style.minHeight = squadGrid.offsetHeight + "px";
+  }
+
   player.status = status;
   if (status === "sell") removeFromLineup(player.id);
   renderSquad();
 
-  if (completesSquad) {
-    const marketTab = $("#marketTab");
-    marketTab.focus({ preventScroll: true });
-    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    marketTab.scrollIntoView({ block: "center", behavior: reduceMotion ? "instant" : "smooth" });
-  }
+  if (completesSquad) revealOpenMarket(squadGrid, startY);
 });
 $("#marketGrid").addEventListener("click", e => {
   const undo = e.target.closest("[data-undo-signing]");
