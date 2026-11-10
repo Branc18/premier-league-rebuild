@@ -393,7 +393,26 @@
   }
 }
 
-.change-club { color: var(--white); text-decoration: none; }
+.topbar-left {
+  display: flex;
+  align-items: center;
+  gap: clamp(10px, 2.5vw, 26px);
+  margin-right: 10px;
+}
+
+.change-club {
+  color: var(--white);
+  font-size: 11px;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+@media (max-width: 420px) {
+  .topbar-left .brand { gap: 6px; font-size: 9px; letter-spacing: .7px; }
+  .topbar-left .brand-mark { flex: none; }
+  .change-club { font-size: 10px; }
+}
 .change-club:hover { text-decoration: underline; }
 .game-loading { padding-top: 24px; }
 .game-loading a { color: var(--white); }

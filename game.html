@@ -6,14 +6,17 @@
 <title>Premier League Rebuild — Club rebuild</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=13">
+<link rel="stylesheet" href="styles.css?v=14">
 </head>
 <body>
 <div class="app-shell game-loading" id="gameLoadStatus"><p role="status">Loading your rebuild…</p><a href="./">Back to club selection</a></div>
 <div class="app-shell" id="gameShell" hidden>
 <header class="topbar">
- <a class="brand" href="./"><span class="brand-mark">PR</span><span>PREMIER LEAGUE <b>REBUILD</b></span></a>
- <div class="top-meta"><a class="change-club" href="./">← Change club</a><span class="season" id="gameSeason"></span><span class="save-state" id="saveState">● SAVED LOCALLY</span></div>
+ <div class="topbar-left">
+  <a class="brand" href="./"><span class="brand-mark">PR</span><span>PREMIER LEAGUE <b>REBUILD</b></span></a>
+  <a class="change-club" href="./">← Change Club</a>
+ </div>
+ <div class="top-meta"><span class="season" id="gameSeason"></span><span class="save-state" id="saveState">● SAVED LOCALLY</span></div>
 </header>
 <section class="hero">
  <div class="hero-copy">
