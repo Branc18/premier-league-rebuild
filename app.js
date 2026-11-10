@@ -111,7 +111,15 @@ function canSign(p, game = state) {
     budget(game) >= p.value && owned(game).length < maxSquad && !game.buys.some(x => x.id === p.id);
 }
 
-const formations={"4-3-3":[["LW","ST","RW"],["CM","CM","CM"],["LB","CB","CB","RB"],["GK"]],"4-2-3-1":[["ST"],["LW","CAM","RW"],["CDM","CDM"],["LB","CB","CB","RB"],["GK"]],"4-4-2":[["ST","ST"],["LM","CM","CM","RM"],["LB","CB","CB","RB"],["GK"]],"3-5-2":[["ST","ST"],["LWB","CM","CAM","CM","RWB"],["CB","CB","CB"],["GK"]]};
+const formations = {
+  "4-3-3": [["LW", "ST", "RW"], ["CM", "CM", "CM"], ["LB", "CB", "CB", "RB"], ["GK"]],
+  "4-2-3-1": [["ST"], ["LW", "CAM", "RW"], ["CDM", "CDM"], ["LB", "CB", "CB", "RB"], ["GK"]],
+  "4-4-2": [["ST", "ST"], ["LM", "CM", "CM", "RM"], ["LB", "CB", "CB", "RB"], ["GK"]],
+  "3-5-2": [["ST", "ST"], ["LWB", "CM", "CAM", "CM", "RWB"], ["CB", "CB", "CB"], ["GK"]],
+  "3-4-3": [["LW", "ST", "RW"], ["LM", "CM", "CM", "RM"], ["CB", "CB", "CB"], ["GK"]],
+  "4-5-1": [["ST"], ["LM", "CM", "CM", "CM", "RM"], ["LB", "CB", "CB", "RB"], ["GK"]],
+  "5-2-3": [["LW", "ST", "RW"], ["CM", "CM"], ["LWB", "CB", "CB", "CB", "RWB"], ["GK"]]
+};
 
 const positionGroup = {
   GK: "GK",
