@@ -258,26 +258,115 @@ $("#marketPositionFilters").addEventListener("click",e=>{let b=e.target.closest(
 [...new Set(market.map(p=>p.club))].sort().forEach(c=>$("#clubFilter").insertAdjacentHTML("beforeend",'<option>'+c+'</option>'));
 $("#resetBtn").addEventListener("click",()=>{if(!confirm("Reset all squad decisions, signings and your budget?"))return;state=newGame();$("#migrationNotice").hidden=true;renderSquad();toast("Save reset.");});
 
-$("#formation").value=state.formation;$("#formation").addEventListener("change",e=>{state.formation=e.target.value;state.slots={};renderLineup();save()});
-$("#pitchSlots").addEventListener("change", e => {
-  const select = e.target.closest("select[data-slot]");
-  if (!select) return;
+const lineupPanel = $("#panel-lineup");
+const lineupPrompt = $("#lineupPrompt");
+let lineupPick = null;
+let lineupDrag = null;
 
-  const key = select.dataset.slot;
-  const [row, col] = key.split("-");
-  const position = formations[state.formation][row]?.[col];
-  const id = select.value;
-  if (!position) return;
-  if (id) {
-    const player = owned().find(p => p.id === id);
-    if (player?.pos !== positionGroup[position] || Object.values(state.slots).includes(id)) return;
-    state.slots[key] = id;
-  } else {
-    delete state.slots[key];
-  }
+$("#formation").addEventListener("change", e => {
+  state.formation = e.target.value;
+  state.slots = {};
   renderLineup();
-  $(`#pitchSlots select[data-slot="${key}"]`).focus();
   save();
+});
+
+function slotGroup(key) {
+  const [row, col] = key.split("-");
+  return positionGroup[formations[state.formation][row]?.[col]];
+}
+
+function selectLineupPlayer(player, message) {
+  lineupPick = player;
+  lineupPanel.querySelectorAll("[data-lineup-player]").forEach(button => {
+    button.setAttribute("aria-pressed", button.dataset.lineupPlayer === player?.id);
+  });
+  lineupPanel.querySelectorAll("[data-slot]").forEach(button => {
+    const eligible = player?.pos === slotGroup(button.dataset.slot) &&
+      button.dataset.lineupPlayer !== player.id;
+    button.classList.toggle("lineup-target", eligible);
+  });
+  const isStarter = player && Object.values(state.slots).includes(player.id);
+  $("#benchReturn").disabled = !isStarter;
+  $("#lineupBenchArea").classList.toggle("lineup-target", Boolean(isStarter));
+  lineupPrompt.textContent = message ?? (player
+    ? player.name + " selected. Choose a highlighted slot."
+    : "Choose a player to highlight their eligible slots.");
+}
+
+function moveLineupPlayer(key, restoreFocus) {
+  const player = lineupPick;
+  const from = Object.keys(state.slots).find(slot => state.slots[slot] === player?.id);
+  if (!player || key === from) return;
+  if (key === null && !from) return;
+  if (key !== null && slotGroup(key) !== player.pos) {
+    lineupPrompt.textContent = player.name + " can only play in a " + player.pos + " slot.";
+    return;
+  }
+
+  const replaced = state.slots[key];
+  if (from) {
+    if (replaced) state.slots[from] = replaced;
+    else delete state.slots[from];
+  }
+  if (key !== null) state.slots[key] = player.id;
+
+  renderLineup();
+  save();
+  lineupPrompt.textContent = key === null
+    ? player.name + " returned to the bench."
+    : player.name + " placed in the Starting XI.";
+  if (restoreFocus) {
+    const target = key === null ? `[data-lineup-player="${player.id}"]` : `[data-slot="${key}"]`;
+    lineupPanel.querySelector(target)?.focus();
+  }
+}
+
+lineupPanel.addEventListener("click", e => {
+  const slot = e.target.closest("[data-slot]");
+  if (slot && lineupPick && slot.dataset.lineupPlayer !== lineupPick.id) {
+    moveLineupPlayer(slot.dataset.slot, true);
+    return;
+  }
+
+  const card = e.target.closest("[data-lineup-player]");
+  if (!card) return;
+  const player = owned().find(p => p.id === card.dataset.lineupPlayer);
+  selectLineupPlayer(player?.id === lineupPick?.id ? null : player);
+});
+
+$("#benchReturn").addEventListener("click", () => moveLineupPlayer(null, true));
+lineupPanel.addEventListener("keydown", e => {
+  if (e.key === "Escape" && lineupPick) selectLineupPlayer(null);
+});
+
+lineupPanel.addEventListener("dragstart", e => {
+  const card = e.target.closest("[data-lineup-player]");
+  if (!card) return;
+  lineupDrag = owned().find(p => p.id === card.dataset.lineupPlayer);
+  if (!lineupDrag) return;
+  e.dataTransfer.setData("text/plain", lineupDrag.id);
+  e.dataTransfer.effectAllowed = "move";
+  selectLineupPlayer(lineupDrag);
+});
+
+lineupPanel.addEventListener("dragover", e => {
+  if (!lineupDrag || !e.target.closest(".lineup-target")) return;
+  e.preventDefault();
+  e.dataTransfer.dropEffect = "move";
+});
+
+lineupPanel.addEventListener("drop", e => {
+  const target = e.target.closest(".lineup-target");
+  if (!lineupDrag || !target) return;
+  e.preventDefault();
+  lineupDrag = null;
+  moveLineupPlayer(target.dataset.slot ?? null, false);
+});
+
+lineupPanel.addEventListener("dragend", () => {
+  if (!lineupDrag) return;
+  lineupDrag = null;
+  selectLineupPlayer(null);
 });
 
 function renderLineup() {
@@ -287,19 +376,13 @@ function renderLineup() {
   $("#pitchSlots").innerHTML = formations[state.formation].map((row, rowIndex) => {
     const slots = row.map((position, colIndex) => {
       const key = rowIndex + "-" + colIndex;
-      const selected = players.find(p => p.id === state.slots[key]);
-      const options = players.filter(p =>
-        p.pos === positionGroup[position] && (!used.has(p.id) || p === selected)
-      ).map(p => `<option value="${p.id}" ${p === selected ? "selected" : ""}>${p.name}</option>`);
-
-      return `<div class="slot">
+      const player = players.find(p => p.id === state.slots[key]);
+      const source = player ? `draggable="true" data-lineup-player="${player.id}"` : "";
+      return `<button type="button" class="slot" data-slot="${key}" ${source}
+        aria-label="${position} slot ${colIndex + 1}, ${player?.name ?? "empty"}" title="${player?.name ?? position}">
         <small>${position}</small>
-        <select data-slot="${key}" aria-label="${position} slot ${colIndex + 1}" ${options.length ? "" : "disabled"}>
-          <option value="">${options.length ? "— SELECT —" : "NONE LEFT"}</option>
-          ${options.join("")}
-        </select>
-        <strong title="${selected?.name ?? ""}">${selected?.name ?? "EMPTY SLOT"}</strong>
-      </div>`;
+        <strong>${player?.name ?? "EMPTY"}</strong>
+      </button>`;
     });
     return `<div class="pitch-row">${slots.join("")}</div>`;
   }).join("");
@@ -308,9 +391,14 @@ function renderLineup() {
   const bench = players.filter(p => !used.has(p.id));
   $("#benchCount").textContent = bench.length + (bench.length === 1 ? " player" : " players");
   $("#lineupBench").innerHTML = squadPositions.flatMap(([position]) =>
-    bench.filter(p => p.pos === position).map(p => `<li><b>${p.pos}</b> ${p.name}</li>`)
+    bench.filter(p => p.pos === position).map(p => `<li>
+      <button type="button" class="bench-player" draggable="true" data-lineup-player="${p.id}">
+        <b>${p.pos}</b> ${p.name}
+      </button>
+    </li>`)
   ).join("");
   $("#benchEmpty").hidden = bench.length > 0;
+  selectLineupPlayer(null);
 }
 $("#shareBtn").addEventListener("click",()=>{let players=owned(),chosen=Object.values(state.slots).map(id=>players.find(p=>p.id===id)).filter(Boolean);let textOut="MY MANCHESTER UNITED REBUILD\nFormation: "+state.formation+"\nBudget remaining: "+money(budget())+"\nStarting XI:\n"+chosen.map(p=>p.name).join("\n")+"\n\nBuilt with Premier League Rebuild";if(navigator.clipboard?.writeText){navigator.clipboard.writeText(textOut).then(()=>toast("Team summary copied to clipboard.")).catch(()=>toast("Clipboard unavailable in this browser."));}else toast("Clipboard unavailable in this browser.");});
 renderSquad();renderMarket();renderLineup();
