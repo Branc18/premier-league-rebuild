@@ -6,7 +6,7 @@
 <title>Premier League Rebuild — Manchester United</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=3">
+<link rel="stylesheet" href="styles.css?v=4">
 </head>
 <body>
 <div class="app-shell">
@@ -45,10 +45,14 @@
  <div class="market-summary"><span id="marketCount">TRANSFER TARGETS</span><span>SELECT A PLAYER TO SIGN</span></div><div class="player-grid" id="marketGrid"></div>
 </section>
 <section id="panel-lineup" class="panel">
- <div class="section-head"><div><div class="eyebrow">TACTICAL BOARD</div><h2>YOUR UNITED XI.</h2><p>Pick a formation and assign your squad. Your best rebuild starts here.</p></div><div class="head-actions"><button class="btn btn-primary" id="shareBtn">↗ SHARE TEAM</button></div></div>
+ <div class="section-head"><div><div class="eyebrow">TACTICAL BOARD</div><h2>YOUR UNITED XI.</h2><p>Pick a formation and assign players to slots that match their squad position.</p></div><div class="head-actions"><button class="btn btn-primary" id="shareBtn">↗ SHARE TEAM</button></div></div>
  <div class="lineup-toolbar"><label>FORMATION <select id="formation"><option>4-3-3</option><option>4-2-3-1</option><option>4-4-2</option><option>3-5-2</option></select></label><span id="lineupCount">0 / 11 STARTING</span></div>
  <div class="pitch-wrap"><div class="pitch" id="pitch"><div class="pitch-lines"></div><div class="pitch-slots" id="pitchSlots"></div></div></div>
- <div class="lineup-bottom"><div><h3>YOUR SQUAD</h3><p>Choose a player for each position on the pitch. Players can only occupy one slot.</p></div><div id="lineupBench" class="bench"></div></div>
+ <section class="lineup-bench" aria-labelledby="benchHeading">
+  <header class="lineup-bench-heading"><h3 id="benchHeading">THE BENCH</h3><span id="benchCount"></span></header>
+  <ul id="lineupBench" class="bench" role="list"></ul>
+  <p id="benchEmpty" hidden>No players on the bench.</p>
+ </section>
  <div class="notice" id="shareNotice">Your lineup and club summary can be copied as text. A public share link and downloadable team graphic are planned for the next release.</div>
 </section>
  <p class="notice">The game uses published Transfermarkt market values in EUR as its transfer prices. A squad sale without a valuation adds no proceeds. Check each player card for its source and valuation date.</p>
@@ -56,5 +60,5 @@
 <footer><span>PREMIER LEAGUE REBUILD <b>·</b> FAN-MADE PROJECT</span><span><a href="https://www.transfermarkt.com/manchester-united/kader/verein/985/saison_id/2026">Transfermarkt squad</a> · <a href="https://www.transfermarkt.com/premier-league/startseite/wettbewerb/GB1">Premier League</a> · Checked 10 November 2026</span></footer>
 </div>
 <div class="toast" id="toast" role="status"></div>
-<script src="app.js?v=3"></script>
+<script src="app.js?v=4"></script>
 </body></html>

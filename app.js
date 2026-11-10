@@ -113,6 +113,13 @@ function canSign(p, game = state) {
 
 const formations={"4-3-3":[["LW","ST","RW"],["CM","CM","CM"],["LB","CB","CB","RB"],["GK"]],"4-2-3-1":[["ST"],["LW","CAM","RW"],["CDM","CDM"],["LB","CB","CB","RB"],["GK"]],"4-4-2":[["ST","ST"],["LM","CM","CM","RM"],["LB","CB","CB","RB"],["GK"]],"3-5-2":[["ST","ST"],["LWB","CM","CAM","CM","RWB"],["CB","CB","CB"],["GK"]]};
 
+const positionGroup = {
+  GK: "GK",
+  LB: "DEF", CB: "DEF", RB: "DEF", LWB: "DEF", RWB: "DEF",
+  LM: "MID", CM: "MID", RM: "MID", CDM: "MID", CAM: "MID",
+  LW: "FWD", ST: "FWD", RW: "FWD"
+};
+
 let state = load();
 let squadFilter = "All", squadStatus = "all", marketPos = "All";
 
@@ -143,12 +150,15 @@ function load() {
   }
 
   if (Object.hasOwn(formations, saved.formation)) game.formation = saved.formation;
-  const eligible = new Set(owned(game).map(p => p.id));
+  const eligible = new Map(owned(game).map(p => [p.id, p]));
   for (const [row, positions] of formations[game.formation].entries()) {
-    for (const col of positions.keys()) {
+    for (const [col, position] of positions.entries()) {
       const slot = row + "-" + col;
       const id = saved.slots?.[slot];
-      if (eligible.delete(id)) game.slots[slot] = id;
+      if (eligible.get(id)?.pos === positionGroup[position]) {
+        game.slots[slot] = id;
+        eligible.delete(id);
+      }
     }
   }
 
@@ -249,6 +259,58 @@ $("#marketPositionFilters").addEventListener("click",e=>{let b=e.target.closest(
 $("#resetBtn").addEventListener("click",()=>{if(!confirm("Reset all squad decisions, signings and your budget?"))return;state=newGame();$("#migrationNotice").hidden=true;renderSquad();toast("Save reset.");});
 
 $("#formation").value=state.formation;$("#formation").addEventListener("change",e=>{state.formation=e.target.value;state.slots={};renderLineup();save()});
-function renderLineup(){let form=state.formation;$("#formation").value=form;let players=owned();let used=Object.values(state.slots);$("#pitchSlots").innerHTML=formations[form].map((row,ri)=>'<div class="pitch-row">'+row.map((pos,ci)=>{let key=ri+"-"+ci;let selected=state.slots[key]||"";let options=players.filter(p=>!used.includes(p.id)||p.id===selected).map(p=>'<option value="'+p.id+'" '+(selected===p.id?"selected":"")+'>'+p.name+'</option>').join("");return '<div class="slot"><small>'+pos+'</small><select data-slot="'+key+'"><option value="">— SELECT —</option>'+options+'</select><strong>'+(players.find(p=>p.id===selected)?.name||"EMPTY SLOT")+'</strong></div>'}).join("")+'</div>').join("");$("#pitchSlots").querySelectorAll("select").forEach(s=>s.addEventListener("change",e=>{if(e.target.value)state.slots[e.target.dataset.slot]=e.target.value;else delete state.slots[e.target.dataset.slot];renderLineup();save()}));$("#lineupCount").textContent=Object.values(state.slots).filter(Boolean).length+" / 11 STARTING";let remaining=players.filter(p=>!used.includes(p.id));$("#lineupBench").innerHTML=remaining.map(p=>'<span>'+p.name+'</span>').join("")||'<span>All available players assigned</span>';}
+$("#pitchSlots").addEventListener("change", e => {
+  const select = e.target.closest("select[data-slot]");
+  if (!select) return;
+
+  const key = select.dataset.slot;
+  const [row, col] = key.split("-");
+  const position = formations[state.formation][row]?.[col];
+  const id = select.value;
+  if (!position) return;
+  if (id) {
+    const player = owned().find(p => p.id === id);
+    if (player?.pos !== positionGroup[position] || Object.values(state.slots).includes(id)) return;
+    state.slots[key] = id;
+  } else {
+    delete state.slots[key];
+  }
+  renderLineup();
+  $(`#pitchSlots select[data-slot="${key}"]`).focus();
+  save();
+});
+
+function renderLineup() {
+  $("#formation").value = state.formation;
+  const players = owned();
+  const used = new Set(Object.values(state.slots));
+  $("#pitchSlots").innerHTML = formations[state.formation].map((row, rowIndex) => {
+    const slots = row.map((position, colIndex) => {
+      const key = rowIndex + "-" + colIndex;
+      const selected = players.find(p => p.id === state.slots[key]);
+      const options = players.filter(p =>
+        p.pos === positionGroup[position] && (!used.has(p.id) || p === selected)
+      ).map(p => `<option value="${p.id}" ${p === selected ? "selected" : ""}>${p.name}</option>`);
+
+      return `<div class="slot">
+        <small>${position}</small>
+        <select data-slot="${key}" aria-label="${position} slot ${colIndex + 1}" ${options.length ? "" : "disabled"}>
+          <option value="">${options.length ? "— SELECT —" : "NONE LEFT"}</option>
+          ${options.join("")}
+        </select>
+        <strong title="${selected?.name ?? ""}">${selected?.name ?? "EMPTY SLOT"}</strong>
+      </div>`;
+    });
+    return `<div class="pitch-row">${slots.join("")}</div>`;
+  }).join("");
+
+  $("#lineupCount").textContent = used.size + " / 11 STARTING";
+  const bench = players.filter(p => !used.has(p.id));
+  $("#benchCount").textContent = bench.length + (bench.length === 1 ? " player" : " players");
+  $("#lineupBench").innerHTML = squadPositions.flatMap(([position]) =>
+    bench.filter(p => p.pos === position).map(p => `<li><b>${p.pos}</b> ${p.name}</li>`)
+  ).join("");
+  $("#benchEmpty").hidden = bench.length > 0;
+}
 $("#shareBtn").addEventListener("click",()=>{let players=owned(),chosen=Object.values(state.slots).map(id=>players.find(p=>p.id===id)).filter(Boolean);let textOut="MY MANCHESTER UNITED REBUILD\nFormation: "+state.formation+"\nBudget remaining: "+money(budget())+"\nStarting XI:\n"+chosen.map(p=>p.name).join("\n")+"\n\nBuilt with Premier League Rebuild";if(navigator.clipboard?.writeText){navigator.clipboard.writeText(textOut).then(()=>toast("Team summary copied to clipboard.")).catch(()=>toast("Clipboard unavailable in this browser."));}else toast("Clipboard unavailable in this browser.");});
 renderSquad();renderMarket();renderLineup();
