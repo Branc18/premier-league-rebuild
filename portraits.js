@@ -58,7 +58,27 @@ const playerPhotos = new Map([
   ["t26","5/51","Antoine_Semenyo_England_v_Ghana_23_June_2026-209_(cropped2).jpg","Bryan Berlin","CC BY-SA 4.0"],
   ["t27","c/c5","Eberechi_Eze_England_v_Ghana_23_June_2026-039.jpg","Bryan Berlin","CC BY-SA 4.0"],
   ["t30","0/07","Cody_Gakpo_Liverpool_FC_20261103_(1).JPG","Zafer","CC BY-SA 4.0"],
-  ["t31","9/97","Rayan_Cherki_France_v_Norway_26_June_26-114.jpg","Bryan Berlin","CC BY-SA 4.0"]
+  ["t31","9/97","Rayan_Cherki_France_v_Norway_26_June_26-114.jpg","Bryan Berlin","CC BY-SA 4.0"],
+  ["ars262749","8/8a","David_Raya_Argentina_v_Spain_19_July_2026-003_(cropped).jpg","Bryan Berlin","CC BY-SA 4.0"],
+  ["ars542586","2/20","Illan_Meslier_13092025_(10)_(cropped).jpg","Timmy96","CC0"],
+  ["ars192279","8/89","Kepa_Arrizabalaga_2021_(cropped).jpg","Vyacheslav Evdokimov","CC BY-SA 3.0"],
+  ["ars495666","0/06","William_Saliba_France_v_Paraguay_4_July_2026-183.jpg","Bryan Berlin","CC BY-SA 4.0"],
+  ["ars435338","8/8e","Gabriel_Magalhaes_Brazil_V_Morocco_13_June_2026-132_(cropped).jpg","Bryan Berlin","CC BY-SA 4.0"],
+  ["ars659813","1/19","Piero_Hincapie_Cote_D'Ivoire_v_Ecuador_14_June_2026-247_(cropped).jpg","Bryan Berlin","CC BY-SA 4.0"],
+  ["ars413403","c/c7","Ezri_Konsa_England_v_Panama_27_June_26-259_(cropped).jpg","Bryan Berlin","CC BY-SA 4.0"],
+  ["ars646750","7/78","2_Cristhian_Mosquera_(cropped).jpg","Chensiyuan","CC BY-SA 4.0"],
+  ["ars502821","4/46","1_Riccardo_Calafiori_2026_(cropped).jpg","Chensiyuan","CC BY-SA 4.0"],
+  ["ars420243","9/9f","JURRIEN_TIMBER.jpg","Carlo Bruil Fotografie","CC BY 2.0"],
+  ["ars335721","a/a0","Ben_White_2018.jpg","James Boyes from UK","CC BY 2.0"],
+  ["ars423440","f/f9","Martin_Zubimendi_Argentina_v_Spain_19_July_2026-012.jpg","Bryan Berlin","CC BY-SA 4.0"],
+  ["ars890721","7/70","Myles_Lewis-Skelly_2026_(cropped).jpg","Chensiyuan","CC BY-SA 4.0"],
+  ["ars520624","7/70","Bruno_Guimaraes_Brazil_V_Morocco_13_June_2026-78_(cropped).jpg","Bryan Berlin","CC BY-SA 4.0"],
+  ["ars338424","4/45","Mikel_Merino_France_v_Spain_7.24.26-241_(cropped).jpg","Bryan Berlin","CC BY-SA 4.0"],
+  ["ars451677","5/5b","Sweden_-_Greece22_(cropped).jpg","Mikael Hervestad","CC BY-SA 4.0"],
+  ["ars1187629","8/8b","1_max_dowman_2026b_(cropped).jpg","Chensiyuan","CC BY-SA 4.0"],
+  ["ars503987","4/45","Noni_Madueke_England_v_Panama_27_June_26-054.jpg","Bryan Berlin","CC BY-SA 4.0"],
+  ["ars309400","7/76","Kai_Havertz_Ecuador_v_Germany_25_June_2026-118.jpg","Bryan Berlin","CC BY-SA 4.0"],
+  ["ars325443","9/9c","Viktor_Gyokeres_France_v_Sweden_6.30.26-123_(cropped).jpg","Bryan Berlin","CC BY-SA 4.0"]
 ].map(([id, path, file, author, license]) => {
   const name = encodeURIComponent(file).replace(/[()']/g, char => "%" + char.charCodeAt(0).toString(16).toUpperCase());
   return [id, {
