@@ -211,6 +211,24 @@ const squadPositions = [
   ["FWD", "Forwards"]
 ];
 
+function positionSections(players, idPrefix, renderCard) {
+  return squadPositions.map(([position, label]) => {
+    const group = players.filter(p => p.pos === position).sort((a, b) =>
+      (hasValue(b) ? b.value : 0) - (hasValue(a) ? a.value : 0)
+    );
+    if (!group.length) return "";
+
+    return `
+      <section class="squad-group" aria-labelledby="${idPrefix}-${position}">
+        <header class="squad-group-heading">
+          <h3 id="${idPrefix}-${position}"><span>${position}</span> ${label}</h3>
+          <span class="squad-group-count">${group.length} ${group.length === 1 ? "player" : "players"}</span>
+        </header>
+        <div class="player-grid">${group.map(player => renderCard(player)).join("")}</div>
+      </section>`;
+  }).join("");
+}
+
 function renderSquad() {
   const query = $("#squadSearch").value.toLowerCase();
   const players = state.squad.filter(p =>
@@ -219,26 +237,25 @@ function renderSquad() {
     p.name.toLowerCase().includes(query)
   );
 
-  const sections = squadPositions.map(([position, label]) => {
-    const group = players.filter(p => p.pos === position).sort((a, b) =>
-      (hasValue(b) ? b.value : 0) - (hasValue(a) ? a.value : 0)
-    );
-    if (!group.length) return "";
-
-    return `
-      <section class="squad-group" aria-labelledby="squad-${position}">
-        <header class="squad-group-heading">
-          <h3 id="squad-${position}"><span>${position}</span> ${label}</h3>
-          <span class="squad-group-count">${group.length} ${group.length === 1 ? "player" : "players"}</span>
-        </header>
-        <div class="player-grid">${group.map(p => card(p)).join("")}</div>
-      </section>`;
-  });
-
-  $("#squadGrid").innerHTML = sections.join("") || '<div class="empty-state">No players match those filters.</div>';
+  $("#squadGrid").innerHTML = positionSections(players, "squad", card) ||
+    '<div class="empty-state">No players match those filters.</div>';
   updateStats();
 }
-function renderMarket(){let q=$("#marketSearch").value.toLowerCase(),club=$("#clubFilter").value;let list=market.filter(p=>(marketPos==="All"||p.pos===marketPos)&&(club==="All"||p.club===club)&&p.name.toLowerCase().includes(q));$("#marketGrid").innerHTML=list.length?list.map(p=>card(p,true)).join(""):'<div class="empty-state">No transfer targets match those filters.</div>';$("#marketCount").textContent=list.length+" TRANSFER TARGETS";updateStats();}
+
+function renderMarket() {
+  const query = $("#marketSearch").value.toLowerCase();
+  const club = $("#clubFilter").value;
+  const players = market.filter(p =>
+    (marketPos === "All" || p.pos === marketPos) &&
+    (club === "All" || p.club === club) &&
+    p.name.toLowerCase().includes(query)
+  );
+
+  $("#marketGrid").innerHTML = positionSections(players, "market", player => card(player, true)) ||
+    '<div class="empty-state">No transfer targets match those filters.</div>';
+  $("#marketCount").textContent = players.length + " TRANSFER TARGETS";
+  updateStats();
+}
 function setTab(tab){if(tab==="market"&&state.squad.some(p=>p.status==="undecided")){toast("Decide every squad player's future first.");return}document.querySelectorAll(".tab").forEach(b=>b.classList.toggle("active",b.dataset.tab===tab));document.querySelectorAll(".panel").forEach(p=>p.classList.toggle("active",p.id==="panel-"+tab));if(tab==="market")renderMarket();if(tab==="lineup")renderLineup();}
 document.querySelectorAll(".tab").forEach(b=>b.addEventListener("click",()=>setTab(b.dataset.tab)));
 $("#squadGrid").addEventListener("click", e => {
