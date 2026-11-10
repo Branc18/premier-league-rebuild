@@ -405,14 +405,28 @@ lineupPanel.addEventListener("keydown", e => {
   selectLineupPlayer(null);
 });
 
+function lineupTeam() {
+  const players = owned();
+  const playersById = new Map(players.map(player => [player.id, player]));
+  const rows = formations[state.formation].map((row, rowIndex) => row.map((position, colIndex) => {
+    const key = rowIndex + "-" + colIndex;
+    return { key, position, player: playersById.get(state.slots[key]) };
+  }));
+  const slots = rows.flat();
+  const starters = slots.filter(slot => slot.player);
+  const used = new Set(starters.map(slot => slot.player.id));
+  const bench = players.filter(player => !used.has(player.id));
+  const groups = squadPositions.map(([position, label]) => ({
+    position, label, players: bench.filter(player => player.pos === position)
+  })).filter(group => group.players.length);
+  return { rows, starters, bench, groups, total: slots.length, complete: used.size === slots.length };
+}
+
 function renderLineup() {
   $("#formation").value = state.formation;
-  const players = owned();
-  const used = new Set(Object.values(state.slots));
-  $("#pitchSlots").innerHTML = formations[state.formation].map((row, rowIndex) => {
-    const slots = row.map((position, colIndex) => {
-      const key = rowIndex + "-" + colIndex;
-      const player = players.find(p => p.id === state.slots[key]);
+  const team = lineupTeam();
+  $("#pitchSlots").innerHTML = team.rows.map(row => {
+    const slots = row.map(({ key, position, player }, colIndex) => {
       const source = player ? `data-lineup-player="${player.id}"` : "";
       return `<button type="button" class="slot" data-slot="${key}" ${source}
         aria-label="${position} slot ${colIndex + 1}, ${player?.name ?? "empty"}" title="${player?.name ?? position}">
@@ -424,18 +438,54 @@ function renderLineup() {
     return `<div class="pitch-row">${slots.join("")}</div>`;
   }).join("");
 
-  $("#lineupCount").textContent = used.size + " / 11 STARTING";
-  const bench = players.filter(p => !used.has(p.id));
-  $("#benchCount").textContent = bench.length + (bench.length === 1 ? " player" : " players");
-  $("#lineupBench").innerHTML = squadPositions.flatMap(([position]) =>
-    bench.filter(p => p.pos === position).map(p => `<li>
+  $("#lineupCount").textContent = `${team.starters.length} / ${team.total} STARTING`;
+  $("#shareBtn").disabled = !team.complete;
+  $("#shareNotice").textContent = team.complete
+    ? "Share Team copies your formation, Starting XI and bench as text."
+    : `Fill all ${team.total} starting slots to share your team.`;
+  $("#benchCount").textContent = team.bench.length + (team.bench.length === 1 ? " player" : " players");
+  $("#lineupBench").innerHTML = team.groups.map(({ position, label, players }) => {
+    const cards = players.map(p => `<li>
       <button type="button" class="bench-player" data-lineup-player="${p.id}">
-        <span class="lineup-grip" aria-hidden="true">⠿</span><b>${p.pos}</b> ${p.name}
+        <span class="lineup-grip" aria-hidden="true">⠿</span>${p.name}
       </button>
-    </li>`)
-  ).join("");
-  $("#benchEmpty").hidden = bench.length > 0;
+    </li>`).join("");
+    return `<section class="bench-group" aria-labelledby="bench-${position}">
+      <h4 id="bench-${position}"><b>${position}</b> ${label}</h4>
+      <ul class="bench" role="list">${cards}</ul>
+    </section>`;
+  }).join("");
+  $("#benchEmpty").hidden = team.bench.length > 0;
   selectLineupPlayer(null);
 }
-$("#shareBtn").addEventListener("click",()=>{let players=owned(),chosen=Object.values(state.slots).map(id=>players.find(p=>p.id===id)).filter(Boolean);let textOut="MY MANCHESTER UNITED REBUILD\nFormation: "+state.formation+"\nBudget remaining: "+money(budget())+"\nStarting XI:\n"+chosen.map(p=>p.name).join("\n")+"\n\nBuilt with Premier League Rebuild";if(navigator.clipboard?.writeText){navigator.clipboard.writeText(textOut).then(()=>toast("Team summary copied to clipboard.")).catch(()=>toast("Clipboard unavailable in this browser."));}else toast("Clipboard unavailable in this browser.");});
+
+$("#shareBtn").addEventListener("click", async () => {
+  const team = lineupTeam();
+  if (!team.complete) return;
+
+  const starters = team.starters.map(({ position, player }) => `${position} — ${player.name}`);
+  const bench = team.groups.map(({ position, label, players }) =>
+    [`${position} — ${label}`, ...players.map(player => player.name)].join("\n")
+  );
+  const summary = [
+    "MY MANCHESTER UNITED REBUILD",
+    "Formation: " + state.formation,
+    "Budget remaining: " + money(budget()),
+    "",
+    "Starting XI:",
+    ...starters,
+    "",
+    "Bench:",
+    bench.join("\n\n") || "No players on the bench.",
+    "",
+    "Built with Premier League Rebuild"
+  ].join("\n");
+
+  try {
+    await navigator.clipboard.writeText(summary);
+    toast("Team and bench copied to clipboard.");
+  } catch {
+    toast("Clipboard unavailable in this browser.");
+  }
+});
 renderSquad();renderMarket();renderLineup();

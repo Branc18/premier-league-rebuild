@@ -159,11 +159,35 @@
   text-transform: uppercase;
 }
 
+.bench-group {
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid var(--line);
+}
+
+.bench-group h4 {
+  margin: 0 0 8px;
+  font: 700 18px 'Barlow Condensed', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+}
+
+.bench-group h4 b {
+  display: inline-block;
+  min-width: 30px;
+  margin-right: 4px;
+  padding: 3px 4px;
+  background: #44212a;
+  color: #ffabb0;
+  font: 800 10px Inter, sans-serif;
+  text-align: center;
+}
+
 .bench {
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
-  margin: 10px 0 0;
+  margin: 0;
   padding: 0;
   list-style: none;
 }
@@ -180,11 +204,11 @@
   font-size: 11px;
 }
 
-.bench b {
-  background: #44212a;
-  color: #ffabb0;
-  padding: 3px 4px;
-  font-size: 9px;
+#shareBtn:disabled {
+  background: var(--panel2);
+  border-color: var(--line);
+  color: var(--muted);
+  cursor: default;
 }
 
 .lineup-bench p {
