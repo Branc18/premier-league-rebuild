@@ -120,9 +120,12 @@
   .home-guide { padding: 8px 10px; }
   .home-guide h2 { font-size: 23px; }
   .home-guide ol { font-size: 11px; }
-  .directory-head { gap: 6px; }
+  .directory-head { display: grid; grid-template-columns: minmax(0, 1fr) minmax(92px, .65fr); gap: 8px; }
+  .directory-head .eyebrow { display: none; }
+  .directory-head h2 { font-size: 22px; }
+  #clubAvailability { margin-top: 4px; font-size: 10px; }
   .club-search { gap: 3px; }
-  .club-search input { padding: 6px 8px; width: min(100%, 200px); }
+  .club-search input { min-width: 0; padding: 6px 8px; width: 100%; }
   .club-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 5px; }
   .club-card { min-height: 77px; gap: 3px; padding: 4px 2px; }
   .club-tile-badge { width: 28px; height: 28px; border-radius: 5px; font-size: 14px; }
