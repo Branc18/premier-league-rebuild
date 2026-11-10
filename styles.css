@@ -2,3 +2,68 @@
 
 .player-value a, footer a { color: inherit; }
 .player-value time { display: block; }
+
+.squad-groups {
+  display: grid;
+  gap: 24px;
+}
+
+.squad-group-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 9px 12px;
+  margin-bottom: 10px;
+  background: linear-gradient(110deg, #29202a, var(--panel));
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--red);
+}
+
+.squad-group-heading h3 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+  font: 800 24px/1 'Barlow Condensed', sans-serif;
+  letter-spacing: .5px;
+  text-transform: uppercase;
+}
+
+.squad-group-heading h3 span {
+  min-width: 40px;
+  padding: 4px 6px;
+  background: #44212a;
+  color: #ffabb0;
+  font-size: 16px;
+  text-align: center;
+}
+
+.squad-group-count {
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .8px;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.squad-group .player-card {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 8px 12px;
+}
+
+.squad-group .shirt {
+  grid-row: span 2;
+  align-self: start;
+}
+
+.squad-group .player-info strong {
+  white-space: normal;
+}
+
+.squad-group .card-actions {
+  grid-column: 2 / -1;
+  margin-left: 0;
+}
