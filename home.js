@@ -38,22 +38,6 @@ document.querySelector("#directorySeason").textContent = `SEASON ${leagueSeason}
 document.querySelector("#clubAvailability").textContent =
   `${clubs.length} clubs · ${playableClubs.length} ready to play`;
 
-const featured = playableClubs.find(club => club.id === defaultClubId) ?? playableClubs[0];
-if (featured) {
-  const saved = readClubSave(featured.id);
-  const inProgress = saved?.squad?.some?.(player => player?.status === "keep" || player?.status === "sell") ||
-    saved?.buys?.length || Object.keys(saved?.slots ?? {}).length;
-  const feature = document.querySelector("#homeFeature");
-  feature.style.setProperty("--club-accent", featured.primary);
-  document.querySelector("#featureBadge").innerHTML = badgeMarkup(featured);
-  document.querySelector("#featureName").textContent = featured.name;
-  document.querySelector("#featureStadium").textContent = clubData.get(featured.id).stadium;
-  const action = document.querySelector("#featureAction");
-  action.href = gameUrl(featured.id);
-  action.firstChild.textContent = inProgress ? "CONTINUE REBUILD " : "START REBUILD ";
-  feature.hidden = false;
-}
-
 const requested = clubs.find(club => club.id === new URLSearchParams(location.search).get("club"));
 if (requested && !clubData.has(requested.id)) {
   const notice = document.querySelector("#clubNotice");

@@ -35,24 +35,31 @@
 .home-intro h1 { font-size: clamp(59px, 8.5vw, 108px); margin: 13px 0 18px; }
 .home-intro > p:last-child { max-width: 330px; margin: 0; color: #c9c1c5; line-height: 1.6; }
 
-.home-feature {
+.home-guide {
   padding: 21px;
   background: #181b21;
   border: 1px solid #48414a;
-  border-left: 3px solid var(--club-accent);
+  border-left: 3px solid var(--red);
 }
 
-.feature-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 16px; }
-.home-feature .eyebrow { margin: 0 0 5px; }
-.home-feature h2, .directory-head h2 {
+.home-guide h2, .directory-head h2 {
   margin: 0;
   font: 800 clamp(30px, 3.3vw, 45px)/.98 'Barlow Condensed', sans-serif;
   text-transform: uppercase;
 }
 
-#featureStadium { margin: 8px 0 18px; color: #aaadb8; font-size: 12px; }
-.feature-action { display: flex; justify-content: space-between; align-items: center; min-height: 42px; text-decoration: none; }
-.feature-action span { font-size: 15px; }
+.home-guide ol {
+  display: grid;
+  gap: 9px;
+  margin: 14px 0 0;
+  padding-left: 20px;
+  color: #c9cbd3;
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.home-guide li::marker { color: var(--gold); font-weight: 800; }
+.home-guide strong { color: var(--white); }
 
 .directory-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 14px; margin: 0 0 16px; }
 .directory-head .eyebrow { margin: 0 0 6px; }
@@ -87,7 +94,7 @@
 
 .club-card.playable { background: linear-gradient(135deg, #302029, #1b1e26 75%); }
 .club-card.playable:hover { border-color: var(--club-accent); }
-.club-card:focus-visible, .feature-action:focus-visible, .club-search input:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+.club-card:focus-visible, .club-search input:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
 
 .club-tile-badge { width: 56px; height: 56px; display: grid; place-items: center; position: relative; background: #eeedf0; color: #1b1e25; border-radius: 8px; font: 800 18px 'Barlow Condensed', sans-serif; }
 .club-tile-badge img { position: absolute; inset: 4px; width: 48px; height: 48px; object-fit: contain; opacity: 0; }
@@ -106,6 +113,6 @@
 @media (max-width: 445px) {
   .club-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .home-banner { padding: 19px; margin-top: 16px; }
-  .home-feature { padding: 15px; }
+  .home-guide { padding: 15px; }
   .home-pitch { width: 100%; }
 }
