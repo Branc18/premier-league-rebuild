@@ -103,7 +103,23 @@ const playerPhotos = new Map([
   ["av1226357","e/eb","Brian_Madjo_July_2026_(cropped).jpg","MintyGel","CC BY 4.0"],
   ["av331726","8/8f","FC_Salzburg_gegen_AS_Roma_(UEFA_Euroleague_play-off,_2023-02-16)_39_(cropped2).jpg","Werner100359","CC BY-SA 4.0"],
   ["av616631","2/29","Next_Generation_Trophy_2017_Dritter_Tag_05.jpg","Werner100359","CC BY-SA 4.0"],
-  ["av735570","5/56","João_Gomes_01112025_(7)_(croped).jpg","Timmy96","CC0"]
+  ["av735570","5/56","João_Gomes_01112025_(7)_(croped).jpg","Timmy96","CC0"],
+  ["bou948275","1/18","Alvaro_Rodriguez_2026.jpg","AFC Bournemouth","CC BY 3.0"],
+  ["bou746740","1/1e","Daniel_Jebbison_2024.jpg","AFC Bournemouth","CC BY 3.0"],
+  ["bou399434","0/00","Marcus_Tavernier_2022.jpg","AFC Bournemouth","CC BY 3.0"],
+  ["bou654539","d/d3","Adrien_Truffert.jpg","Timmy96","CC BY-SA 4.0"],
+  ["bou52570","8/83","Fraser_Forster_09052026_(1).jpg","Timmy96","CC0"],
+  ["bou955357","e/ec","Jogadores_do_AFC_Bournemouth_abraçados_(Éli_Junior_Kroupi).jpg","AFC Bournemouth","CC BY 4.0"],
+  ["bou1012564","4/40","Brazil_World_Cup_Roster_Brazil_V_Morocco_13_June_2026-72_(Rayan).jpg","Bryan Berlin","CC BY-SA 4.0"],
+  ["bou855256","f/f1","Alex_Scott_Interview_2023.jpg","AFC Bournemouth","CC BY 3.0"],
+  ["bou711337","e/e1","Evanilson_09052026_(1).jpg","Timmy96","CC0"],
+  ["bou1009658","0/08","Julio_Soler_2025.jpg","AFC Bournemouth","CC BY 3.0"],
+  ["bou61841","3/3b","Adam_Smith_09052026_(1).jpg","Timmy96","CC0"],
+  ["bou277033","3/33","David_Brooks_09052026_(2).jpg","Timmy96","CC0"],
+  ["bou332705","8/81","Tyler_Adams_WC2022.jpg","U.S. Department of State","Public domain"],
+  ["bou463605","e/e0","Bafodé_Diakité_asse_losc_2425_(cropped).jpg","Paté kroute","CC0"],
+  ["bou330659","4/41","Justin_Kluivert_09052026_(1).jpg","Timmy96","CC0"],
+  ["bou532776","f/ff","Amine_Adli_27122025_(4).jpg","Timmy96","CC0"]
 ].map(([id, path, file, author, license]) => {
   const name = encodeURIComponent(file).replace(/[()']/g, char => "%" + char.charCodeAt(0).toString(16).toUpperCase());
   return [id, {
@@ -116,6 +132,13 @@ const playerPhotos = new Map([
 
 // Center and zoom for source photos that show more than a typical headshot.
 const portraitFraming = {
+  bou52570: [.50, .22, 1.65], // Fraser Forster
+  bou654539: [.50, .19, 1.65], // Adrien Truffert
+  bou711337: [.50, .17, 1.65], // Evanilson
+  bou61841: [.50, .25, 2.10], // Adam Smith
+  bou277033: [.50, .25, 1.90], // David Brooks
+  bou330659: [.50, .23, 1.70], // Justin Kluivert
+  bou532776: [.50, .23, 1.70], // Amine Adli
   av616631: [.41, .18, 1.43], // Matteo Ruggeri
   av735570: [.40, .22, 1.38], // João Gomes
   mu4: [.50, .25, 1.50], // Diogo Dalot

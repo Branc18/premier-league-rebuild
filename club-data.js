@@ -122,6 +122,46 @@ clubData.set("aston-villa", {
   checkedOn: "11 November 2026"
 });
 
+// Transfermarkt 2026/27 squad snapshot. Amounts are whole euros.
+clubData.set("bournemouth", {
+  squad: [
+    ["bou465555","Djordje Petrović","GK",1,28000000,"/djordje-petrovic/profil/spieler/465555"],
+    ["bou301238","Michele Di Gregorio","GK",20,8000000,"/michele-di-gregorio/profil/spieler/301238","Juventus"],
+    ["bou52570","Fraser Forster","GK",17,400000,"/fraser-forster/profil/spieler/52570"],
+    ["bou611793","James Hill","DEF",5,30000000,"/james-hill/profil/spieler/611793"],
+    ["bou650568","António Silva","DEF",14,30000000,"/antonio-silva/profil/spieler/650568"],
+    ["bou463605","Bafodé Diakité","DEF",18,22000000,"/bafode-diakite/profil/spieler/463605"],
+    ["bou989112","Veljko Milosavljević","DEF",44,20000000,"/veljko-milosavljevic/profil/spieler/989112"],
+    ["bou654539","Adrien Truffert","DEF",3,35000000,"/adrien-truffert/profil/spieler/654539"],
+    ["bou1009658","Julio Soler","DEF",6,6000000,"/julio-soler/profil/spieler/1009658"],
+    ["bou676042","Juanlu Sánchez","DEF",24,10000000,"/juanlu-sanchez/profil/spieler/676042"],
+    ["bou513970","Julián Araujo","DEF",2,6000000,"/julian-araujo/profil/spieler/513970"],
+    ["bou471690","Max Aarons","DEF",28,2500000,"/max-aarons/profil/spieler/471690"],
+    ["bou61841","Adam Smith","DEF",15,300000,"/adam-smith/profil/spieler/61841"],
+    ["bou332705","Tyler Adams","MID",12,30000000,"/tyler-adams/profil/spieler/332705"],
+    ["bou855256","Alex Scott","MID",8,70000000,"/alex-scott/profil/spieler/855256"],
+    ["bou998101","Alex Tóth","MID",27,12000000,"/alex-toth/profil/spieler/998101"],
+    ["bou249089","Lewis Cook","MID",4,11000000,"/lewis-cook/profil/spieler/249089"],
+    ["bou188077","Ryan Christie","MID",10,8000000,"/ryan-christie/profil/spieler/188077"],
+    ["bou399434","Marcus Tavernier","MID",16,30000000,"/marcus-tavernier/profil/spieler/399434"],
+    ["bou330659","Justin Kluivert","MID",19,25000000,"/justin-kluivert/profil/spieler/330659"],
+    ["bou532776","Amine Adli","FWD",21,20000000,"/amine-adli/profil/spieler/532776"],
+    ["bou1012564","Rayan","FWD",37,60000000,"/rayan/profil/spieler/1012564"],
+    ["bou719673","Ben Gannon-Doak","FWD",11,15000000,"/ben-gannon-doak/profil/spieler/719673"],
+    ["bou277033","David Brooks","FWD",7,12000000,"/david-brooks/profil/spieler/277033"],
+    ["bou955357","Junior Kroupi","FWD",22,70000000,"/junior-kroupi/profil/spieler/955357"],
+    ["bou711337","Evanilson","FWD",9,35000000,"/evanilson/profil/spieler/711337"],
+    ["bou948275","Álvaro Rodríguez","FWD",30,20000000,"/alvaro-rodriguez/profil/spieler/948275"],
+    ["bou746740","Daniel Jebbison","FWD",29,8000000,"/daniel-jebbison/profil/spieler/746740"]
+  ].map(([id, name, pos, number, value, profile, loanFrom]) => ({
+    id, name, pos, number, value, profile, loanFrom,
+    status: loanFrom ? "keep" : "undecided"
+  })),
+  stadium: "Vitality Stadium · Bournemouth",
+  squadSource: "https://www.transfermarkt.com/afc-bournemouth/kader/verein/989/saison_id/2026",
+  checkedOn: "11 November 2026"
+});
+
 const featuredTargets = [
   ["t0","Gianluigi Donnarumma","GK","Manchester City",45000000,"2026-06-03","/gianluigi-donnarumma/profil/spieler/315858"],
   ["t1","James Trafford","GK","Leeds United",35000000,"2026-10-07","/james-trafford/profil/spieler/566799"],
