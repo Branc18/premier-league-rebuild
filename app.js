@@ -202,8 +202,18 @@ document.addEventListener("load", e => {
   image.closest(".portrait-tile").classList.add("portrait-loaded");
 }, true);
 
-function card(p,marketCard=false){let status=p.status||"";let actions=marketCard?'<button class="buy-btn" data-buy="'+p.id+'" '+(!canSign(p)?"disabled":"")+'>SIGN PLAYER</button>':(status==="undecided"?'<button class="action keep" data-choice="keep" data-id="'+p.id+'">KEEP</button><button class="action sell" data-choice="sell" data-id="'+p.id+'">SELL</button>':status==="keep"?'<button class="action keep selected" data-choice="undecided" data-id="'+p.id+'">KEPT ✓</button><button class="action sell" data-choice="sell" data-id="'+p.id+'">SELL</button>':'<button class="action keep" data-choice="keep" data-id="'+p.id+'">KEEP</button><button class="action sell selected" data-choice="undecided" data-id="'+p.id+'">FOR SALE ✓</button>');
-return '<article class="player-card '+(marketCard?'market-card':status==="keep"?'kept':status==="sell"?'sold':'')+'">'+portraitMarkup(p, '<span class="shirt">'+(p.number||"＋")+'</span>')+'<div class="player-info"><span class="position">'+p.pos+' · '+(marketCard?p.club:"MANCHESTER UNITED")+'</span><strong>'+p.name+'</strong><small>'+(marketCard?(hasValue(p)?"AVAILABLE TO BUY":"SIGNING UNAVAILABLE"):status==="keep"?"IN YOUR SQUAD":status==="sell"?(hasValue(p)?"SALE VALUE ADDED TO BUDGET":"NO PROCEEDS ADDED"):"UNDECIDED")+'</small></div><div class="player-value"><strong>'+(hasValue(p)?money(p.value):"Unavailable")+'</strong><small><a href="'+transfermarkt+p.profile+'" target="_blank" rel="noopener">Transfermarkt</a>'+(p.valueDate?'<time datetime="'+p.valueDate+'">'+dateFormat.format(new Date(p.valueDate))+'</time>':'')+'</small></div><div class="card-actions">'+actions+'</div></article>'}
+function card(p,marketCard=false){
+  const status = p.status || "";
+  const signed = marketCard && state.buys.some(player => player.id === p.id);
+  let actions;
+  if (marketCard) {
+    actions = signed
+      ? `<button type="button" class="action" data-undo-signing="${p.id}">UNDO SIGNING</button>`
+      : `<button type="button" class="buy-btn" data-buy="${p.id}" ${canSign(p) ? "" : "disabled"}>SIGN PLAYER</button>`;
+  } else {
+    actions = (status==="undecided"?'<button class="action keep" data-choice="keep" data-id="'+p.id+'">KEEP</button><button class="action sell" data-choice="sell" data-id="'+p.id+'">SELL</button>':status==="keep"?'<button class="action keep selected" data-choice="undecided" data-id="'+p.id+'">KEPT ✓</button><button class="action sell" data-choice="sell" data-id="'+p.id+'">SELL</button>':'<button class="action keep" data-choice="keep" data-id="'+p.id+'">KEEP</button><button class="action sell selected" data-choice="undecided" data-id="'+p.id+'">FOR SALE ✓</button>');
+  }
+return '<article class="player-card '+(marketCard?'market-card':status==="keep"?'kept':status==="sell"?'sold':'')+'">'+portraitMarkup(p, '<span class="shirt">'+(p.number||"＋")+'</span>')+'<div class="player-info"><span class="position">'+p.pos+' · '+(marketCard?p.club:"MANCHESTER UNITED")+'</span><strong>'+p.name+'</strong><small>'+(marketCard?(signed?"SIGNED":hasValue(p)?"AVAILABLE TO BUY":"SIGNING UNAVAILABLE"):status==="keep"?"IN YOUR SQUAD":status==="sell"?(hasValue(p)?"SALE VALUE ADDED TO BUDGET":"NO PROCEEDS ADDED"):"UNDECIDED")+'</small></div><div class="player-value"><strong>'+(hasValue(p)?money(p.value):"Unavailable")+'</strong><small><a href="'+transfermarkt+p.profile+'" target="_blank" rel="noopener">Transfermarkt</a>'+(p.valueDate?'<time datetime="'+p.valueDate+'">'+dateFormat.format(new Date(p.valueDate))+'</time>':'')+'</small></div><div class="card-actions">'+actions+'</div></article>'}
 const squadPositions = [
   ["GK", "Goalkeepers"],
   ["DEF", "Defenders"],
@@ -258,6 +268,12 @@ function renderMarket() {
 }
 function setTab(tab){if(tab==="market"&&state.squad.some(p=>p.status==="undecided")){toast("Decide every squad player's future first.");return}document.querySelectorAll(".tab").forEach(b=>b.classList.toggle("active",b.dataset.tab===tab));document.querySelectorAll(".panel").forEach(p=>p.classList.toggle("active",p.id==="panel-"+tab));if(tab==="market")renderMarket();if(tab==="lineup")renderLineup();}
 document.querySelectorAll(".tab").forEach(b=>b.addEventListener("click",()=>setTab(b.dataset.tab)));
+function removeFromLineup(playerId) {
+  for (const slot of Object.keys(state.slots)) {
+    if (state.slots[slot] === playerId) delete state.slots[slot];
+  }
+}
+
 $("#squadGrid").addEventListener("click", e => {
   const button = e.target.closest("[data-choice]");
   const player = state.squad.find(p => p.id === button?.dataset.id);
@@ -275,19 +291,29 @@ $("#squadGrid").addEventListener("click", e => {
     }
   }
   player.status = status;
-  if (status === "sell") {
-    for (const slot of Object.keys(state.slots)) {
-      if (state.slots[slot] === player.id) delete state.slots[slot];
-    }
-  }
+  if (status === "sell") removeFromLineup(player.id);
   renderSquad();
 });
 $("#marketGrid").addEventListener("click", e => {
+  const undo = e.target.closest("[data-undo-signing]");
+  if (undo) {
+    const index = state.buys.findIndex(player => player.id === undo.dataset.undoSigning);
+    if (index === -1) return;
+
+    const [player] = state.buys.splice(index, 1);
+    removeFromLineup(player.id);
+    renderMarket();
+    $("#marketGrid").querySelector(`[data-buy="${player.id}"]`)?.focus();
+    toast("Signing undone. " + money(player.value) + " refunded for " + player.name + ".");
+    return;
+  }
+
   const button = e.target.closest("[data-buy]");
   const player = market.find(p => p.id === button?.dataset.buy);
   if (!player || !canSign(player)) return;
   state.buys.push({ ...player });
   renderMarket();
+  $("#marketGrid").querySelector(`[data-undo-signing="${player.id}"]`)?.focus();
   toast(player.name + " signed.");
 });
 $("#squadSearch").addEventListener("input",renderSquad);$("#marketSearch").addEventListener("input",renderMarket);$("#clubFilter").addEventListener("change",renderMarket);
