@@ -1,7 +1,6 @@
 // Render the current rebuild as a standalone, high-resolution PNG.
-function loadGraphicPortrait(id) {
-  const photo = playerPhotos.get(id);
-  if (!photo) return Promise.resolve(null);
+function loadGraphicImage(url) {
+  if (!url) return Promise.resolve(null);
 
   return new Promise(resolve => {
     const image = new Image();
@@ -12,15 +11,24 @@ function loadGraphicPortrait(id) {
       resolve(result);
     };
     const timeout = setTimeout(() => finish(null), 4500);
-    image.onload = () => finish({ image, photo });
+    image.onload = () => finish(image);
     image.onerror = () => finish(null);
-    image.src = photo.url;
+    image.src = url;
   });
+}
+
+async function loadGraphicPortrait(id) {
+  const photo = playerPhotos.get(id);
+  const image = await loadGraphicImage(photo?.url);
+  return image ? { image, photo } : null;
 }
 
 async function makeTeamGraphic(team) {
   const players = team.rows.flat().map(slot => slot.player);
-  const portraits = await Promise.all(players.map(player => loadGraphicPortrait(player.id)));
+  const [crest, portraits] = await Promise.all([
+    loadGraphicImage(team.crestUrl),
+    Promise.all(players.map(player => loadGraphicPortrait(player.id)))
+  ]);
   const photoById = new Map(players.map((player, index) => [player.id, portraits[index]]));
   const credits = [...new Set(portraits.filter(Boolean).map(({ photo }) => photo.author + " · " + photo.license))];
   const canvas = document.createElement("canvas");
@@ -75,7 +83,15 @@ async function makeTeamGraphic(team) {
   ctx.fillRect(0, 0, width, 8);
 
   label("PREMIER LEAGUE REBUILD  /  TACTICAL BOARD", 54, 47, { size: 17, color: gold, weight: 800 });
-  label("MY MANCHESTER UNITED XI", 50, 120, { size: 65, weight: 900, maxWidth: 978, family: headline });
+  label("MY MANCHESTER UNITED XI", 50, 120, {
+    size: 65, weight: 900, maxWidth: crest ? 812 : 978, family: headline
+  });
+  if (crest) {
+    const scale = 132 / Math.max(crest.naturalWidth, crest.naturalHeight);
+    const w = crest.naturalWidth * scale;
+    const h = crest.naturalHeight * scale;
+    ctx.drawImage(crest, 1028 - w, 111 - h / 2, w, h);
+  }
   label("MANAGER MODE  ·  SEASON 26/27", 54, 175, { size: 17, color: muted, weight: 700 });
 
   [

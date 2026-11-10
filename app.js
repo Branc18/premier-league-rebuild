@@ -556,6 +556,7 @@ $("#shareBtn").addEventListener("click", async () => {
   try {
     const graphic = await makeTeamGraphic({
       rows: team.rows,
+      crestUrl: $(".club-badge").src,
       formation: state.formation,
       budget: money(budget()),
       spend: money(spend()),
