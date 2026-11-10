@@ -79,11 +79,11 @@ async function makeTeamGraphic(team) {
   glow.addColorStop(1, "#12151c");
   ctx.fillStyle = glow;
   ctx.fillRect(0, 0, width, 300);
-  ctx.fillStyle = "#e32936";
+  ctx.fillStyle = team.clubColor;
   ctx.fillRect(0, 0, width, 8);
 
   label("PREMIER LEAGUE REBUILD  /  TACTICAL BOARD", 54, 47, { size: 17, color: gold, weight: 800 });
-  label("MY MANCHESTER UNITED XI", 50, 120, {
+  label(`MY ${team.clubName.toUpperCase()} XI`, 50, 120, {
     size: 65, weight: 900, maxWidth: crest ? 812 : 978, family: headline
   });
   if (crest) {
@@ -92,7 +92,7 @@ async function makeTeamGraphic(team) {
     const h = crest.naturalHeight * scale;
     ctx.drawImage(crest, 1028 - w, 111 - h / 2, w, h);
   }
-  label("MANAGER MODE  ·  SEASON 26/27", 54, 175, { size: 17, color: muted, weight: 700 });
+  label(`MANAGER MODE  ·  SEASON ${team.season}`, 54, 175, { size: 17, color: muted, weight: 700 });
 
   [
     ["FORMATION", team.formation],

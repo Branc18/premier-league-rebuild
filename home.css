@@ -1,0 +1,111 @@
+.club-home {
+  background-image: radial-gradient(ellipse at 72% 0%, #272024 0, transparent 39%);
+}
+
+.club-home .season { font-size: 10px; font-weight: 800; letter-spacing: 1.2px; }
+
+.home-banner {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(240px, 350px);
+  align-items: center;
+  gap: clamp(24px, 5vw, 72px);
+  padding: clamp(25px, 5vw, 62px);
+  margin: 26px 0 38px;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: linear-gradient(108deg, #2b151c 0%, #171921 56%, #121a19);
+  border: 1px solid #45343c;
+  border-top: 3px solid var(--red);
+}
+
+.home-pitch {
+  position: absolute;
+  z-index: -1;
+  right: -58px;
+  bottom: -105px;
+  width: min(66%, 640px);
+  transform: rotate(-15deg);
+  fill: none;
+  stroke: #9ccab5;
+  stroke-width: 1.5;
+  opacity: .18;
+}
+
+.home-intro h1 { font-size: clamp(59px, 8.5vw, 108px); margin: 13px 0 18px; }
+.home-intro > p:last-child { max-width: 330px; margin: 0; color: #c9c1c5; line-height: 1.6; }
+
+.home-feature {
+  padding: 21px;
+  background: #181b21;
+  border: 1px solid #48414a;
+  border-left: 3px solid var(--club-accent);
+}
+
+.feature-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 16px; }
+.home-feature .eyebrow { margin: 0 0 5px; }
+.home-feature h2, .directory-head h2 {
+  margin: 0;
+  font: 800 clamp(30px, 3.3vw, 45px)/.98 'Barlow Condensed', sans-serif;
+  text-transform: uppercase;
+}
+
+#featureStadium { margin: 8px 0 18px; color: #aaadb8; font-size: 12px; }
+.feature-action { display: flex; justify-content: space-between; align-items: center; min-height: 42px; text-decoration: none; }
+.feature-action span { font-size: 15px; }
+
+.directory-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 14px; margin: 0 0 16px; }
+.directory-head .eyebrow { margin: 0 0 6px; }
+#clubAvailability { color: #afb2bd; font-size: 12px; margin: 8px 0 0; }
+
+.club-search { display: grid; gap: 6px; color: #c9cbd3; font-size: 11px; font-weight: 700; }
+.club-search input { width: min(270px, 80vw); padding: 10px 12px; border: 1px solid #4b4d57; background: #1a1c23; color: var(--white); border-radius: 0; }
+
+.club-grid {
+  list-style: none;
+  margin: 0 0 32px;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.club-card {
+  display: grid;
+  justify-items: start;
+  align-content: start;
+  gap: 9px;
+  min-height: 154px;
+  height: 100%;
+  padding: 12px;
+  color: var(--white);
+  text-decoration: none;
+  background: #191c23;
+  border: 1px solid #343744;
+  border-top: 2px solid var(--club-accent);
+}
+
+.club-card.playable { background: linear-gradient(135deg, #302029, #1b1e26 75%); }
+.club-card.playable:hover { border-color: var(--club-accent); }
+.club-card:focus-visible, .feature-action:focus-visible, .club-search input:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+
+.club-tile-badge { width: 56px; height: 56px; display: grid; place-items: center; position: relative; background: #eeedf0; color: #1b1e25; border-radius: 8px; font: 800 18px 'Barlow Condensed', sans-serif; }
+.club-tile-badge img { position: absolute; inset: 4px; width: 48px; height: 48px; object-fit: contain; opacity: 0; }
+.club-tile-badge.badge-loaded img { opacity: 1; }
+.club-tile-badge.badge-loaded > span { visibility: hidden; }
+.club-tile-name { font: 800 23px/1 'Barlow Condensed', sans-serif; text-wrap: balance; }
+.club-state { color: #aeb2bf; font-size: 9px; font-weight: 800; letter-spacing: .8px; white-space: nowrap; }
+.club-state.ready { color: #a2efbe; }
+.club-state.ready::before { content: "●"; padding-right: 5px; }
+
+@media (max-width: 850px) { .club-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+@media (max-width: 670px) {
+  .home-banner { grid-template-columns: 1fr; }
+  .club-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@media (max-width: 445px) {
+  .club-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .home-banner { padding: 19px; margin-top: 16px; }
+  .home-feature { padding: 15px; }
+  .home-pitch { width: 100%; }
+}
