@@ -287,7 +287,8 @@
   align-self: start;
 }
 
-.slot .portrait-tile {
+.slot .portrait-tile,
+.bench-player .portrait-tile {
   width: 30px;
   height: 30px;
 }

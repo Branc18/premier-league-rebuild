@@ -513,7 +513,9 @@ function renderLineup() {
   $("#lineupBench").innerHTML = team.groups.map(({ position, label, players }) => {
     const cards = players.map(p => `<li>
       <button type="button" class="bench-player" data-lineup-player="${p.id}">
-        <span class="lineup-grip" aria-hidden="true">⠿</span>${p.name}
+        <span class="lineup-grip" aria-hidden="true">⠿</span>
+        ${portraitMarkup(p, `<span class="slot-photo-fallback" aria-hidden="true">${p.number || position}</span>`)}
+        ${p.name}
       </button>
     </li>`).join("");
     return `<section class="bench-group" aria-labelledby="bench-${position}">
