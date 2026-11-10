@@ -220,7 +220,9 @@ function renderSquad() {
   );
 
   const sections = squadPositions.map(([position, label]) => {
-    const group = players.filter(p => p.pos === position);
+    const group = players.filter(p => p.pos === position).sort((a, b) =>
+      (hasValue(b) ? b.value : 0) - (hasValue(a) ? a.value : 0)
+    );
     if (!group.length) return "";
 
     return `
