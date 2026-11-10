@@ -6,7 +6,7 @@
 <title>Premier League Rebuild — Manchester United</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="styles.css?v=2">
 </head>
 <body>
 <div class="app-shell">
@@ -21,10 +21,10 @@
  <div class="hero-crest"><div class="crest-ring"><div class="crest">M<span>U</span></div><small>MANCHESTER<br>UNITED</small></div><div class="hero-record"><span>YOUR CLUB</span><strong>MANCHESTER<br>UNITED</strong><small>OLD TRAFFORD · MANCHESTER</small></div></div>
 </section>
 <section class="dashboard">
- <div class="stat"><span>TRANSFER BUDGET</span><strong id="budgetStat">£0.0m</strong><small>AVAILABLE TO SPEND</small></div>
+ <div class="stat"><span>TRANSFER BUDGET</span><strong id="budgetStat">€0</strong><small>AVAILABLE TO SPEND</small></div>
  <div class="stat"><span>SQUAD SIZE</span><strong id="squadStat">30 <i>/ 25</i></strong><small>MAXIMUM REGISTERED SQUAD</small></div>
  <div class="stat"><span>PLAYERS DECIDED</span><strong id="decidedStat">0 <i>/ 30</i></strong><small>KEEP OR SELL EVERY PLAYER</small></div>
- <div class="stat"><span>TRANSFER SPEND</span><strong id="spendStat">£0.0m</strong><small>YOUR NEW SIGNINGS</small></div>
+ <div class="stat"><span>TRANSFER SPEND</span><strong id="spendStat">€0</strong><small>YOUR NEW SIGNINGS</small></div>
 </section>
 <nav class="tabs">
  <button class="tab active" data-tab="squad"><span>01</span> SQUAD <b id="squadTabCount">30</b></button>
@@ -34,12 +34,13 @@
 <main>
 <section id="panel-squad" class="panel active">
  <div class="section-head"><div><div class="eyebrow">THE DRESSING ROOM</div><h2>MAKE YOUR CALL.</h2><p>Keep the players you believe in. Sell the rest to build your transfer kitty.</p></div><div class="head-actions"><button class="btn btn-ghost" id="resetBtn">RESET SAVE</button></div></div>
- <div class="notice" id="decisionNotice"><b>YOUR JOB:</b> Decide the future of every player to unlock the transfer market. Sale values are provisional estimates, not live market quotes.</div>
+ <div class="notice" id="decisionNotice"><b>YOUR JOB:</b> Decide the future of every player to unlock the transfer market.</div>
+ <p class="notice" id="migrationNotice" role="status" hidden></p>
  <div class="filters"><div class="search-wrap">⌕ <input id="squadSearch" placeholder="Search players..." aria-label="Search players"></div><div class="filter-group" id="positionFilters"><button class="filter active" data-filter="All">ALL</button><button class="filter" data-filter="GK">GK</button><button class="filter" data-filter="DEF">DEF</button><button class="filter" data-filter="MID">MID</button><button class="filter" data-filter="FWD">FWD</button></div><div class="filter-group"><button class="filter active" data-status="all">ALL</button><button class="filter" data-status="undecided">UNDECIDED</button><button class="filter" data-status="keep">KEPT</button><button class="filter" data-status="sell">FOR SALE</button></div></div>
  <div class="player-grid" id="squadGrid"></div>
 </section>
 <section id="panel-market" class="panel">
- <div class="section-head"><div><div class="eyebrow">THE MARKET IS OPEN</div><h2>MAKE A STATEMENT.</h2><p>Recruit first-team players from Premier League rivals. No loans, no free agents.</p></div><div class="market-balance"><span>AVAILABLE</span><strong id="marketBudget">£0.0m</strong></div></div>
+ <div class="section-head"><div><div class="eyebrow">THE MARKET IS OPEN</div><h2>MAKE A STATEMENT.</h2><p>Recruit first-team players from Premier League rivals. No loans, no free agents.</p></div><div class="market-balance"><span>AVAILABLE</span><strong id="marketBudget">€0</strong></div></div>
  <div class="filters"><div class="search-wrap">⌕ <input id="marketSearch" placeholder="Search transfer targets..." aria-label="Search transfer targets"></div><div class="filter-group" id="marketPositionFilters"><button class="filter active" data-mpos="All">ALL</button><button class="filter" data-mpos="GK">GK</button><button class="filter" data-mpos="DEF">DEF</button><button class="filter" data-mpos="MID">MID</button><button class="filter" data-mpos="FWD">FWD</button></div><select id="clubFilter" aria-label="Filter by club"><option value="All">ALL CLUBS</option></select></div>
  <div class="market-summary"><span id="marketCount">TRANSFER TARGETS</span><span>SELECT A PLAYER TO SIGN</span></div><div class="player-grid" id="marketGrid"></div>
 </section>
@@ -50,9 +51,10 @@
  <div class="lineup-bottom"><div><h3>YOUR SQUAD</h3><p>Choose a player for each position on the pitch. Players can only occupy one slot.</p></div><div id="lineupBench" class="bench"></div></div>
  <div class="notice" id="shareNotice">Your lineup and club summary can be copied as text. A public share link and downloadable team graphic are planned for the next release.</div>
 </section>
+ <p class="notice">The game uses published Transfermarkt market values in EUR as its transfer prices. A squad sale without a valuation adds no proceeds. Check each player card for its source and valuation date.</p>
 </main>
-<footer><span>PREMIER LEAGUE REBUILD <b>·</b> FAN-MADE PROJECT</span><span>PLAYER VALUES ARE ESTIMATES · NOT FINANCIAL ADVICE</span></footer>
+<footer><span>PREMIER LEAGUE REBUILD <b>·</b> FAN-MADE PROJECT</span><span><a href="https://www.transfermarkt.com/manchester-united/kader/verein/985/saison_id/2026">Transfermarkt squad</a> · <a href="https://www.transfermarkt.com/premier-league/startseite/wettbewerb/GB1">Premier League</a> · Checked 10 November 2026</span></footer>
 </div>
 <div class="toast" id="toast" role="status"></div>
-<script src="app.js"></script>
+<script src="app.js?v=2"></script>
 </body></html>

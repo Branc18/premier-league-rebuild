@@ -7,7 +7,7 @@ Open `index.html` in a browser, or serve this folder with any static web server.
 
 ## Features
 - Manchester United men's first-team squad seeded from the club's published 2026/27 roster
-- Keep or sell each player; sale estimates add to the transfer budget
+- Keep or sell each player; verified sale values add to the transfer budget
 - Transfer market unlocks after every starting-squad player has a decision
 - Buy Premier League rival first-team targets within budget
 - 25-player squad cap
@@ -16,7 +16,12 @@ Open `index.html` in a browser, or serve this folder with any static web server.
 - Copyable text summary of the starting XI
 
 ## Data notes
-The Manchester United squad list is based on the club's current [Men's Team page](https://www.manutd.com/en/teams/mens-team) and [2026/27 squad announcement](https://www.manutd.com/en/news/premier-league-squad-confirmed-for-2026-27). The transfer market is a curated starter sample of rival Premier League players, not the complete league database. Player valuations are illustrative GBP estimates for gameplay only, not live Transfermarkt values or official valuations. Squad and club affiliations should be reviewed periodically as transfers and loans change.
+
+The starting squad follows the club's [men's first-team page](https://www.manutd.com/en/teams/mens-team), excluding players listed as out on loan. Values were checked on 10 November 2026 against the [Transfermarkt squad](https://www.transfermarkt.com/manchester-united/kader/verein/985/saison_id/2026) and individual profiles. Jack Fletcher appears in the club's first-team list and on Transfermarkt as a Manchester United U21 player. His valuation comes from his Transfermarkt profile. Dermot Mee has no published value.
+
+The market is a curated list of players on rival [2026/27 Premier League squads](https://www.transfermarkt.com/premier-league/startseite/wettbewerb/GB1). Player cards link to the original source and show its last valuation update when available. The snapshot is maintained in `app.js`. All prices are stored as whole euros without exchange-rate conversion and used as game transfer prices. Unvalued squad players can be sold without generating proceeds. Targets without a verified price cannot be signed.
+
+Existing saves retain squad decisions and eligible lineup slots. Previous signings are repriced at verified EUR values in purchase order and retained when eligible and affordable within the squad cap. Slots for removed signings are cleared.
 
 ## Deploy with GitHub Pages
 The workflow in `.github/workflows/deploy.yml` publishes the repository root to GitHub Pages whenever a commit is pushed to `main`. In the repository, open **Settings → Pages** and ensure **Build and deployment → Source** is set to **GitHub Actions**. The published URL will be:

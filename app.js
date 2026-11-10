@@ -1,38 +1,222 @@
-const initialSquad=[
-["Senne Lammens","GK",1,35],["Karl Darlow","GK",12,2],["Tom Heaton","GK",22,0.5],["Dermot Mee","GK",45,0.2],
-["Diogo Dalot","DEF",2,28],["Noussair Mazraoui","DEF",3,20],["Matthijs de Ligt","DEF",4,30],["Harry Maguire","DEF",5,8],["Lisandro Martínez","DEF",6,32],["Patrick Dorgu","DEF",13,30],["Leny Yoro","DEF",15,38],["Luke Shaw","DEF",23,8],["Ayden Heaven","DEF",26,18],["Harry Amass","DEF",41,5],
-["Mason Mount","MID",7,22],["Bruno Fernandes","MID",8,42],["Andrey Santos","MID",17,38],["Youri Tielemans","MID",18,32],["Carlos Baleba","MID",20,55],["Manuel Ugarte","MID",25,22],["Kobbie Mainoo","MID",37,35],["Jack Fletcher","MID",38,2],["Tyler Fletcher","MID",39,1],
-["Marcus Rashford","FWD",9,35],["Matheus Cunha","FWD",10,55],["Joshua Zirkzee","FWD",11,25],["Amad Diallo","FWD",16,38],["Bryan Mbeumo","FWD",19,55],["Benjamin Šeško","FWD",30,55],["Shea Lacey","FWD",31,4]
-].map((p,i)=>({id:"mu"+i,name:p[0],pos:p[1],number:p[2],value:p[3],status:"undecided",club:"Manchester United"}));
-const market=[
-["Gianluigi Donnarumma","GK","Manchester City",45],["James Trafford","GK","Leeds United",18],["Alisson Becker","GK","Liverpool",22],
-["Rúben Dias","DEF","Manchester City",45],["Marc Guéhi","DEF","Manchester City",48],["Joško Gvardiol","DEF","Manchester City",55],["Lewis Hall","DEF","Newcastle United",38],["Milos Kerkez","DEF","Liverpool",42],["Jarrad Branthwaite","DEF","Everton",35],["Pedro Porro","DEF","Tottenham",38],["Micky van de Ven","DEF","Tottenham",45],["Tino Livramento","DEF","Newcastle United",32],
-["Declan Rice","MID","Arsenal",95],["Martin Ødegaard","MID","Arsenal",70],["Moises Caicedo","MID","Chelsea",85],["Enzo Fernández","MID","Chelsea",75],["Florian Wirtz","MID","Liverpool",105],["Dominik Szoboszlai","MID","Liverpool",65],["Elliot Anderson","MID","Manchester City",60],["Morgan Gibbs-White","MID","Nottingham Forest",45],["Cole Palmer","MID","Chelsea",95],["James Maddison","MID","Tottenham",28],
-["Erling Haaland","FWD","Manchester City",145],["Bukayo Saka","FWD","Arsenal",110],["Alexander Isak","FWD","Liverpool",95],["Hugo Ekitike","FWD","Liverpool",65],["Antoine Semenyo","FWD","Manchester City",60],["Eberechi Eze","FWD","Arsenal",55],["Ollie Watkins","FWD","Aston Villa",38],["Anthony Gordon","FWD","Newcastle United",50],["Cody Gakpo","FWD","Liverpool",55],["Rayan Cherki","FWD","Manchester City",48]
-].map((p,i)=>({id:"t"+i,name:p[0],pos:p[1],club:p[2],value:p[3]}));
-const $=s=>document.querySelector(s);const money=n=>"£"+Number(n).toFixed(1)+"m";
-let state=load();let squadFilter="All",squadStatus="all",marketPos="All";
-function load(){try{const s=JSON.parse(localStorage.getItem("plr-save"));if(s&&Array.isArray(s.squad))return s}catch(e){}return{ squad:initialSquad.map(x=>({...x})),buys:[],formation:"4-3-3",slots:{},spent:0};}
-function save(){localStorage.setItem("plr-save",JSON.stringify(state));$("#saveState").textContent="● SAVED LOCALLY";}
-function budget(){return state.squad.filter(p=>p.status==="sell").reduce((a,p)=>a+p.value,0)-state.spent;}
-function owned(){return state.squad.filter(p=>p.status!=="sell").concat(state.buys);}
+// Transfermarkt snapshot checked 10 November 2026. Amounts are whole euros.
+const initialSquad = [
+  ["mu0","Senne Lammens","GK",1,35000000,"2026-06-03","/senne-lammens/profil/spieler/503883"],
+  ["mu1","Karl Darlow","GK",12,200000,"2026-06-03","/karl-darlow/profil/spieler/99397"],
+  ["mu2","Tom Heaton","GK",22,100000,"2026-06-03","/tom-heaton/profil/spieler/34130"],
+  ["mu3","Dermot Mee","GK",45,null,null,"/dermot-mee/profil/spieler/620362"],
+  ["mu4","Diogo Dalot","DEF",2,30000000,"2026-06-03","/diogo-dalot/profil/spieler/357147"],
+  ["mu5","Noussair Mazraoui","DEF",3,18000000,"2026-06-03","/noussair-mazraoui/profil/spieler/340456"],
+  ["mu6","Matthijs de Ligt","DEF",4,25000000,"2026-10-07","/matthijs-de-ligt/profil/spieler/326031"],
+  ["mu7","Harry Maguire","DEF",5,8000000,"2026-06-03","/harry-maguire/profil/spieler/177907"],
+  ["mu8","Lisandro Martínez","DEF",6,45000000,"2026-07-22","/lisandro-martinez/profil/spieler/480762"],
+  ["mu9","Patrick Dorgu","DEF",13,35000000,"2026-06-03","/patrick-dorgu/profil/spieler/926952"],
+  ["mu10","Leny Yoro","DEF",15,45000000,"2026-10-07","/leny-yoro/profil/spieler/923831"],
+  ["mu11","Luke Shaw","DEF",23,8000000,"2026-06-03","/luke-shaw/profil/spieler/183288"],
+  ["mu12","Ayden Heaven","DEF",26,30000000,"2026-06-03","/ayden-heaven/profil/spieler/1078163"],
+  ["mu13","Harry Amass","DEF",41,5000000,"2026-10-07","/harry-amass/profil/spieler/1011738"],
+  ["mu14","Mason Mount","MID",7,25000000,"2026-06-03","/mason-mount/profil/spieler/346483"],
+  ["mu15","Bruno Fernandes","MID",8,35000000,"2026-06-03","/bruno-fernandes/profil/spieler/240306"],
+  ["mu16","Andrey Santos","MID",17,45000000,"2026-10-07","/andrey-santos/profil/spieler/743600"],
+  ["mu17","Youri Tielemans","MID",18,40000000,"2026-07-22","/youri-tielemans/profil/spieler/249565"],
+  ["mu18","Carlos Baleba","MID",20,65000000,"2026-10-07","/carlos-baleba/profil/spieler/973085"],
+  ["mu19","Manuel Ugarte","MID",25,20000000,"2026-10-07","/manuel-ugarte/profil/spieler/476701"],
+  ["mu20","Kobbie Mainoo","MID",37,75000000,"2026-10-07","/kobbie-mainoo/profil/spieler/820374"],
+  ["mu21","Jack Fletcher","MID",38,2000000,"2026-10-07","/jack-fletcher/profil/spieler/1011140"],
+  ["mu22","Tyler Fletcher","MID",39,2500000,"2026-10-07","/tyler-fletcher/profil/spieler/1049911"],
+  ["mu23","Marcus Rashford","FWD",9,35000000,"2026-10-07","/marcus-rashford/profil/spieler/258923"],
+  ["mu24","Matheus Cunha","FWD",10,75000000,"2026-06-03","/matheus-cunha/profil/spieler/517894"],
+  ["mu25","Joshua Zirkzee","FWD",11,20000000,"2026-06-03","/joshua-zirkzee/profil/spieler/435648"],
+  ["mu26","Amad Diallo","FWD",16,45000000,"2026-06-03","/amad-diallo/profil/spieler/536835"],
+  ["mu27","Bryan Mbeumo","FWD",19,75000000,"2026-06-03","/bryan-mbeumo/profil/spieler/413039"],
+  ["mu28","Benjamin Šeško","FWD",30,75000000,"2026-06-03","/benjamin-sesko/profil/spieler/627442"],
+  ["mu29","Shea Lacey","FWD",31,12000000,"2026-10-07","/shea-lacey/profil/spieler/926309"]
+].map(([id, name, pos, number, value, valueDate, profile]) => ({
+  id, name, pos, number, value, valueDate, profile, status: "undecided", club: "Manchester United"
+}));
+
+const market = [
+  ["t0","Gianluigi Donnarumma","GK","Manchester City",45000000,"2026-06-03","/gianluigi-donnarumma/profil/spieler/315858"],
+  ["t1","James Trafford","GK","Leeds United",35000000,"2026-10-07","/james-trafford/profil/spieler/566799"],
+  ["t2","Alisson Becker","GK","Liverpool FC",15000000,"2026-06-03","/alisson/profil/spieler/105470"],
+  ["t3","Rúben Dias","DEF","Manchester City",50000000,"2026-10-07","/ruben-dias/profil/spieler/258004"],
+  ["t4","Marc Guéhi","DEF","Manchester City",75000000,"2026-10-07","/marc-guehi/profil/spieler/392757"],
+  ["t5","Joško Gvardiol","DEF","Manchester City",75000000,"2026-10-07","/josko-gvardiol/profil/spieler/475959"],
+  ["t6","Lewis Hall","DEF","Newcastle United",55000000,"2026-10-07","/lewis-hall/profil/spieler/670858"],
+  ["t7","Milos Kerkez","DEF","Liverpool FC",35000000,"2026-06-03","/milos-kerkez/profil/spieler/730861"],
+  ["t8","Jarrad Branthwaite","DEF","Everton FC",45000000,"2026-10-07","/jarrad-branthwaite/profil/spieler/661053"],
+  ["t9","Pedro Porro","DEF","Tottenham Hotspur",45000000,"2026-07-22","/pedro-porro/profil/spieler/553875"],
+  ["t10","Micky van de Ven","DEF","Tottenham Hotspur",50000000,"2026-06-03","/micky-van-de-ven/profil/spieler/557459"],
+  ["t11","Tino Livramento","DEF","Newcastle United",45000000,"2026-06-03","/tino-livramento/profil/spieler/503981"],
+  ["t12","Declan Rice","MID","Arsenal FC",120000000,"2026-06-03","/declan-rice/profil/spieler/357662"],
+  ["t13","Martin Ødegaard","MID","Arsenal FC",80000000,"2026-10-07","/martin-odegaard/profil/spieler/316264"],
+  ["t14","Moisés Caicedo","MID","Chelsea FC",100000000,"2026-06-03","/moises-caicedo/profil/spieler/687626"],
+  ["t15","Enzo Fernández","MID","Manchester City",120000000,"2026-10-07","/enzo-fernandez/profil/spieler/648195"],
+  ["t16","Florian Wirtz","MID","Liverpool FC",85000000,"2026-10-07","/florian-wirtz/profil/spieler/598577"],
+  ["t17","Dominik Szoboszlai","MID","Liverpool FC",100000000,"2026-06-03","/dominik-szoboszlai/profil/spieler/451276"],
+  ["t18","Elliot Anderson","MID","Manchester City",120000000,"2026-10-07","/elliot-anderson/profil/spieler/567576"],
+  ["t19","Morgan Gibbs-White","MID","Nottingham Forest",80000000,"2026-10-07","/morgan-gibbs-white/profil/spieler/429014"],
+  ["t20","Cole Palmer","MID","Chelsea FC",110000000,"2026-10-07","/cole-palmer/profil/spieler/568177"],
+  ["t21","James Maddison","MID","Tottenham Hotspur",17000000,"2026-10-07","/james-maddison/profil/spieler/294057"],
+  ["t22","Erling Haaland","FWD","Manchester City",220000000,"2026-07-22","/erling-haaland/profil/spieler/418560"],
+  ["t23","Bukayo Saka","FWD","Arsenal FC",110000000,"2026-06-03","/bukayo-saka/profil/spieler/433177"],
+  ["t24","Alexander Isak","FWD","Liverpool FC",90000000,"2026-10-07","/alexander-isak/profil/spieler/349066"],
+  ["t25","Hugo Ekitiké","FWD","Liverpool FC",80000000,"2026-06-03","/hugo-ekitike/profil/spieler/709726"],
+  ["t26","Antoine Semenyo","FWD","Manchester City",80000000,"2026-06-03","/antoine-semenyo/profil/spieler/583255"],
+  ["t27","Eberechi Eze","MID","Arsenal FC",60000000,"2026-10-07","/eberechi-eze/profil/spieler/479999"],
+  ["t30","Cody Gakpo","FWD","Liverpool FC",75000000,"2026-10-07","/cody-gakpo/profil/spieler/434675"],
+  ["t31","Rayan Cherki","MID","Manchester City",110000000,"2026-10-07","/rayan-cherki/profil/spieler/607223"]
+].map(([id, name, pos, club, value, valueDate, profile]) => ({
+  id, name, pos, club, value, valueDate, profile
+}));
+
+const $ = s => document.querySelector(s);
+const saveKey = "plr-save";
+const saveVersion = 2;
+const maxSquad = 25;
+const transfermarkt = "https://www.transfermarkt.com";
+const numberFormat = new Intl.NumberFormat("en-IE", { maximumFractionDigits: 6 });
+const dateFormat = new Intl.DateTimeFormat("en-GB", { dateStyle: "medium", timeZone: "UTC" });
+const hasValue = p => Number.isSafeInteger(p.value) && p.value > 0;
+
+function money(euros) {
+  const amount = Math.abs(euros);
+  const sign = euros < 0 ? "−" : "";
+  if (amount >= 1000000) return sign + "€" + numberFormat.format(amount / 1000000) + "m";
+  if (amount >= 1000) return sign + "€" + numberFormat.format(amount / 1000) + "k";
+  return sign + "€" + numberFormat.format(amount);
+}
+
+function newGame() {
+  return { version: saveVersion, squad: initialSquad.map(p => ({ ...p })), buys: [], formation: "4-3-3", slots: {} };
+}
+
+function saleValue(p) {
+  return p.status === "sell" && hasValue(p) ? p.value : 0;
+}
+
+function spend(game = state) {
+  return game.buys.reduce((total, p) => total + p.value, 0);
+}
+
+function budget(game = state) {
+  return game.squad.reduce((total, p) => total + saleValue(p), 0) - spend(game);
+}
+
+function owned(game = state) {
+  return game.squad.filter(p => p.status !== "sell").concat(game.buys);
+}
+
+function canSign(p, game = state) {
+  return hasValue(p) && !game.squad.some(p => p.status === "undecided") &&
+    budget(game) >= p.value && owned(game).length < maxSquad && !game.buys.some(x => x.id === p.id);
+}
+
+const formations={"4-3-3":[["LW","ST","RW"],["CM","CM","CM"],["LB","CB","CB","RB"],["GK"]],"4-2-3-1":[["ST"],["LW","CAM","RW"],["CDM","CDM"],["LB","CB","CB","RB"],["GK"]],"4-4-2":[["ST","ST"],["LM","CM","CM","RM"],["LB","CB","CB","RB"],["GK"]],"3-5-2":[["ST","ST"],["LWB","CM","CAM","CM","RWB"],["CB","CB","CB"],["GK"]]};
+
+let state = load();
+let squadFilter = "All", squadStatus = "all", marketPos = "All";
+
+function load() {
+  const game = newGame();
+  let saved;
+  try {
+    saved = JSON.parse(localStorage.getItem(saveKey));
+  } catch {
+    return game;
+  }
+  if (!Array.isArray(saved?.squad)) return game;
+
+  for (const player of game.squad) {
+    const status = saved.squad.find(p => p?.id === player.id)?.status;
+    if (status === "keep" || status === "sell") player.status = status;
+  }
+
+  const legacy = saved.version !== saveVersion;
+  if (Array.isArray(saved.buys)) {
+    for (const previous of saved.buys) {
+      const player = market.find(p => p.id === previous?.id);
+      if (!player || !hasValue(player) || game.buys.some(p => p.id === player.id)) continue;
+      if (!legacy || (budget(game) >= player.value && owned(game).length < maxSquad)) {
+        game.buys.push({ ...player, value: !legacy && hasValue(previous) ? previous.value : player.value });
+      }
+    }
+  }
+
+  if (Object.hasOwn(formations, saved.formation)) game.formation = saved.formation;
+  const eligible = new Set(owned(game).map(p => p.id));
+  for (const [row, positions] of formations[game.formation].entries()) {
+    for (const col of positions.keys()) {
+      const slot = row + "-" + col;
+      const id = saved.slots?.[slot];
+      if (eligible.delete(id)) game.slots[slot] = id;
+    }
+  }
+
+  if (legacy) {
+    const lost = (Array.isArray(saved.buys) ? saved.buys.length : 0) - game.buys.length;
+    const notice = $("#migrationNotice");
+    notice.hidden = false;
+    notice.textContent = "Your save now uses verified EUR values. Squad decisions were carried over and eligible signings were repriced." +
+      (lost ? " Signings removed because they no longer fit the market, budget or squad limit: " + lost + "." : "");
+  }
+  return game;
+}
+
+function save() {
+  try {
+    localStorage.setItem(saveKey, JSON.stringify(state));
+    $("#saveState").textContent = "● SAVED LOCALLY";
+  } catch {
+    $("#saveState").textContent = "● SAVE UNAVAILABLE";
+  }
+}
 function toast(t){const el=$("#toast");el.textContent=t;el.classList.add("show");setTimeout(()=>el.classList.remove("show"),2200)}
-function updateStats(){let decided=state.squad.filter(p=>p.status!=="undecided").length;$("#budgetStat").textContent=money(budget());$("#marketBudget").textContent=money(budget());$("#squadStat").innerHTML=owned().length+' <i>/ 25</i>';$("#decidedStat").innerHTML=decided+' <i>/ '+state.squad.length+'</i>';$("#spendStat").textContent=money(state.spent);$("#squadTabCount").textContent=state.squad.length;let unlocked=decided===state.squad.length;$("#marketTab").classList.toggle("locked",!unlocked);$("#marketTab b").textContent=unlocked?"OPEN":"LOCKED";$("#decisionNotice").innerHTML=unlocked?"<b>MARKET UNLOCKED:</b> Your squad decisions are complete. Build your new team with the budget you created.":"<b>YOUR JOB:</b> Decide the future of every player to unlock the transfer market. "+decided+" of "+state.squad.length+" decisions made. Sale values are provisional estimates.";save();}
-function card(p,marketCard=false){let status=p.status||"";let actions=marketCard?'<button class="buy-btn" data-buy="'+p.id+'" '+(budget()<p.value||owned().length>=25||state.buys.some(x=>x.id===p.id)?"disabled":"")+'>SIGN PLAYER</button>':(status==="undecided"?'<button class="action keep" data-choice="keep" data-id="'+p.id+'">KEEP</button><button class="action sell" data-choice="sell" data-id="'+p.id+'">SELL</button>':status==="keep"?'<button class="action keep selected" data-choice="undecided" data-id="'+p.id+'">KEPT ✓</button><button class="action sell" data-choice="sell" data-id="'+p.id+'">SELL</button>':'<button class="action keep" data-choice="keep" data-id="'+p.id+'">KEEP</button><button class="action sell selected" data-choice="undecided" data-id="'+p.id+'">FOR SALE ✓</button>');
-return '<article class="player-card '+(marketCard?'market-card':status==="keep"?'kept':status==="sell"?'sold':'')+'"><div class="shirt">'+(p.number||"＋")+'</div><div class="player-info"><span class="position">'+p.pos+' · '+(marketCard?p.club:"MANCHESTER UNITED")+'</span><strong>'+p.name+'</strong><small>'+(marketCard?"AVAILABLE TO BUY":status==="keep"?"IN YOUR SQUAD":status==="sell"?"SALE VALUE ADDED TO BUDGET":"UNDECIDED")+'</small></div><div class="player-value"><strong>'+money(p.value)+'</strong><small>EST. VALUE</small></div><div class="card-actions">'+actions+'</div></article>'}
+function updateStats(){let decided=state.squad.filter(p=>p.status!=="undecided").length;$("#budgetStat").textContent=money(budget());$("#marketBudget").textContent=money(budget());$("#squadStat").innerHTML=owned().length+' <i>/ 25</i>';$("#decidedStat").innerHTML=decided+' <i>/ '+state.squad.length+'</i>';$("#spendStat").textContent=money(spend());$("#squadTabCount").textContent=state.squad.length;let unlocked=decided===state.squad.length;$("#marketTab").classList.toggle("locked",!unlocked);$("#marketTab b").textContent=unlocked?"OPEN":"LOCKED";$("#decisionNotice").innerHTML=unlocked?"<b>MARKET UNLOCKED:</b> Your squad decisions are complete. Build your new team with the budget you created.":"<b>YOUR JOB:</b> Decide the future of every player to unlock the transfer market. "+decided+" of "+state.squad.length+" decisions made.";save();}
+function card(p,marketCard=false){let status=p.status||"";let actions=marketCard?'<button class="buy-btn" data-buy="'+p.id+'" '+(!canSign(p)?"disabled":"")+'>SIGN PLAYER</button>':(status==="undecided"?'<button class="action keep" data-choice="keep" data-id="'+p.id+'">KEEP</button><button class="action sell" data-choice="sell" data-id="'+p.id+'">SELL</button>':status==="keep"?'<button class="action keep selected" data-choice="undecided" data-id="'+p.id+'">KEPT ✓</button><button class="action sell" data-choice="sell" data-id="'+p.id+'">SELL</button>':'<button class="action keep" data-choice="keep" data-id="'+p.id+'">KEEP</button><button class="action sell selected" data-choice="undecided" data-id="'+p.id+'">FOR SALE ✓</button>');
+return '<article class="player-card '+(marketCard?'market-card':status==="keep"?'kept':status==="sell"?'sold':'')+'"><div class="shirt">'+(p.number||"＋")+'</div><div class="player-info"><span class="position">'+p.pos+' · '+(marketCard?p.club:"MANCHESTER UNITED")+'</span><strong>'+p.name+'</strong><small>'+(marketCard?(hasValue(p)?"AVAILABLE TO BUY":"SIGNING UNAVAILABLE"):status==="keep"?"IN YOUR SQUAD":status==="sell"?(hasValue(p)?"SALE VALUE ADDED TO BUDGET":"NO PROCEEDS ADDED"):"UNDECIDED")+'</small></div><div class="player-value"><strong>'+(hasValue(p)?money(p.value):"Unavailable")+'</strong><small><a href="'+transfermarkt+p.profile+'" target="_blank" rel="noopener">Transfermarkt</a>'+(p.valueDate?'<time datetime="'+p.valueDate+'">'+dateFormat.format(new Date(p.valueDate))+'</time>':'')+'</small></div><div class="card-actions">'+actions+'</div></article>'}
 function renderSquad(){let q=$("#squadSearch").value.toLowerCase();let list=state.squad.filter(p=>(squadFilter==="All"||p.pos===squadFilter)&&(squadStatus==="all"||p.status===squadStatus)&&p.name.toLowerCase().includes(q));$("#squadGrid").innerHTML=list.length?list.map(p=>card(p)).join(""):'<div class="empty-state">No players match those filters.</div>';updateStats();}
-function renderMarket(){let q=$("#marketSearch").value.toLowerCase(),club=$("#clubFilter").value;let list=market.filter(p=>(marketPos==="All"||p.pos===marketPos)&&(club==="All"||p.club===club)&&p.name.toLowerCase().includes(q));$("#marketGrid").innerHTML=list.map(p=>card(p,true)).join("");$("#marketCount").textContent=list.length+" TRANSFER TARGETS";updateStats();}
+function renderMarket(){let q=$("#marketSearch").value.toLowerCase(),club=$("#clubFilter").value;let list=market.filter(p=>(marketPos==="All"||p.pos===marketPos)&&(club==="All"||p.club===club)&&p.name.toLowerCase().includes(q));$("#marketGrid").innerHTML=list.length?list.map(p=>card(p,true)).join(""):'<div class="empty-state">No transfer targets match those filters.</div>';$("#marketCount").textContent=list.length+" TRANSFER TARGETS";updateStats();}
 function setTab(tab){if(tab==="market"&&state.squad.some(p=>p.status==="undecided")){toast("Decide every squad player's future first.");return}document.querySelectorAll(".tab").forEach(b=>b.classList.toggle("active",b.dataset.tab===tab));document.querySelectorAll(".panel").forEach(p=>p.classList.toggle("active",p.id==="panel-"+tab));if(tab==="market")renderMarket();if(tab==="lineup")renderLineup();}
 document.querySelectorAll(".tab").forEach(b=>b.addEventListener("click",()=>setTab(b.dataset.tab)));
-$("#squadGrid").addEventListener("click",e=>{let b=e.target.closest("[data-choice]");if(!b)return;let p=state.squad.find(x=>x.id===b.dataset.id);if(!p)return;p.status=b.dataset.choice;renderSquad();});
-$("#marketGrid").addEventListener("click",e=>{let b=e.target.closest("[data-buy]");if(!b)return;let p=market.find(x=>x.id===b.dataset.buy);if(!p||budget()<p.value||owned().length>=25||state.buys.some(x=>x.id===p.id))return;state.buys.push({...p});state.spent+=p.value;renderMarket();toast(p.name+" signed.");});
+$("#squadGrid").addEventListener("click", e => {
+  const button = e.target.closest("[data-choice]");
+  const player = state.squad.find(p => p.id === button?.dataset.id);
+  if (!player) return;
+
+  const status = button.dataset.choice;
+  if (player.status === "sell" && status !== "sell") {
+    if (budget() < saleValue(player)) {
+      toast("This sale has already funded your signings.");
+      return;
+    }
+    if (state.buys.length && owned().length >= maxSquad) {
+      toast("Free a squad place before reversing this sale.");
+      return;
+    }
+  }
+  player.status = status;
+  if (status === "sell") {
+    for (const slot of Object.keys(state.slots)) {
+      if (state.slots[slot] === player.id) delete state.slots[slot];
+    }
+  }
+  renderSquad();
+});
+$("#marketGrid").addEventListener("click", e => {
+  const button = e.target.closest("[data-buy]");
+  const player = market.find(p => p.id === button?.dataset.buy);
+  if (!player || !canSign(player)) return;
+  state.buys.push({ ...player });
+  renderMarket();
+  toast(player.name + " signed.");
+});
 $("#squadSearch").addEventListener("input",renderSquad);$("#marketSearch").addEventListener("input",renderMarket);$("#clubFilter").addEventListener("change",renderMarket);
 $("#positionFilters").addEventListener("click",e=>{let b=e.target.closest("[data-filter]");if(!b)return;squadFilter=b.dataset.filter;document.querySelectorAll("[data-filter]").forEach(x=>x.classList.toggle("active",x===b));renderSquad()});
 document.querySelectorAll("[data-status]").forEach(b=>b.addEventListener("click",()=>{squadStatus=b.dataset.status;document.querySelectorAll("[data-status]").forEach(x=>x.classList.toggle("active",x===b));renderSquad()}));
 $("#marketPositionFilters").addEventListener("click",e=>{let b=e.target.closest("[data-mpos]");if(!b)return;marketPos=b.dataset.mpos;document.querySelectorAll("[data-mpos]").forEach(x=>x.classList.toggle("active",x===b));renderMarket()});
 [...new Set(market.map(p=>p.club))].sort().forEach(c=>$("#clubFilter").insertAdjacentHTML("beforeend",'<option>'+c+'</option>'));
-$("#resetBtn").addEventListener("click",()=>{if(!confirm("Reset all squad decisions, signings and your budget?"))return;state={squad:initialSquad.map(x=>({...x})),buys:[],formation:"4-3-3",slots:{},spent:0};save();renderSquad();toast("Save reset.");});
-const formations={"4-3-3":[["LW","ST","RW"],["CM","CM","CM"],["LB","CB","CB","RB"],["GK"]],"4-2-3-1":[["ST"],["LW","CAM","RW"],["CDM","CDM"],["LB","CB","CB","RB"],["GK"]],"4-4-2":[["ST","ST"],["LM","CM","CM","RM"],["LB","CB","CB","RB"],["GK"]],"3-5-2":[["ST","ST"],["LWB","CM","CAM","CM","RWB"],["CB","CB","CB"],["GK"]]};
+$("#resetBtn").addEventListener("click",()=>{if(!confirm("Reset all squad decisions, signings and your budget?"))return;state=newGame();$("#migrationNotice").hidden=true;renderSquad();toast("Save reset.");});
+
 $("#formation").value=state.formation;$("#formation").addEventListener("change",e=>{state.formation=e.target.value;state.slots={};renderLineup();save()});
 function renderLineup(){let form=state.formation;$("#formation").value=form;let players=owned();let used=Object.values(state.slots);$("#pitchSlots").innerHTML=formations[form].map((row,ri)=>'<div class="pitch-row">'+row.map((pos,ci)=>{let key=ri+"-"+ci;let selected=state.slots[key]||"";let options=players.filter(p=>!used.includes(p.id)||p.id===selected).map(p=>'<option value="'+p.id+'" '+(selected===p.id?"selected":"")+'>'+p.name+'</option>').join("");return '<div class="slot"><small>'+pos+'</small><select data-slot="'+key+'"><option value="">— SELECT —</option>'+options+'</select><strong>'+(players.find(p=>p.id===selected)?.name||"EMPTY SLOT")+'</strong></div>'}).join("")+'</div>').join("");$("#pitchSlots").querySelectorAll("select").forEach(s=>s.addEventListener("change",e=>{if(e.target.value)state.slots[e.target.dataset.slot]=e.target.value;else delete state.slots[e.target.dataset.slot];renderLineup();save()}));$("#lineupCount").textContent=Object.values(state.slots).filter(Boolean).length+" / 11 STARTING";let remaining=players.filter(p=>!used.includes(p.id));$("#lineupBench").innerHTML=remaining.map(p=>'<span>'+p.name+'</span>').join("")||'<span>All available players assigned</span>';}
 $("#shareBtn").addEventListener("click",()=>{let players=owned(),chosen=Object.values(state.slots).map(id=>players.find(p=>p.id===id)).filter(Boolean);let textOut="MY MANCHESTER UNITED REBUILD\nFormation: "+state.formation+"\nBudget remaining: "+money(budget())+"\nStarting XI:\n"+chosen.map(p=>p.name).join("\n")+"\n\nBuilt with Premier League Rebuild";if(navigator.clipboard?.writeText){navigator.clipboard.writeText(textOut).then(()=>toast("Team summary copied to clipboard.")).catch(()=>toast("Clipboard unavailable in this browser."));}else toast("Clipboard unavailable in this browser.");});
