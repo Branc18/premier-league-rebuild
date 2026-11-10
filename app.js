@@ -262,6 +262,7 @@ const lineupPanel = $("#panel-lineup");
 const lineupPrompt = $("#lineupPrompt");
 let lineupPick = null;
 let lineupDrag = null;
+let ignoreLineupClick = false;
 
 $("#formation").addEventListener("change", e => {
   state.formation = e.target.value;
@@ -322,6 +323,10 @@ function moveLineupPlayer(key, restoreFocus) {
 }
 
 lineupPanel.addEventListener("click", e => {
+  if (ignoreLineupClick && e.detail) {
+    ignoreLineupClick = false;
+    return;
+  }
   const slot = e.target.closest("[data-slot]");
   if (slot && lineupPick && slot.dataset.lineupPlayer !== lineupPick.id) {
     moveLineupPlayer(slot.dataset.slot, true);
@@ -335,37 +340,68 @@ lineupPanel.addEventListener("click", e => {
 });
 
 $("#benchReturn").addEventListener("click", () => moveLineupPlayer(null, true));
-lineupPanel.addEventListener("keydown", e => {
-  if (e.key === "Escape" && lineupPick) selectLineupPlayer(null);
-});
+const dragLabel = $("#lineupDragLabel");
 
-lineupPanel.addEventListener("dragstart", e => {
+lineupPanel.addEventListener("pointerdown", e => {
+  if (!e.isPrimary || e.button !== 0) return;
+  ignoreLineupClick = false;
   const card = e.target.closest("[data-lineup-player]");
-  if (!card) return;
-  lineupDrag = owned().find(p => p.id === card.dataset.lineupPlayer);
-  if (!lineupDrag) return;
-  e.dataTransfer.setData("text/plain", lineupDrag.id);
-  e.dataTransfer.effectAllowed = "move";
-  selectLineupPlayer(lineupDrag);
+  if (!card || (e.pointerType === "touch" && !e.target.closest(".lineup-grip"))) return;
+  const player = owned().find(p => p.id === card.dataset.lineupPlayer);
+  if (!player) return;
+
+  lineupDrag = { pointer: e.pointerId, player, x: e.clientX, y: e.clientY, frame: null };
+  card.setPointerCapture(e.pointerId);
 });
 
-lineupPanel.addEventListener("dragover", e => {
-  if (!lineupDrag || !e.target.closest(".lineup-target")) return;
-  e.preventDefault();
-  e.dataTransfer.dropEffect = "move";
+function scrollDuringLineupDrag() {
+  const { y } = lineupDrag;
+  const edge = 52;
+  if (y < edge) window.scrollBy(0, -12);
+  else if (y > window.innerHeight - edge) window.scrollBy(0, 12);
+  lineupDrag.frame = requestAnimationFrame(scrollDuringLineupDrag);
+}
+
+lineupPanel.addEventListener("pointermove", e => {
+  if (lineupDrag?.pointer !== e.pointerId) return;
+  if (lineupDrag.frame === null) {
+    if (Math.hypot(e.clientX - lineupDrag.x, e.clientY - lineupDrag.y) < 7) return;
+    ignoreLineupClick = true;
+    selectLineupPlayer(lineupDrag.player);
+    dragLabel.textContent = lineupDrag.player.name;
+    dragLabel.hidden = false;
+    lineupDrag.frame = requestAnimationFrame(scrollDuringLineupDrag);
+  }
+  lineupDrag.y = e.clientY;
+  dragLabel.style.left = e.clientX + 12 + "px";
+  dragLabel.style.top = e.clientY + 12 + "px";
 });
 
-lineupPanel.addEventListener("drop", e => {
-  const target = e.target.closest(".lineup-target");
-  if (!lineupDrag || !target) return;
-  e.preventDefault();
+function finishLineupDrag(target = null) {
+  const active = lineupDrag?.frame != null;
+  if (active) cancelAnimationFrame(lineupDrag.frame);
   lineupDrag = null;
-  moveLineupPlayer(target.dataset.slot ?? null, false);
+  dragLabel.hidden = true;
+  if (target) moveLineupPlayer(target.dataset.slot ?? null, false);
+  else if (active) selectLineupPlayer(null);
+}
+
+lineupPanel.addEventListener("pointerup", e => {
+  if (lineupDrag?.pointer !== e.pointerId) return;
+  const target = lineupDrag.frame === null ? null :
+    document.elementFromPoint(e.clientX, e.clientY)?.closest(".lineup-target");
+  finishLineupDrag(target);
 });
 
-lineupPanel.addEventListener("dragend", () => {
-  if (!lineupDrag) return;
-  lineupDrag = null;
+for (const event of ["pointercancel", "lostpointercapture"]) {
+  lineupPanel.addEventListener(event, e => {
+    if (lineupDrag?.pointer === e.pointerId) finishLineupDrag();
+  });
+}
+
+lineupPanel.addEventListener("keydown", e => {
+  if (e.key !== "Escape") return;
+  finishLineupDrag();
   selectLineupPlayer(null);
 });
 
@@ -377,9 +413,10 @@ function renderLineup() {
     const slots = row.map((position, colIndex) => {
       const key = rowIndex + "-" + colIndex;
       const player = players.find(p => p.id === state.slots[key]);
-      const source = player ? `draggable="true" data-lineup-player="${player.id}"` : "";
+      const source = player ? `data-lineup-player="${player.id}"` : "";
       return `<button type="button" class="slot" data-slot="${key}" ${source}
         aria-label="${position} slot ${colIndex + 1}, ${player?.name ?? "empty"}" title="${player?.name ?? position}">
+        ${player ? '<span class="lineup-grip" aria-hidden="true">⠿</span>' : ""}
         <small>${position}</small>
         <strong>${player?.name ?? "EMPTY"}</strong>
       </button>`;
@@ -392,8 +429,8 @@ function renderLineup() {
   $("#benchCount").textContent = bench.length + (bench.length === 1 ? " player" : " players");
   $("#lineupBench").innerHTML = squadPositions.flatMap(([position]) =>
     bench.filter(p => p.pos === position).map(p => `<li>
-      <button type="button" class="bench-player" draggable="true" data-lineup-player="${p.id}">
-        <b>${p.pos}</b> ${p.name}
+      <button type="button" class="bench-player" data-lineup-player="${p.id}">
+        <span class="lineup-grip" aria-hidden="true">⠿</span><b>${p.pos}</b> ${p.name}
       </button>
     </li>`)
   ).join("");

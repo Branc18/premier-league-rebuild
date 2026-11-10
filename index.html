@@ -6,7 +6,7 @@
 <title>Premier League Rebuild — Manchester United</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=5">
+<link rel="stylesheet" href="styles.css?v=6">
 </head>
 <body>
 <div class="app-shell">
@@ -45,8 +45,9 @@
  <div class="market-summary"><span id="marketCount">TRANSFER TARGETS</span><span>SELECT A PLAYER TO SIGN</span></div><div class="player-grid" id="marketGrid"></div>
 </section>
 <section id="panel-lineup" class="panel">
- <div class="section-head"><div><div class="eyebrow">TACTICAL BOARD</div><h2>YOUR UNITED XI.</h2><p>Drag players from the bench to matching positions. You can also select a player, then select a slot.</p></div><div class="head-actions"><button class="btn btn-primary" id="shareBtn">↗ SHARE TEAM</button></div></div>
+ <div class="section-head"><div><div class="eyebrow">TACTICAL BOARD</div><h2>YOUR UNITED XI.</h2><p>Drag players by their grip to a matching position, or select a player and then a slot.</p></div><div class="head-actions"><button class="btn btn-primary" id="shareBtn">↗ SHARE TEAM</button></div></div>
  <div class="lineup-toolbar"><label>FORMATION <select id="formation"><option>4-3-3</option><option>4-2-3-1</option><option>4-4-2</option><option>3-5-2</option></select></label><span id="lineupCount">0 / 11 STARTING</span></div>
+ <div id="lineupDragLabel" class="lineup-drag-label" aria-hidden="true" hidden></div>
  <div class="lineup-controls">
   <p id="lineupPrompt" role="status"></p>
   <button type="button" class="btn btn-ghost" id="benchReturn" disabled>RETURN TO BENCH</button>
@@ -64,5 +65,5 @@
 <footer><span>PREMIER LEAGUE REBUILD <b>·</b> FAN-MADE PROJECT</span><span><a href="https://www.transfermarkt.com/manchester-united/kader/verein/985/saison_id/2026">Transfermarkt squad</a> · <a href="https://www.transfermarkt.com/premier-league/startseite/wettbewerb/GB1">Premier League</a> · Checked 10 November 2026</span></footer>
 </div>
 <div class="toast" id="toast" role="status"></div>
-<script src="app.js?v=5"></script>
+<script src="app.js?v=6"></script>
 </body></html>

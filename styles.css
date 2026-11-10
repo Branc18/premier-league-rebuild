@@ -192,3 +192,37 @@
   font-size: 12px;
   margin: 10px 0 0;
 }
+
+[data-lineup-player] {
+  user-select: none;
+}
+
+.slot {
+  position: relative;
+}
+
+.lineup-grip {
+  touch-action: none;
+  padding: 4px;
+  color: var(--gold);
+  font-size: 14px;
+  line-height: 1;
+}
+
+.slot .lineup-grip {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.lineup-drag-label {
+  position: fixed;
+  z-index: 10;
+  pointer-events: none;
+  padding: 7px 10px;
+  background: var(--panel2);
+  border: 1px solid var(--gold);
+  color: var(--white);
+  font-size: 12px;
+  font-weight: 800;
+}
