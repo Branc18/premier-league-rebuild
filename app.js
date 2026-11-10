@@ -225,9 +225,18 @@ $("#squadGrid").addEventListener("click", e => {
       return;
     }
   }
+  const completesSquad = player.status === "undecided" && status !== "undecided" &&
+    state.squad.every(p => p === player || p.status !== "undecided");
   player.status = status;
   if (status === "sell") removeFromLineup(player.id);
   renderSquad();
+
+  if (completesSquad) {
+    const marketTab = $("#marketTab");
+    marketTab.focus({ preventScroll: true });
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    marketTab.scrollIntoView({ block: "center", behavior: reduceMotion ? "instant" : "smooth" });
+  }
 });
 $("#marketGrid").addEventListener("click", e => {
   const undo = e.target.closest("[data-undo-signing]");
