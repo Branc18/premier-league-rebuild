@@ -82,6 +82,46 @@ clubData.set("arsenal", {
   checkedOn: "11 November 2026"
 });
 
+// Aston Villa's 26/27 squad. Incoming loans are retained for lineup selection.
+clubData.set("aston-villa", {
+  squad: [
+    ["av432298","Zion Suzuki","GK",1,30000000,"2026-07-22","/zion-suzuki/profil/spieler/432298"],
+    ["av124884","Marco Bizot","GK",40,1500000,null,"/marco-bizot/profil/spieler/124884"],
+    ["av712181","James Wright","GK",42,200000,null,"/james-wright/profil/spieler/712181"],
+    ["av503977","Taylor Harwood-Bellis","DEF",4,25000000,null,"/taylor-harwood-bellis/profil/spieler/503977"],
+    ["av399776","Pau Torres","DEF",14,20000000,null,"/pau-torres/profil/spieler/399776"],
+    ["av1282860","Modou Kéba Cissé","DEF",48,6000000,null,"/modou-keba-cisse/profil/spieler/1282860"],
+    ["av184573","Victor Lindelöf","DEF",3,5000000,null,"/victor-lindelof/profil/spieler/184573"],
+    ["av253677","Tyrone Mings","DEF",5,3000000,null,"/tyrone-mings/profil/spieler/253677"],
+    ["av485585","Ian Maatsen","DEF",22,35000000,null,"/ian-maatsen/profil/spieler/485585"],
+    ["av616631","Matteo Ruggeri","DEF",13,28000000,null,"/matteo-ruggeri/profil/spieler/616631"],
+    ["av425334","Matty Cash","DEF",2,22000000,null,"/matty-cash/profil/spieler/425334"],
+    ["av477758","Aaron Wan-Bissaka","DEF",29,15000000,null,"/aaron-wan-bissaka/profil/spieler/477758","West Ham United"],
+    ["av394327","Boubacar Kamara","MID",8,50000000,null,"/boubacar-kamara/profil/spieler/394327"],
+    ["av485706","Amadou Onana","MID",24,40000000,null,"/amadou-onana/profil/spieler/485706"],
+    ["av645686","Lamare Bogarde","MID",26,18000000,null,"/lamare-bogarde/profil/spieler/645686"],
+    ["av735570","João Gomes","MID",35,40000000,null,"/joao-gomes/profil/spieler/735570"],
+    ["av153084","Leon Goretzka","MID",27,10000000,null,"/leon-goretzka/profil/spieler/153084"],
+    ["av131978","Ross Barkley","MID",6,4000000,null,"/ross-barkley/profil/spieler/131978"],
+    ["av193116","John McGinn","MID",7,13000000,null,"/john-mcginn/profil/spieler/193116"],
+    ["av927353","Johan Manzambi","MID",44,65000000,null,"/johan-manzambi/profil/spieler/927353"],
+    ["av321247","Emiliano Buendía","MID",10,16000000,null,"/emiliano-buendia/profil/spieler/321247"],
+    ["av811779","Alejandro Garnacho","FWD",17,22000000,null,"/alejandro-garnacho/profil/spieler/811779","Chelsea"],
+    ["av1023191","George Hemmings","MID",53,15000000,null,"/george-hemmings/profil/spieler/1023191"],
+    ["av1185888","Ibrahim Mbaye","FWD",19,50000000,null,"/ibrahim-mbaye/profil/spieler/1185888"],
+    ["av1005583","Alysson","FWD",47,15000000,null,"/alysson/profil/spieler/1005583"],
+    ["av776890","Nicolas Jackson","FWD",11,45000000,null,"/nicolas-jackson/profil/spieler/776890"],
+    ["av1226357","Brian Madjo","FWD",39,22000000,null,"/brian-madjo/profil/spieler/1226357"],
+    ["av331726","Tammy Abraham","FWD",18,18000000,null,"/tammy-abraham/profil/spieler/331726"]
+  ].map(([id, name, pos, number, value, valueDate, profile, loanFrom]) => ({
+    id, name, pos, number, value, valueDate, profile, loanFrom,
+    status: loanFrom ? "keep" : "undecided"
+  })),
+  stadium: "Villa Park · Birmingham",
+  squadSource: "https://www.transfermarkt.com/aston-villa/kader/verein/405/saison_id/2026",
+  checkedOn: "11 November 2026"
+});
+
 const featuredTargets = [
   ["t0","Gianluigi Donnarumma","GK","Manchester City",45000000,"2026-06-03","/gianluigi-donnarumma/profil/spieler/315858"],
   ["t1","James Trafford","GK","Leeds United",35000000,"2026-10-07","/james-trafford/profil/spieler/566799"],
@@ -133,7 +173,7 @@ function rivalTransferTargets(activeClub) {
     if (club.id === activeClub.id) continue;
     for (const player of clubData.get(club.id)?.squad ?? []) {
       const key = playerKey(player);
-      if (!player.value || ownPlayers.has(key) || targets.has(key)) continue;
+      if (!player.value || player.loanFrom || ownPlayers.has(key) || targets.has(key)) continue;
       const { status, number, ...target } = player;
       targets.set(key, { ...target, club: club.name });
     }

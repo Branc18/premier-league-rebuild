@@ -23,7 +23,7 @@ function newGame() {
 }
 
 function saleValue(p) {
-  return p.status === "sell" && hasValue(p) ? p.value : 0;
+  return !p.loanFrom && p.status === "sell" && hasValue(p) ? p.value : 0;
 }
 
 function spend(game = state) {
@@ -70,7 +70,7 @@ function load() {
 
   for (const player of game.squad) {
     const status = saved.squad.find(p => p?.id === player.id)?.status;
-    if (status === "keep" || status === "sell") player.status = status;
+    if (!player.loanFrom && (status === "keep" || status === "sell")) player.status = status;
   }
 
   const legacy = saved.version !== saveVersion;
@@ -145,10 +145,12 @@ function card(p,marketCard=false){
     actions = signed
       ? `<button type="button" class="action" data-undo-signing="${p.id}">UNDO SIGNING</button>`
       : `<button type="button" class="buy-btn" data-buy="${p.id}" ${canSign(p) ? "" : "disabled"}>SIGN PLAYER</button>`;
+  } else if (p.loanFrom) {
+    actions = "";
   } else {
     actions = (status==="undecided"?'<button class="action keep" data-choice="keep" data-id="'+p.id+'">KEEP</button><button class="action sell" data-choice="sell" data-id="'+p.id+'">SELL</button>':status==="keep"?'<button class="action keep selected" data-choice="undecided" data-id="'+p.id+'">KEPT ✓</button><button class="action sell" data-choice="sell" data-id="'+p.id+'">SELL</button>':'<button class="action keep" data-choice="keep" data-id="'+p.id+'">KEEP</button><button class="action sell selected" data-choice="undecided" data-id="'+p.id+'">FOR SALE ✓</button>');
   }
-return '<article class="player-card '+(marketCard?'market-card':status==="keep"?'kept':status==="sell"?'sold':'')+'">'+portraitMarkup(p, '<span class="shirt">'+(p.number||"＋")+'</span>')+'<div class="player-info"><span class="position">'+p.pos+' · '+(marketCard?p.club:activeClub.name.toUpperCase())+'</span><strong>'+p.name+'</strong><small>'+(marketCard?(signed?"SIGNED":hasValue(p)?"AVAILABLE TO BUY":"SIGNING UNAVAILABLE"):status==="keep"?"IN YOUR SQUAD":status==="sell"?(hasValue(p)?"SALE VALUE ADDED TO BUDGET":"NO PROCEEDS ADDED"):"UNDECIDED")+'</small></div><div class="player-value"><strong>'+(hasValue(p)?money(p.value):"Unavailable")+'</strong><small><a href="'+transfermarkt+p.profile+'" target="_blank" rel="noopener">Transfermarkt</a>'+(p.valueDate?'<time datetime="'+p.valueDate+'">'+dateFormat.format(new Date(p.valueDate))+'</time>':'')+'</small></div><div class="card-actions">'+actions+'</div></article>'}
+return '<article class="player-card '+(marketCard?'market-card':status==="keep"?'kept':status==="sell"?'sold':'')+'">'+portraitMarkup(p, '<span class="shirt">'+(p.number||"＋")+'</span>')+'<div class="player-info"><span class="position">'+p.pos+' · '+(marketCard?p.club:activeClub.name.toUpperCase())+'</span><strong>'+p.name+'</strong><small>'+(marketCard?(signed?"SIGNED":hasValue(p)?"AVAILABLE TO BUY":"SIGNING UNAVAILABLE"):p.loanFrom?"ON LOAN FROM "+p.loanFrom.toUpperCase():status==="keep"?"IN YOUR SQUAD":status==="sell"?(hasValue(p)?"SALE VALUE ADDED TO BUDGET":"NO PROCEEDS ADDED"):"UNDECIDED")+'</small></div><div class="player-value"><strong>'+(hasValue(p)?money(p.value):"Unavailable")+'</strong><small><a href="'+transfermarkt+p.profile+'" target="_blank" rel="noopener">Transfermarkt</a>'+(p.valueDate?'<time datetime="'+p.valueDate+'">'+dateFormat.format(new Date(p.valueDate))+'</time>':'')+'</small></div><div class="card-actions">'+actions+'</div></article>'}
 const squadPositions = [
   ["GK", "Goalkeepers"],
   ["DEF", "Defenders"],
@@ -247,7 +249,7 @@ function revealOpenMarket(squadGrid, startY) {
 $("#squadGrid").addEventListener("click", e => {
   const button = e.target.closest("[data-choice]");
   const player = state.squad.find(p => p.id === button?.dataset.id);
-  if (!player) return;
+  if (!player || player.loanFrom) return;
 
   const status = button.dataset.choice;
   if (player.status === "sell" && status !== "sell") {

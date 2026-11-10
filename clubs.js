@@ -25,8 +25,8 @@ const clubs = [
   id, name, shortName, code, primary, secondary,
   badge: id === defaultClubId
     ? "manchester-united-crest.svg"
-    : id === "arsenal"
-      ? "arsenal-crest.png"
+    : id === "arsenal" || id === "aston-villa"
+      ? `${id}-crest.png`
       : `https://resources.premierleague.com/premierleague/badges/100/t${badgeId}.png`
 }));
 
