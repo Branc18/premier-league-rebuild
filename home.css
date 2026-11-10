@@ -6,11 +6,11 @@
 
 .home-banner {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(240px, 350px);
+  grid-template-columns: minmax(0, 1fr) minmax(240px, 440px);
   align-items: center;
-  gap: clamp(24px, 5vw, 72px);
-  padding: clamp(25px, 5vw, 62px);
-  margin: 26px 0 38px;
+  gap: clamp(16px, 4vw, 48px);
+  padding: 14px clamp(16px, 3vw, 36px);
+  margin: 14px 0 18px;
   position: relative;
   isolation: isolate;
   overflow: hidden;
@@ -32,11 +32,10 @@
   opacity: .18;
 }
 
-.home-intro h1 { font-size: clamp(59px, 8.5vw, 108px); margin: 13px 0 18px; }
-.home-intro > p:last-child { max-width: 330px; margin: 0; color: #c9c1c5; line-height: 1.6; }
+.home-intro h1 { font-size: clamp(40px, 5.5vw, 70px); margin: 8px 0 0; }
 
 .home-guide {
-  padding: 21px;
+  padding: 11px 15px;
   background: #181b21;
   border: 1px solid #48414a;
   border-left: 3px solid var(--red);
@@ -44,24 +43,24 @@
 
 .home-guide h2, .directory-head h2 {
   margin: 0;
-  font: 800 clamp(30px, 3.3vw, 45px)/.98 'Barlow Condensed', sans-serif;
+  font: 800 clamp(24px, 3vw, 34px)/.98 'Barlow Condensed', sans-serif;
   text-transform: uppercase;
 }
 
 .home-guide ol {
   display: grid;
-  gap: 9px;
-  margin: 14px 0 0;
+  gap: 4px;
+  margin: 7px 0 0;
   padding-left: 20px;
   color: #c9cbd3;
   font-size: 12px;
-  line-height: 1.45;
+  line-height: 1.35;
 }
 
 .home-guide li::marker { color: var(--gold); font-weight: 800; }
 .home-guide strong { color: var(--white); }
 
-.directory-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 14px; margin: 0 0 16px; }
+.directory-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 14px; margin: 0 0 9px; }
 .directory-head .eyebrow { margin: 0 0 6px; }
 #clubAvailability { color: #afb2bd; font-size: 12px; margin: 8px 0 0; }
 
@@ -73,18 +72,20 @@
   margin: 0 0 32px;
   padding: 0;
   display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: 10px;
+  grid-template-columns: repeat(10, minmax(0, 1fr));
+  gap: 7px;
 }
 
 .club-card {
   display: grid;
-  justify-items: start;
-  align-content: start;
-  gap: 9px;
-  min-height: 154px;
+  justify-items: center;
+  grid-template-rows: auto 1fr auto;
+  align-items: center;
+  text-align: center;
+  gap: 5px;
+  min-height: 100px;
   height: 100%;
-  padding: 12px;
+  padding: 6px 4px;
   color: var(--white);
   text-decoration: none;
   background: #191c23;
@@ -96,23 +97,36 @@
 .club-card.playable:hover { border-color: var(--club-accent); }
 .club-card:focus-visible, .club-search input:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
 
-.club-tile-badge { width: 56px; height: 56px; display: grid; place-items: center; position: relative; background: #eeedf0; color: #1b1e25; border-radius: 8px; font: 800 18px 'Barlow Condensed', sans-serif; }
-.club-tile-badge img { position: absolute; inset: 4px; width: 48px; height: 48px; object-fit: contain; opacity: 0; }
+.club-tile-badge { width: 38px; height: 38px; display: grid; place-items: center; position: relative; background: #eeedf0; color: #1b1e25; border-radius: 8px; font: 800 18px 'Barlow Condensed', sans-serif; }
+.club-tile-badge img { position: absolute; inset: 4px; width: 30px; height: 30px; object-fit: contain; opacity: 0; }
 .club-tile-badge.badge-loaded img { opacity: 1; }
 .club-tile-badge.badge-loaded > span { visibility: hidden; }
-.club-tile-name { font: 800 23px/1 'Barlow Condensed', sans-serif; text-wrap: balance; }
-.club-state { color: #aeb2bf; font-size: 9px; font-weight: 800; letter-spacing: .8px; white-space: nowrap; }
+.club-tile-name { font: 800 17px/1 'Barlow Condensed', sans-serif; text-wrap: balance; }
+.club-state { color: #aeb2bf; font-size: 8px; font-weight: 800; letter-spacing: .4px; white-space: nowrap; }
 .club-state.ready { color: #a2efbe; }
 .club-state.ready::before { content: "●"; padding-right: 5px; }
 
-@media (max-width: 850px) { .club-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
-@media (max-width: 670px) {
-  .home-banner { grid-template-columns: 1fr; }
-  .club-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+@media (max-width: 980px) {
+  .club-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); }
 }
-@media (max-width: 445px) {
-  .club-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .home-banner { padding: 19px; margin-top: 16px; }
-  .home-guide { padding: 15px; }
-  .home-pitch { width: 100%; }
+
+@media (max-width: 670px) {
+  .club-home .topbar { height: 48px; }
+  .home-banner { grid-template-columns: 1fr; gap: 9px; padding: 10px 12px; margin: 9px 0 12px; }
+  .home-intro .eyebrow { display: none; }
+  .home-intro h1 { margin: 0; font-size: clamp(31px, 8vw, 46px); line-height: .95; }
+  .home-intro h1 br { display: none; }
+  .home-intro h1 em::before { content: " "; }
+  .home-guide { padding: 8px 10px; }
+  .home-guide h2 { font-size: 23px; }
+  .home-guide ol { font-size: 11px; }
+  .directory-head { gap: 6px; }
+  .club-search { gap: 3px; }
+  .club-search input { padding: 6px 8px; width: min(100%, 200px); }
+  .club-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 5px; }
+  .club-card { min-height: 77px; gap: 3px; padding: 4px 2px; }
+  .club-tile-badge { width: 28px; height: 28px; border-radius: 5px; font-size: 14px; }
+  .club-tile-badge img { inset: 3px; width: 22px; height: 22px; }
+  .club-tile-name { font-size: 14px; }
+  .club-state { font-size: 7px; letter-spacing: 0; }
 }
