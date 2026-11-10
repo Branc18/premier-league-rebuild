@@ -255,22 +255,31 @@
   flex: none;
 }
 
-.player-portrait {
+.portrait-frame {
   position: absolute;
-  inset: 0;
+  top: 50%;
+  left: 0;
   width: 100%;
-  height: 100%;
+  aspect-ratio: 1;
+  transform: translateY(-50%);
+  overflow: hidden;
   border: 1px solid #626773;
-  border-radius: 6px;
+  border-radius: 7px;
   background: #23262e;
-  object-fit: cover;
-  object-position: center 22%;
   opacity: 0;
   pointer-events: none;
 }
 
-.player-portrait.portrait-loaded {
+.portrait-loaded .portrait-frame {
   opacity: 1;
+}
+
+.portrait-loaded > :is(.shirt, .slot-photo-fallback) {
+  visibility: hidden;
+}
+
+.player-portrait {
+  position: absolute;
 }
 
 .squad-group .portrait-tile {
@@ -279,7 +288,7 @@
 }
 
 .slot .portrait-tile {
-  width: 28px;
+  width: 30px;
   height: 30px;
 }
 

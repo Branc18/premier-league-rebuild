@@ -68,3 +68,19 @@ const playerPhotos = new Map([
     license
   }];
 }));
+
+// Center and zoom for source photos that show more than a typical headshot.
+const portraitFraming = {
+  mu4: [.50, .25, 1.50], // Diogo Dalot
+  mu9: [.54, .34, 3.40], // Patrick Dorgu
+  mu10: [.57, .24, 1.65], // Leny Yoro
+  mu14: [.46, .25, 1.55] // Mason Mount
+};
+
+function squarePortraitCrop(id, width, height) {
+  const [focusX, focusY, zoom] = portraitFraming[id] ?? [.50, .33, 1.14];
+  const size = Math.min(width, height) / zoom;
+  const x = Math.max(0, Math.min(width - size, width * focusX - size / 2));
+  const y = Math.max(0, Math.min(height - size, height * focusY - size / 2));
+  return { x, y, size };
+}

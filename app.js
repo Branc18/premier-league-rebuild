@@ -184,12 +184,22 @@ function toast(t){const el=$("#toast");el.textContent=t;el.classList.add("show")
 function updateStats(){let decided=state.squad.filter(p=>p.status!=="undecided").length;$("#budgetStat").textContent=money(budget());$("#marketBudget").textContent=money(budget());$("#squadStat").innerHTML=owned().length+' <i>/ 25</i>';$("#decidedStat").innerHTML=decided+' <i>/ '+state.squad.length+'</i>';$("#spendStat").textContent=money(spend());$("#squadTabCount").textContent=state.squad.length;let unlocked=decided===state.squad.length;$("#marketTab").classList.toggle("locked",!unlocked);$("#marketTab b").textContent=unlocked?"OPEN":"LOCKED";$("#decisionNotice").innerHTML=unlocked?"<b>MARKET UNLOCKED:</b> Your squad decisions are complete. Build your new team with the budget you created.":"<b>YOUR JOB:</b> Decide the future of every player to unlock the transfer market. "+decided+" of "+state.squad.length+" decisions made.";save();}
 function portraitMarkup(player, fallback) {
   const photo = playerPhotos.get(player.id);
-  const image = photo ? `<img class="player-portrait" src="${photo.url}" crossorigin="anonymous" alt="" loading="lazy" decoding="async">` : "";
+  const image = photo ? `<span class="portrait-frame">
+    <img class="player-portrait" data-portrait="${player.id}" src="${photo.url}" crossorigin="anonymous" alt="" loading="lazy" decoding="async">
+  </span>` : "";
   return `<span class="portrait-tile">${fallback}${image}</span>`;
 }
 
 document.addEventListener("load", e => {
-  if (e.target.classList?.contains("player-portrait")) e.target.classList.add("portrait-loaded");
+  const image = e.target;
+  if (!image.classList?.contains("player-portrait")) return;
+  const { naturalWidth, naturalHeight } = image;
+  const { x, y, size } = squarePortraitCrop(image.dataset.portrait, naturalWidth, naturalHeight);
+  image.style.width = 100 * naturalWidth / size + "%";
+  image.style.height = 100 * naturalHeight / size + "%";
+  image.style.left = -100 * x / size + "%";
+  image.style.top = -100 * y / size + "%";
+  image.closest(".portrait-tile").classList.add("portrait-loaded");
 }, true);
 
 function card(p,marketCard=false){let status=p.status||"";let actions=marketCard?'<button class="buy-btn" data-buy="'+p.id+'" '+(!canSign(p)?"disabled":"")+'>SIGN PLAYER</button>':(status==="undecided"?'<button class="action keep" data-choice="keep" data-id="'+p.id+'">KEEP</button><button class="action sell" data-choice="sell" data-id="'+p.id+'">SELL</button>':status==="keep"?'<button class="action keep selected" data-choice="undecided" data-id="'+p.id+'">KEPT ✓</button><button class="action sell" data-choice="sell" data-id="'+p.id+'">SELL</button>':'<button class="action keep" data-choice="keep" data-id="'+p.id+'">KEEP</button><button class="action sell selected" data-choice="undecided" data-id="'+p.id+'">FOR SALE ✓</button>');

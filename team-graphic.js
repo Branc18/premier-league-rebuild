@@ -123,13 +123,16 @@ async function makeTeamGraphic(team) {
     row.forEach(({ position, player }, index) => {
       const x = centerX + (index - (row.length - 1) / 2) * spacing;
       const portrait = photoById.get(player.id);
-      box(x - 36, y, 72, 75, 10, "#132820", "#b3d8bf");
+      box(x - 38, y, 76, 76, 10, "#132820", "#b3d8bf");
       if (portrait) {
         const { image } = portrait;
-        const scale = Math.min(66 / image.naturalWidth, 69 / image.naturalHeight);
-        const w = image.naturalWidth * scale;
-        const h = image.naturalHeight * scale;
-        ctx.drawImage(image, x - w / 2, y + (75 - h) / 2, w, h);
+        const crop = squarePortraitCrop(player.id, image.naturalWidth, image.naturalHeight);
+        ctx.save();
+        ctx.beginPath();
+        ctx.roundRect(x - 35, y + 3, 70, 70, 7);
+        ctx.clip();
+        ctx.drawImage(image, crop.x, crop.y, crop.size, crop.size, x - 35, y + 3, 70, 70);
+        ctx.restore();
       } else {
         label(player.number || position, x, y + 38, { size: 27, color: gold, align: "center", weight: 900 });
       }
@@ -164,7 +167,7 @@ async function makeTeamGraphic(team) {
   label("Fan-made  ·  Values in EUR", 1028, footerTop + 28,
     { size: 14, color: muted, align: "right" });
   if (credits.length) {
-    label("PHOTO CREDITS  ·  WIKIMEDIA COMMONS  ·  FULL SOURCE LINKS ON THE GAME PAGE", 52, footerTop + 63,
+    label("CROPPED PHOTOS  ·  WIKIMEDIA COMMONS  ·  FULL SOURCE LINKS ON THE GAME PAGE", 52, footerTop + 63,
       { size: 13, color: gold, weight: 800 });
     credits.forEach((credit, index) => label(credit, 52 + index % 3 * 329,
       footerTop + 87 + Math.floor(index / 3) * 22, { size: 13, color: muted, maxWidth: 318 }));
