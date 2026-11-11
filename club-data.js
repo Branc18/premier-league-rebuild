@@ -670,6 +670,41 @@ clubData.set("newcastle-united", {
   checkedOn: "11 November 2026"
 });
 
+// Transfermarkt 2026/27 squad snapshot. Amounts are whole euros.
+clubData.set("nottingham-forest", {
+  squad: [
+    ["nfo432914","John Victor","GK",12,3500000,"/john-victor/profil/spieler/432914"],
+    ["nfo127202","Matz Sels","GK",26,3500000,"/matz-sels/profil/spieler/127202"],
+    ["nfo381469","Steven Benda","GK",33,1000000,"/steven-benda/profil/spieler/381469"],
+    ["nfo1005649","Murillo","DEF",5,50000000,"/murillo/profil/spieler/1005649"],
+    ["nfo974982","Ousmane Diomande","DEF",2,42000000,"/ousmane-diomande/profil/spieler/974982"],
+    ["nfo413507","Nikola Milenković","DEF",31,28000000,"/nikola-milenkovic/profil/spieler/413507"],
+    ["nfo984096","Jair Cunha","DEF",23,25000000,"/jair-cunha/profil/spieler/984096"],
+    ["nfo503680","Neco Williams","DEF",3,32000000,"/neco-williams/profil/spieler/503680"],
+    ["nfo524285","Luca Netz","DEF",25,8000000,"/luca-netz/profil/spieler/524285"],
+    ["nfo493003","Daniel Muñoz","DEF",27,22000000,"/daniel-munoz/profil/spieler/493003"],
+    ["nfo236490","Ola Aina","DEF",34,18000000,"/ola-aina/profil/spieler/236490"],
+    ["nfo708072","Nicolò Savona","DEF",37,15000000,"/nicolo-savona/profil/spieler/708072"],
+    ["nfo375885","Ibrahim Sangaré","MID",6,20000000,"/ibrahim-sangare/profil/spieler/375885"],
+    ["nfo583199","James McAtee","MID",24,22000000,"/james-mcatee/profil/spieler/583199"],
+    ["nfo223979","Xaver Schlager","MID",21,15000000,"/xaver-schlager/profil/spieler/223979"],
+    ["nfo497291","Nicolás Domínguez","MID",8,13000000,"/nicolas-dominguez/profil/spieler/497291"],
+    ["nfo425902","Ryan Yates","MID",22,7000000,"/ryan-yates/profil/spieler/425902"],
+    ["nfo429014","Morgan Gibbs-White","MID",10,80000000,"/morgan-gibbs-white/profil/spieler/429014"],
+    ["nfo392768","Callum Hudson-Odoi","FWD",7,25000000,"/callum-hudson-odoi/profil/spieler/392768"],
+    ["nfo365108","Dan Ndoye","FWD",14,35000000,"/dan-ndoye/profil/spieler/365108"],
+    ["nfo610849","Liam Delap","FWD",19,40000000,"/liam-delap/profil/spieler/610849"],
+    ["nfo432164","Igor Jesus","FWD",11,25000000,"/igor-jesus/profil/spieler/432164"],
+    ["nfo585959","Arnaud Kalimuendo","FWD",15,20000000,"/arnaud-kalimuendo/profil/spieler/585959"],
+    ["nfo108725","Chris Wood","FWD",9,4000000,"/chris-wood/profil/spieler/108725"]
+  ].map(([id, name, pos, number, value, profile]) => ({
+    id, name, pos, number, value, profile, status: "undecided"
+  })),
+  stadium: "The City Ground · Nottingham",
+  squadSource: "https://www.transfermarkt.com/nottingham-forest/kader/verein/703/saison_id/2026",
+  checkedOn: "11 November 2026"
+});
+
 const featuredTargets = [
   ["t0","Gianluigi Donnarumma","GK","Manchester City",45000000,"2026-06-03","/gianluigi-donnarumma/profil/spieler/315858"],
   ["t1","James Trafford","GK","Leeds United",35000000,"2026-10-07","/james-trafford/profil/spieler/566799"],

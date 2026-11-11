@@ -426,7 +426,30 @@ const playerPhotos = new Map([
   ["new199527","4/44","Premier_League_Newcastle-Arsenal_2023-05-07_29_(cropped_Jacob_Murphy).jpg","SonoGrazy","CC BY-SA 4.0"],
   ["new724129","5/55","Matias_Fernandez-Pardo_Belgium_v_USA_6_July_2026-248.jpg","Bryan Berlin","CC BY-SA 4.0"],
   ["new609556","b/b2","William_Osula_24052026_(8).jpg","Timmy96","CC0"],
-  ["new388165","9/9b","CAN_2023RD_Congo_2-1_Guinée_9939_(cropped).jpg","feguifoot","CC0"]
+  ["new388165","9/9b","CAN_2023RD_Congo_2-1_Guinée_9939_(cropped).jpg","feguifoot","CC0"],
+  ["nfo432914","5/5b","John_Victor_22122025_(1).jpg","Timmy96","CC0"],
+  ["nfo127202","3/31","Matz_Sels_USMNT_v_Belgium_Mar_28_2026-12_(cropped).jpg","Bryan Berlin","CC BY-SA 4.0"],
+  ["nfo381469","2/2a","Steven_Benda_06042025_(3).jpg","Timmy96","CC0"],
+  ["nfo1005649","d/d7","Murillo_and_Tony_Loughlan_22122025_(1)_(Murillo_Santiago_Costa_dos_Santos).jpg","Timmy96","CC0"],
+  ["nfo974982","c/c9","Ousmane_Diomandé_Cote_D'Ivoire_v_Ecuador_14_June_2026-58.jpg","Bryan Berlin","CC BY-SA 4.0"],
+  ["nfo413507","4/47","Nikola_Milenković_2018.jpg","Екатерина Лаут","CC BY-SA 3.0"],
+  ["nfo984096","a/a5","Jair_Cunha_18-11-2024.png","BrazilianDude70","CC BY 4.0"],
+  ["nfo503680","6/62","2022_FIFA_World_Cup_United_States_1–1_Wales_-_(24)_(cropped).jpg","حسین ظهروند","CC BY 4.0"],
+  ["nfo524285","d/dc","2022128153147_2022-05-08_Fussball_Eintracht_Frankfurt_vs_Borussia_Mönchengladbach_-_Sven_-_1D_X_MK_II_-_0695_-_B70I6806_(cropped).jpg","Sven Mandel","CC BY-SA 4.0"],
+  ["nfo493003","a/ab","Daniel_Muñoz,_Colombia_NT_presidential_send-off,_Jun_2026.jpg","Fotografía oficial de la Presidencia de Colombia","Public domain"],
+  ["nfo236490","e/ec","Ola_Aina_2016.jpg","@cfcunofficial (Chelsea Debs) London","CC BY-SA 2.0"],
+  ["nfo708072","6/67","Nicolò_Savona.jpg","SonoGrazy","CC BY-SA 4.0"],
+  ["nfo375885","a/af","Ibrahim_Sangare_Piero_Hincapie_Cote_D'Ivoire_v_Ecuador_14_June_2026-245_(Ibrahim_Sangare).jpg","Bryan Berlin","CC BY-SA 4.0"],
+  ["nfo583199","d/d1","James_McAtee_in_2024.jpg","Hameltion","CC BY-SA 4.0"],
+  ["nfo223979","9/9a","20180610_FIFA_Friendly_Match_Austria_vs._Brazil_Xaver_Schlager_850_1680.jpg","Granada","CC BY-SA 4.0"],
+  ["nfo425902","d/de","Ryan_Yates.jpg","Nottingham Forest F.C.","CC0"],
+  ["nfo429014","6/61","Morgan_Gibbs-White_-_Nottingham_Forest_-_2025.jpg","Sebalston","CC0"],
+  ["nfo392768","b/b6","Callum_Hudson-Odoi_for_Nottingham_Forest_vs_AS_Monaco_by_Sebastian_Alston_(cropped).jpg","Sebalston","CC BY 4.0"],
+  ["nfo365108","9/9c","Lens_-_Nice_(23-01-2021)_52.jpg","Supporterhéninois","CC0"],
+  ["nfo610849","6/66","Liam_Delap_in_2025.jpg","The White House","Public domain"],
+  ["nfo432164","c/cb","Igor_Jesus_22122025_(1)_(Igor_Jesus).jpg","Timmy96","CC0"],
+  ["nfo585959","0/03","Kalimuendo_asse_srfc_2425.png","Paté kroute","CC0"],
+  ["nfo108725","6/67","Chris_Wood_(cropped).jpg","Sebalston","CC BY-SA 4.0"]
 ].map(([id, path, file, author, license]) => {
   const name = encodeURIComponent(file).replace(/[()']/g, char => "%" + char.charCodeAt(0).toString(16).toUpperCase());
   return [id, {
