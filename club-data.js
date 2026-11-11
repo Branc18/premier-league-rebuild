@@ -244,6 +244,45 @@ clubData.set("brighton", {
   checkedOn: "11 November 2026"
 });
 
+// Transfermarkt 2026/27 squad snapshot. Amounts are whole euros.
+clubData.set("chelsea", {
+  squad: [
+    ["che834397","Mike Penders","GK",39,25000000,"/mike-penders/profil/spieler/834397"],
+    ["che111873","Emiliano Martínez","GK",1,10000000,"/emiliano-martinez/profil/spieler/111873"],
+    ["che656316","Gabriel Slonina","GK",44,3000000,"/gabriel-slonina/profil/spieler/656316"],
+    ["che731466","Teddy Sharman-Lowe","GK",28,500000,"/teddy-sharman-lowe/profil/spieler/731466"],
+    ["che434224","Maxence Lacroix","DEF",5,60000000,"/maxence-lacroix/profil/spieler/434224"],
+    ["che614258","Levi Colwill","DEF",6,50000000,"/levi-colwill/profil/spieler/614258"],
+    ["che475411","Wesley Fofana","DEF",3,32000000,"/wesley-fofana/profil/spieler/475411"],
+    ["che1004708","Josh Acheampong","DEF",34,30000000,"/josh-acheampong/profil/spieler/1004708"],
+    ["che1145504","Aarón Anselmino","DEF",30,10000000,"/aaron-anselmino/profil/spieler/1145504"],
+    ["che904802","Jorrel Hato","DEF",21,45000000,"/jorrel-hato/profil/spieler/904802"],
+    ["che596122","Pep Chavarría","DEF",29,18000000,"/pep-chavarria/profil/spieler/596122"],
+    ["che472423","Reece James","DEF",24,60000000,"/reece-james/profil/spieler/472423"],
+    ["che895937","Marco Palestra","DEF",2,45000000,"/marco-palestra/profil/spieler/895937"],
+    ["che620322","Malo Gusto","DEF",27,35000000,"/malo-gusto/profil/spieler/620322"],
+    ["che687626","Moisés Caicedo","MID",25,100000000,"/moises-caicedo/profil/spieler/687626"],
+    ["che628451","Roméo Lavia","MID",45,25000000,"/romeo-lavia/profil/spieler/628451"],
+    ["che849410","Valentín Barco","MID",4,40000000,"/valentin-barco/profil/spieler/849410"],
+    ["che1353008","Mahdi Nicoll-Jazuli","MID",32,2000000,"/mahdi-nicoll-jazuli/profil/spieler/1353008"],
+    ["che61651","Jordan Henderson","MID",14,1200000,"/jordan-henderson/profil/spieler/61651"],
+    ["che568177","Cole Palmer","MID",10,110000000,"/cole-palmer/profil/spieler/568177"],
+    ["che503743","Morgan Rogers","FWD",17,120000000,"/morgan-rogers/profil/spieler/503743"],
+    ["che670882","Jamie Gittens","FWD",11,25000000,"/jamie-gittens/profil/spieler/670882"],
+    ["che1056993","Estêvão","FWD",41,80000000,"/estevao/profil/spieler/1056993"],
+    ["che487465","Pedro Neto","FWD",7,60000000,"/pedro-neto/profil/spieler/487465"],
+    ["che1138758","Geovany Quenda","FWD",23,42000000,"/geovany-quenda/profil/spieler/1138758"],
+    ["che626724","João Pedro","FWD",9,100000000,"/joao-pedro/profil/spieler/626724"],
+    ["che559328","Emmanuel Emegha","FWD",22,20000000,"/emmanuel-emegha/profil/spieler/559328"],
+    ["che67063","Danny Welbeck","FWD",18,3000000,"/danny-welbeck/profil/spieler/67063"]
+  ].map(([id, name, pos, number, value, profile]) => ({
+    id, name, pos, number, value, profile, status: "undecided"
+  })),
+  stadium: "Stamford Bridge · London",
+  squadSource: "https://www.transfermarkt.com/chelsea-fc/kader/verein/631/saison_id/2026",
+  checkedOn: "11 November 2026"
+});
+
 const featuredTargets = [
   ["t0","Gianluigi Donnarumma","GK","Manchester City",45000000,"2026-06-03","/gianluigi-donnarumma/profil/spieler/315858"],
   ["t1","James Trafford","GK","Leeds United",35000000,"2026-10-07","/james-trafford/profil/spieler/566799"],

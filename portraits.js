@@ -167,7 +167,28 @@ const playerPhotos = new Map([
   ["bha1060087","9/94","Charalampos_Kostoulas_24012026_(2).jpg","Timmy96","CC0"],
   ["bha538977","6/62","Georginio_Rutter_(cropped).jpeg","Egghead06","CC BY-SA 4.0"],
   ["bha888785","5/5a","Promise_David_Canada_v_Qatar_18_June_2026-018.jpg","Bryan Berlin","CC BY-SA 4.0"],
-  ["bha648046","8/8f","Evan_Ferguson_YantsImages_-_Asatur_Yesayants_626_(cropped).jpg","YantsImages","CC BY-SA 4.0"]
+  ["bha648046","8/8f","Evan_Ferguson_YantsImages_-_Asatur_Yesayants_626_(cropped).jpg","YantsImages","CC BY-SA 4.0"],
+  ["che834397","d/d5","Mike_Penders_Belgium_v_USA_6_July_2026-155.jpg","Bryan Berlin","CC BY-SA 4.0"],
+  ["che111873","d/d9","Emiliano_Martinez_Argentina_v_Spain_19_July_2026-269.jpg","Bryan Berlin","CC BY-SA 4.0"],
+  ["che731466","3/3a","Doncaster_Rovers_v_Harrogate_Town_(25th_January_2025)_013.jpg","Mtaylor848","CC BY-SA 4.0"],
+  ["che434224","e/eb","Maxence_Lacroix_France_v_Norway_26_June_26-031_(cropped).jpg","Bryan Berlin","CC BY-SA 4.0"],
+  ["che614258","d/d1","Levi_Colwill_FIFA_Club_World_Cup_final_extraction.jpg","The White House","Public domain"],
+  ["che475411","f/f6","Wesley_Fofana_2022.jpg","Ardfern","CC BY-SA 4.0"],
+  ["che1145504","e/ed","Aaron_Anselmino_Chelsea_AC_Milan_warm_up.jpg","Oscar0123","CC BY 4.0"],
+  ["che904802","4/49","Jorrel_Hato_Chelsea_AC_Milan_warm_up.jpg","Oscar0123","CC BY 4.0"],
+  ["che472423","3/3e","Reece_James_England_v_Ghana_23_June_2026-248_(cropped).jpg","Bryan Berlin","CC BY-SA 4.0"],
+  ["che620322","a/a2","Malo_Gusto_France_v_Senegal_16_June_2026-399.jpg","Bryan Berlin","CC BY-SA 4.0"],
+  ["che687626","0/0e","Moises_Caicedo_Ecuador_v_Germany_25_June_2026-051_(cropped).jpg","Bryan Berlin","CC BY-SA 4.0"],
+  ["che628451","f/fb","Roméo_Lavia_20042025_(1)_cropped.jpg","Timmy96","CC0"],
+  ["che849410","1/1c","Valentin_Barco_Argentina_v_Egypt_7_July_2026-028.jpg","Bryan Berlin","CC BY-SA 4.0"],
+  ["che61651","8/84","Jordan_Henderson_England_v_Ghana_23_June_2026-029_(cropped).jpg","Bryan Berlin","CC BY-SA 4.0"],
+  ["che568177","f/fb","Cole_Palmer_2025_FIFA_Club_World_Cup_Final.jpg","The White House","Public domain"],
+  ["che503743","2/28","Morgan_Rogers_England_v_Panama_27_June_26-144_(cropped).jpg","Bryan Berlin","CC BY-SA 4.0"],
+  ["che1056993","b/b3","Estevao-Palmeiras-Liverpool-abr24_(cropped).jpg","NullReason","CC BY-SA 4.0"],
+  ["che487465","6/68","Pedro_Neto_Croatia_v_Portugal_2_July_2026-113.jpg","Bryan Berlin","CC BY-SA 4.0"],
+  ["che626724","1/1d","João_Pedro,_2025_FIFA_Club_World_Cup_final_(54654843615).jpg","DHSgov","Public domain"],
+  ["che559328","3/35","FC_RB_Salzburg_gegen_SK_Sturm_Graz(2023-05-21)_35_(Emanuel_Emegha).jpg","Werner100359","CC BY-SA 4.0"],
+  ["che67063","4/46","Danny_Welbeck_2018-06-13_1.jpg","Кирилл Венедиктов","CC BY-SA 3.0"]
 ].map(([id, path, file, author, license]) => {
   const name = encodeURIComponent(file).replace(/[()']/g, char => "%" + char.charCodeAt(0).toString(16).toUpperCase());
   return [id, {
