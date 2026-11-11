@@ -19,7 +19,7 @@ function money(euros) {
 }
 
 function newGame() {
-  return { version: saveVersion, squad: initialSquad.map(p => ({ ...p })), buys: [], formation: "4-3-3", slots: {} };
+  return { version: saveVersion, squad: initialSquad.map(p => ({ ...p, status: "keep" })), buys: [], formation: "4-3-3", slots: {} };
 }
 
 function saleValue(p) {
@@ -39,7 +39,7 @@ function owned(game = state) {
 }
 
 function canSign(p, game = state) {
-  return hasValue(p) && !game.squad.some(p => p.status === "undecided") &&
+  return hasValue(p) &&
     budget(game) >= p.value && owned(game).length < maxSquad && !game.buys.some(x => x.id === p.id);
 }
 
@@ -116,7 +116,16 @@ function save() {
   }
 }
 function toast(t){const el=$("#toast");el.textContent=t;el.classList.add("show");setTimeout(()=>el.classList.remove("show"),2200)}
-function updateStats(){let decided=state.squad.filter(p=>p.status!=="undecided").length;$("#budgetStat").textContent=money(budget());$("#marketBudget").textContent=money(budget());$("#squadStat").innerHTML=owned().length+' <i>/ 25</i>';$("#decidedStat").innerHTML=decided+' <i>/ '+state.squad.length+'</i>';$("#spendStat").textContent=money(spend());$("#squadTabCount").textContent=state.squad.length;let unlocked=decided===state.squad.length;$("#marketTab").classList.toggle("locked",!unlocked);$("#marketTab b").textContent=unlocked?"OPEN":"LOCKED";$("#decisionNotice").innerHTML=unlocked?"<b>MARKET UNLOCKED:</b> Your squad decisions are complete. Build your new team with the budget you created.":"<b>YOUR JOB:</b> Decide the future of every player to unlock the transfer market. "+decided+" of "+state.squad.length+" decisions made.";save();}
+function updateStats() {
+  const available = money(budget());
+  $("#budgetStat").textContent = available;
+  $("#marketBudget").textContent = available;
+  $("#squadStat").innerHTML = owned().length + " <i>/ " + maxSquad + "</i>";
+  $("#soldStat").textContent = state.squad.filter(p => p.status === "sell").length;
+  $("#spendStat").textContent = money(spend());
+  $("#squadTabCount").textContent = state.squad.length;
+  save();
+}
 function portraitMarkup(player, fallback) {
   const photo = playerPhotos.get(player.id);
   const image = photo ? `<span class="portrait-frame">
@@ -148,9 +157,11 @@ function card(p,marketCard=false){
   } else if (p.loanFrom) {
     actions = "";
   } else {
-    actions = (status==="undecided"?'<button class="action keep" data-choice="keep" data-id="'+p.id+'">KEEP</button><button class="action sell" data-choice="sell" data-id="'+p.id+'">SELL</button>':status==="keep"?'<button class="action keep selected" data-choice="undecided" data-id="'+p.id+'">KEPT ✓</button><button class="action sell" data-choice="sell" data-id="'+p.id+'">SELL</button>':'<button class="action keep" data-choice="keep" data-id="'+p.id+'">KEEP</button><button class="action sell selected" data-choice="undecided" data-id="'+p.id+'">FOR SALE ✓</button>');
+    actions = status === "sell"
+      ? '<button class="action keep" data-choice="keep" data-id="'+p.id+'">KEEP</button><span class="action sell selected">FOR SALE ✓</span>'
+      : '<span class="action keep selected">KEPT ✓</span><button class="action sell" data-choice="sell" data-id="'+p.id+'">SELL</button>';
   }
-return '<article class="player-card '+(marketCard?'market-card':status==="keep"?'kept':status==="sell"?'sold':'')+'">'+portraitMarkup(p, '<span class="shirt">'+(p.number||"＋")+'</span>')+'<div class="player-info"><span class="position">'+p.pos+' · '+(marketCard?p.club:activeClub.name.toUpperCase())+'</span><strong>'+p.name+'</strong><small>'+(marketCard?(signed?"SIGNED":hasValue(p)?"AVAILABLE TO BUY":"SIGNING UNAVAILABLE"):p.loanFrom?"ON LOAN FROM "+p.loanFrom.toUpperCase():status==="keep"?"IN YOUR SQUAD":status==="sell"?(hasValue(p)?"SALE VALUE ADDED TO BUDGET":"NO PROCEEDS ADDED"):"UNDECIDED")+'</small></div><div class="player-value"><strong>'+(hasValue(p)?money(p.value):"Unavailable")+'</strong><small><a href="'+transfermarkt+p.profile+'" target="_blank" rel="noopener">Transfermarkt</a>'+(p.valueDate?'<time datetime="'+p.valueDate+'">'+dateFormat.format(new Date(p.valueDate))+'</time>':'')+'</small></div><div class="card-actions">'+actions+'</div></article>'}
+return '<article class="player-card '+(marketCard?'market-card':status==="keep"?'kept':status==="sell"?'sold':'')+'">'+portraitMarkup(p, '<span class="shirt">'+(p.number||"＋")+'</span>')+'<div class="player-info"><span class="position">'+p.pos+' · '+(marketCard?p.club:activeClub.name.toUpperCase())+'</span><strong>'+p.name+'</strong><small>'+(marketCard?(signed?"SIGNED":hasValue(p)?"AVAILABLE TO BUY":"SIGNING UNAVAILABLE"):p.loanFrom?"ON LOAN FROM "+p.loanFrom.toUpperCase():status==="sell"?(hasValue(p)?"SALE VALUE ADDED TO BUDGET":"NO PROCEEDS ADDED"):"IN YOUR SQUAD")+'</small></div><div class="player-value"><strong>'+(hasValue(p)?money(p.value):"Unavailable")+'</strong><small><a href="'+transfermarkt+p.profile+'" target="_blank" rel="noopener">Transfermarkt</a>'+(p.valueDate?'<time datetime="'+p.valueDate+'">'+dateFormat.format(new Date(p.valueDate))+'</time>':'')+'</small></div><div class="card-actions">'+actions+'</div></article>'}
 const squadPositions = [
   ["GK", "Goalkeepers"],
   ["DEF", "Defenders"],
@@ -203,47 +214,21 @@ function renderMarket() {
   $("#marketCount").textContent = players.length + " TRANSFER TARGETS";
   updateStats();
 }
-function setTab(tab){if(tab==="market"&&state.squad.some(p=>p.status==="undecided")){toast("Decide every squad player's future first.");return}document.querySelectorAll(".tab").forEach(b=>b.classList.toggle("active",b.dataset.tab===tab));document.querySelectorAll(".panel").forEach(p=>p.classList.toggle("active",p.id==="panel-"+tab));if(tab==="market"){ $("#marketTab").classList.remove("just-unlocked"); renderMarket(); }if(tab==="lineup")renderLineup();}
+function setTab(tab) {
+  if (tab === "market" && !$("#marketTab").classList.contains("active") &&
+      !state.squad.some(p => p.status === "sell") &&
+      !confirm("You have not sold any players. Do you wish to proceed to the transfer market with no budget?")) return;
+
+  document.querySelectorAll(".tab").forEach(b => b.classList.toggle("active", b.dataset.tab === tab));
+  document.querySelectorAll(".panel").forEach(p => p.classList.toggle("active", p.id === "panel-" + tab));
+  if (tab === "market") renderMarket();
+  if (tab === "lineup") renderLineup();
+}
 document.querySelectorAll(".tab").forEach(b=>b.addEventListener("click",()=>setTab(b.dataset.tab)));
 function removeFromLineup(playerId) {
   for (const slot of Object.keys(state.slots)) {
     if (state.slots[slot] === playerId) delete state.slots[slot];
   }
-}
-
-function revealOpenMarket(squadGrid, startY) {
-  const marketTab = $("#marketTab");
-  marketTab.classList.add("just-unlocked");
-  marketTab.focus({ preventScroll: true });
-
-  const scrollTo = top => window.scrollTo({ top, behavior: "instant" });
-  scrollTo(startY);
-  const from = window.scrollY;
-  const bounds = marketTab.getBoundingClientRect();
-  const target = Math.max(0, from + bounds.top + bounds.height / 2 - window.innerHeight / 2);
-  const finish = () => { squadGrid.style.minHeight = ""; };
-  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches || Math.abs(target - from) < 1) {
-    scrollTo(target);
-    finish();
-    return;
-  }
-
-  const duration = 900;
-  const start = performance.now();
-  let expectedY = from;
-  function animate(now) {
-    if (Math.abs(window.scrollY - expectedY) > 3 || !marketTab.classList.contains("just-unlocked")) {
-      finish();
-      return;
-    }
-    const progress = Math.min(1, Math.max(0, (now - start) / duration));
-    const eased = progress * progress * (3 - 2 * progress);
-    scrollTo(from + (target - from) * eased);
-    expectedY = window.scrollY;
-    if (progress < 1) requestAnimationFrame(animate);
-    else finish();
-  }
-  requestAnimationFrame(animate);
 }
 
 $("#squadGrid").addEventListener("click", e => {
@@ -262,20 +247,9 @@ $("#squadGrid").addEventListener("click", e => {
       return;
     }
   }
-  const completesSquad = player.status === "undecided" && status !== "undecided" &&
-    state.squad.every(p => p === player || p.status !== "undecided");
-  const squadGrid = $("#squadGrid");
-  const startY = window.scrollY;
-  if (completesSquad) {
-    // Preserve the page height while the last filtered card disappears.
-    squadGrid.style.minHeight = squadGrid.offsetHeight + "px";
-  }
-
   player.status = status;
   if (status === "sell") removeFromLineup(player.id);
   renderSquad();
-
-  if (completesSquad) revealOpenMarket(squadGrid, startY);
 });
 $("#marketGrid").addEventListener("click", e => {
   const undo = e.target.closest("[data-undo-signing]");
