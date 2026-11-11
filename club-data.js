@@ -324,6 +324,46 @@ clubData.set("coventry-city", {
   checkedOn: "11 November 2026"
 });
 
+// Transfermarkt 2026/27 squad snapshot. Amounts are whole euros.
+clubData.set("crystal-palace", {
+  squad: [
+    ["cry258919","Dean Henderson","GK",1,28000000,"/dean-henderson/profil/spieler/258919"],
+    ["cry296802","Walter Benítez","GK",44,4000000,"/walter-benitez/profil/spieler/296802"],
+    ["cry196722","Remi Matthews","GK",31,200000,"/remi-matthews/profil/spieler/196722"],
+    ["cry1077175","Honest Ahanor","DEF",21,40000000,"/honest-ahanor/profil/spieler/1077175","Atalanta BC"],
+    ["cry1006411","Jaydee Canvot","DEF",6,35000000,"/jaydee-canvot/profil/spieler/1006411"],
+    ["cry578539","Chris Richards","DEF",26,28000000,"/chris-richards/profil/spieler/578539"],
+    ["cry689637","Chadi Riad","DEF",4,15000000,"/chadi-riad/profil/spieler/689637"],
+    ["cry386047","Axel Disasi","DEF",5,15000000,"/axel-disasi/profil/spieler/386047","Chelsea"],
+    ["cry331560","Takehiro Tomiyasu","DEF",17,5000000,"/takehiro-tomiyasu/profil/spieler/331560"],
+    ["cry730893","Tyrick Mitchell","DEF",3,25000000,"/tyrick-mitchell/profil/spieler/730893"],
+    ["cry316125","Ben Chilwell","DEF",33,10000000,"/ben-chilwell/profil/spieler/316125"],
+    ["cry945021","Anan Khalaili","DEF",25,23000000,"/anan-khalaili/profil/spieler/945021"],
+    ["cry331505","Óscar Mingueza","DEF",30,15000000,"/oscar-mingueza/profil/spieler/331505"],
+    ["cry744149","Adam Wharton","MID",20,75000000,"/adam-wharton/profil/spieler/744149"],
+    ["cry543387","Cheick Doucouré","MID",28,7000000,"/cheick-doucoure/profil/spieler/543387"],
+    ["cry262980","Jefferson Lerma","MID",8,6000000,"/jefferson-lerma/profil/spieler/262980"],
+    ["cry420213","Quinten Timber","MID",23,25000000,"/quinten-timber/profil/spieler/420213"],
+    ["cry356141","Daichi Kamada","MID",18,10000000,"/daichi-kamada/profil/spieler/356141"],
+    ["cry207014","Will Hughes","MID",19,5000000,"/will-hughes/profil/spieler/207014"],
+    ["cry568157","Yéremy Pino","FWD",10,30000000,"/yeremy-pino/profil/spieler/568157"],
+    ["cry584769","Dwight McNeil","FWD",11,22000000,"/dwight-mcneil/profil/spieler/584769"],
+    ["cry410225","Ismaïla Sarr","FWD",7,45000000,"/ismaila-sarr/profil/spieler/410225"],
+    ["cry881116","Darío Osorio","FWD",24,20000000,"/dario-osorio/profil/spieler/881116","FC Midtjylland"],
+    ["cry500689","Evann Guessand","FWD",29,20000000,"/evann-guessand/profil/spieler/500689","Aston Villa"],
+    ["cry1007383","Zavier Gozo","FWD",12,12000000,"/zavier-gozo/profil/spieler/1007383"],
+    ["cry429983","Jørgen Strand Larsen","FWD",22,40000000,"/jorgen-strand-larsen/profil/spieler/429983"],
+    ["cry420002","Jean-Philippe Mateta","FWD",14,30000000,"/jean-philippe-mateta/profil/spieler/420002"],
+    ["cry340324","Eddie Nketiah","FWD",9,13000000,"/eddie-nketiah/profil/spieler/340324"]
+  ].map(([id, name, pos, number, value, profile, loanFrom]) => ({
+    id, name, pos, number, value, profile, loanFrom,
+    status: loanFrom ? "keep" : "undecided"
+  })),
+  stadium: "Selhurst Park · London",
+  squadSource: "https://www.transfermarkt.com/crystal-palace/kader/verein/873/saison_id/2026",
+  checkedOn: "11 November 2026"
+});
+
 const featuredTargets = [
   ["t0","Gianluigi Donnarumma","GK","Manchester City",45000000,"2026-06-03","/gianluigi-donnarumma/profil/spieler/315858"],
   ["t1","James Trafford","GK","Leeds United",35000000,"2026-10-07","/james-trafford/profil/spieler/566799"],
