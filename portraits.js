@@ -188,7 +188,29 @@ const playerPhotos = new Map([
   ["che487465","6/68","Pedro_Neto_Croatia_v_Portugal_2_July_2026-113.jpg","Bryan Berlin","CC BY-SA 4.0"],
   ["che626724","1/1d","João_Pedro,_2025_FIFA_Club_World_Cup_final_(54654843615).jpg","DHSgov","Public domain"],
   ["che559328","3/35","FC_RB_Salzburg_gegen_SK_Sturm_Graz(2023-05-21)_35_(Emanuel_Emegha).jpg","Werner100359","CC BY-SA 4.0"],
-  ["che67063","4/46","Danny_Welbeck_2018-06-13_1.jpg","Кирилл Венедиктов","CC BY-SA 3.0"]
+  ["che67063","4/46","Danny_Welbeck_2018-06-13_1.jpg","Кирилл Венедиктов","CC BY-SA 3.0"],
+  ["cov121352","5/58","Ben_Wilson_2018.jpg","Bradford City AFC","CC BY 3.0"],
+  ["cov788283","d/dd","Bobby_Thomas.png","MilesaMFC","CC0"],
+  ["cov442248","5/54","Ethan_Pinnock,_Brentford_F.C._footballer,_November_2025.jpg","Timmy96","CC0"],
+  ["cov1049020","8/81","ManCity20240722-044.jpg","Hameltion","CC BY-SA 4.0"],
+  ["cov412823","e/e8","Joel_Lautibaudiere.png","MilesaMFC","CC0"],
+  ["cov527425","7/76","Luke_Woolfenden.jpg","Xaneph","CC BY-SA 4.0"],
+  ["cov258915","1/1e","Jay_Dasilva_2015.jpg","@cfcunofficial (Chelsea Debs) London","CC BY-SA 2.0"],
+  ["cov121250","b/b6","Jake+Bidwell+QPR+2016_(cropped).jpg","Jrppezza","CC BY-SA 4.0"],
+  ["cov265471","c/ce","Matt_Grimes_2022.png","The2Coming","CC BY-SA 4.0"],
+  ["cov1240763","8/82","Caleb_Yirenkyi_England_v_Ghana_23_June_2026-012.jpg","Bryan Berlin","CC BY-SA 4.0"],
+  ["cov403692","4/41","Victor_Torp.png","MilesaMFC","CC0"],
+  ["cov322985","5/54","Guga_Wiki_2.45.jpg","KlaasHamer","CC BY-SA 4.0"],
+  ["cov421637","f/f2","Frank_Onyeka_2025.jpg","Timmy96","CC0"],
+  ["cov662476","0/06","Jack_Rudoni.png","MilesaMFC","CC0"],
+  ["cov463613","6/69","TFC_players_on_Fan_days_-_Gboho_(cropped)_-_1.jpg","Gaillac","CC0"],
+  ["cov607226","9/92","Loum_Tchaouna_29112025_(3).jpg","Timmy96","CC0"],
+  ["cov617408","3/3d","Tatshurio_Sakamoto.png","MilesaMFC","CC0"],
+  ["cov986288","f/f4","Sidiki_Chérif_26_Fenerbahçe_20260805_(4).JPG","Zafer","CC BY-SA 4.0"],
+  ["cov315291","d/d6","Haji_Wright_Australia_v_USA_19_June_2026-76.jpg","Bryan Berlin","CC BY-SA 4.0"],
+  ["cov451747","d/d9","Brandon_Thomas-Asante_England_v_Ghana_23_June_2026-109.jpg","Bryan Berlin","CC BY-SA 4.0"],
+  ["cov511550","4/47","Ellis_Reco_Simms_2016.jpg","Werner100359","CC BY-SA 4.0"],
+  ["cov295313","0/0b","2022-04-20_Fußball,_Männer,_DFB-Pokal,_RB_Leipzig_-_1._FC_Union_Berlin_1DX_8274_by_Stepro.jpg","Steffen Prößdorf","CC BY-SA 4.0"]
 ].map(([id, path, file, author, license]) => {
   const name = encodeURIComponent(file).replace(/[()']/g, char => "%" + char.charCodeAt(0).toString(16).toUpperCase());
   return [id, {

@@ -283,6 +283,47 @@ clubData.set("chelsea", {
   checkedOn: "11 November 2026"
 });
 
+// Transfermarkt 2026/27 squad snapshot. Amounts are whole euros.
+clubData.set("coventry-city", {
+  squad: [
+    ["cov646353","Carl Rushworth","GK",19,22000000,"/carl-rushworth/profil/spieler/646353"],
+    ["cov136401","Dan Bentley","GK",25,800000,"/dan-bentley/profil/spieler/136401"],
+    ["cov121352","Ben Wilson","GK",13,300000,"/ben-wilson/profil/spieler/121352"],
+    ["cov788283","Bobby Thomas","DEF",4,20000000,"/bobby-thomas/profil/spieler/788283"],
+    ["cov635645","Aurèle Amenda","DEF",24,15000000,"/aurele-amenda/profil/spieler/635645"],
+    ["cov442248","Ethan Pinnock","DEF",2,3000000,"/ethan-pinnock/profil/spieler/442248"],
+    ["cov1049020","Stephen Mfuni","DEF",12,3000000,"/stephen-mfuni/profil/spieler/1049020","Manchester City U21"],
+    ["cov412823","Joel Latibeaudiere","DEF",22,3000000,"/joel-latibeaudiere/profil/spieler/412823"],
+    ["cov527425","Luke Woolfenden","DEF",26,1500000,"/luke-woolfenden/profil/spieler/527425"],
+    ["cov258915","Jay Dasilva","DEF",3,12000000,"/jay-dasilva/profil/spieler/258915"],
+    ["cov121250","Jake Bidwell","DEF",21,600000,"/jake-bidwell/profil/spieler/121250"],
+    ["cov587335","Milan van Ewijk","DEF",27,22000000,"/milan-van-ewijk/profil/spieler/587335"],
+    ["cov626888","Kaine Kesler-Hayden","DEF",20,3000000,"/kaine-kesler-hayden/profil/spieler/626888"],
+    ["cov265471","Matt Grimes","MID",6,5000000,"/matt-grimes/profil/spieler/265471"],
+    ["cov1240763","Caleb Yirenkyi","MID",8,22000000,"/caleb-yirenkyi/profil/spieler/1240763"],
+    ["cov403692","Victor Torp","MID",29,14000000,"/victor-torp/profil/spieler/403692"],
+    ["cov322985","Gustavo Hamer","MID",38,11000000,"/gustavo-hamer/profil/spieler/322985"],
+    ["cov618903","Josh Eccles","MID",28,9000000,"/josh-eccles/profil/spieler/618903"],
+    ["cov421637","Frank Onyeka","MID",16,8000000,"/frank-onyeka/profil/spieler/421637"],
+    ["cov662476","Jack Rudoni","MID",5,20000000,"/jack-rudoni/profil/spieler/662476"],
+    ["cov466637","Ephron Mason-Clark","FWD",10,16000000,"/ephron-mason-clark/profil/spieler/466637"],
+    ["cov463613","Yann Gboho","FWD",34,15000000,"/yann-gboho/profil/spieler/463613"],
+    ["cov607226","Loum Tchaouna","FWD",17,18000000,"/loum-tchaouna/profil/spieler/607226"],
+    ["cov617408","Tatsuhiro Sakamoto","FWD",7,4500000,"/tatsuhiro-sakamoto/profil/spieler/617408"],
+    ["cov986288","Sidiki Chérif","FWD",49,22000000,"/sidiki-cherif/profil/spieler/986288"],
+    ["cov315291","Haji Wright","FWD",11,16000000,"/haji-wright/profil/spieler/315291"],
+    ["cov451747","Brandon Thomas-Asante","FWD",23,16000000,"/brandon-thomas-asante/profil/spieler/451747"],
+    ["cov511550","Ellis Simms","FWD",9,12000000,"/ellis-simms/profil/spieler/511550"],
+    ["cov295313","Taiwo Awoniyi","FWD",14,8000000,"/taiwo-awoniyi/profil/spieler/295313"]
+  ].map(([id, name, pos, number, value, profile, loanFrom]) => ({
+    id, name, pos, number, value, profile, loanFrom,
+    status: loanFrom ? "keep" : "undecided"
+  })),
+  stadium: "Coventry Building Society Arena · Coventry",
+  squadSource: "https://www.transfermarkt.com/coventry-city/kader/verein/990/saison_id/2026",
+  checkedOn: "11 November 2026"
+});
+
 const featuredTargets = [
   ["t0","Gianluigi Donnarumma","GK","Manchester City",45000000,"2026-06-03","/gianluigi-donnarumma/profil/spieler/315858"],
   ["t1","James Trafford","GK","Leeds United",35000000,"2026-10-07","/james-trafford/profil/spieler/566799"],
