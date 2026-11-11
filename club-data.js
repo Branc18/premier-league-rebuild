@@ -746,6 +746,46 @@ clubData.set("sunderland", {
   checkedOn: "11 November 2026"
 });
 
+// Transfermarkt 2026/27 squad snapshot. Amounts are whole euros.
+clubData.set("tottenham-hotspur", {
+  squad: [
+    ["tot725912","Antonín Kinský","GK",31,18000000,"/antonin-kinsky/profil/spieler/725912"],
+    ["tot74960","Martin Dúbravka","GK",39,500000,"/martin-dubravka/profil/spieler/74960"],
+    ["tot428016","Brandon Austin","GK",40,500000,"/brandon-austin/profil/spieler/428016"],
+    ["tot576314","Jan Paul van Hecke","DEF",6,60000000,"/jan-paul-van-hecke/profil/spieler/576314"],
+    ["tot557459","Micky van de Ven","DEF",37,50000000,"/micky-van-de-ven/profil/spieler/557459"],
+    ["tot469781","Marcos Senesi","DEF",5,20000000,"/marcos-senesi/profil/spieler/469781"],
+    ["tot258878","Tosin Adarabioyo","DEF",4,13000000,"/tosin-adarabioyo/profil/spieler/258878"],
+    ["tot192765","Ben Davies","DEF",33,3000000,"/ben-davies/profil/spieler/192765"],
+    ["tot556385","Destiny Udogie","DEF",13,25000000,"/destiny-udogie/profil/spieler/556385"],
+    ["tot234803","Andrew Robertson","DEF",3,7000000,"/andrew-robertson/profil/spieler/234803"],
+    ["tot553875","Pedro Porro","DEF",23,45000000,"/pedro-porro/profil/spieler/553875"],
+    ["tot922693","Archie Gray","DEF",14,35000000,"/archie-gray/profil/spieler/922693"],
+    ["tot397033","Sandro Tonali","MID",16,90000000,"/sandro-tonali/profil/spieler/397033"],
+    ["tot354362","Rodrigo Bentancur","MID",30,17000000,"/rodrigo-bentancur/profil/spieler/354362"],
+    ["tot880245","Mateus Fernandes","MID",18,70000000,"/mateus-fernandes/profil/spieler/880245"],
+    ["tot866246","Lucas Bergvall","MID",15,40000000,"/lucas-bergvall/profil/spieler/866246"],
+    ["tot488362","Conor Gallagher","MID",8,32000000,"/conor-gallagher/profil/spieler/488362"],
+    ["tot566931","Xavi Simons","MID",7,40000000,"/xavi-simons/profil/spieler/566931"],
+    ["tot294057","James Maddison","MID",10,17000000,"/james-maddison/profil/spieler/294057"],
+    ["tot431755","Dejan Kulusevski","MID",21,13000000,"/dejan-kulusevski/profil/spieler/431755"],
+    ["tot743591","Sávio","FWD",17,50000000,"/savio/profil/spieler/743591"],
+    ["tot801734","Mathys Tel","FWD",11,22000000,"/mathys-tel/profil/spieler/801734"],
+    ["tot743498","Wilson Odobert","FWD",28,18000000,"/wilson-odobert/profil/spieler/743498"],
+    ["tot537860","Mykhaylo Mudryk","FWD",27,15000000,"/mykhaylo-mudryk/profil/spieler/537860","Chelsea"],
+    ["tot543499","Mohammed Kudus","FWD",20,45000000,"/mohammed-kudus/profil/spieler/543499"],
+    ["tot445939","Omar Marmoush","FWD",22,50000000,"/omar-marmoush/profil/spieler/445939","Manchester City"],
+    ["tot258889","Dominic Solanke","FWD",19,25000000,"/dominic-solanke/profil/spieler/258889"],
+    ["tot378710","Richarlison","FWD",9,15000000,"/richarlison/profil/spieler/378710"]
+  ].map(([id, name, pos, number, value, profile, loanFrom]) => ({
+    id, name, pos, number, value, profile, loanFrom,
+    status: loanFrom ? "keep" : "undecided"
+  })),
+  stadium: "Tottenham Hotspur Stadium · London",
+  squadSource: "https://www.transfermarkt.com/tottenham-hotspur/kader/verein/148/saison_id/2026",
+  checkedOn: "12 November 2026"
+});
+
 const featuredTargets = [
   ["t0","Gianluigi Donnarumma","GK","Manchester City",45000000,"2026-06-03","/gianluigi-donnarumma/profil/spieler/315858"],
   ["t1","James Trafford","GK","Leeds United",35000000,"2026-10-07","/james-trafford/profil/spieler/566799"],
