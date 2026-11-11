@@ -180,6 +180,10 @@ const playerPhotos = new Map([
 
 // Center and zoom for source photos that show more than a typical headshot.
 const portraitFraming = {
+  bha504849: [.50, .22, 1.75], // Kaoru Mitoma
+  bha996897: [.49, .21, 2.10], // Diego Gómez
+  bha1012534: [.45, .24, 1.65], // Yankuba Minteh
+  bha148153: [.49, .22, 1.55], // Lewis Dunk
   bre540941: [.50, .21, 1.14], // Mikkel Damsgaard
   bre808348: [.50, .43, 1.14], // Mamadou Sangaré
   bre823231: [.62, .40, 1.40], // Dango Ouattara
