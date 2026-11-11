@@ -364,6 +364,40 @@ clubData.set("crystal-palace", {
   checkedOn: "11 November 2026"
 });
 
+// Transfermarkt 2026/27 squad snapshot. Amounts are whole euros.
+clubData.set("everton", {
+  squad: [
+    ["eve130164","Jordan Pickford","GK",1,13000000,"/jordan-pickford/profil/spieler/130164"],
+    ["eve357658","Mark Travers","GK",12,3000000,"/mark-travers/profil/spieler/357658"],
+    ["eve215810","Tom King","GK",31,100000,"/tom-king/profil/spieler/215810"],
+    ["eve661053","Jarrad Branthwaite","DEF",4,45000000,"/jarrad-branthwaite/profil/spieler/661053"],
+    ["eve173504","James Tarkowski","DEF",6,5000000,"/james-tarkowski/profil/spieler/173504"],
+    ["eve118534","Michael Keane","DEF",5,3000000,"/michael-keane/profil/spieler/118534"],
+    ["eve404842","Vitaliy Mykolenko","DEF",16,25000000,"/vitaliy-mykolenko/profil/spieler/404842"],
+    ["eve711544","Jake O'Brien","DEF",15,18000000,"/jake-obrien/profil/spieler/711544"],
+    ["eve285845","Ainsley Maitland-Niles","DEF",2,10000000,"/ainsley-maitland-niles/profil/spieler/285845"],
+    ["eve505219","James Garner","MID",37,50000000,"/james-garner/profil/spieler/505219"],
+    ["eve538216","Hayden Hackney","MID",30,32000000,"/hayden-hackney/profil/spieler/538216"],
+    ["eve148367","Christian Nørgaard","MID",23,5000000,"/christian-norgaard/profil/spieler/148367"],
+    ["eve1107733","Harrison Armstrong","MID",45,30000000,"/harrison-armstrong/profil/spieler/1107733"],
+    ["eve608832","Merlin Röhl","MID",34,20000000,"/merlin-rohl/profil/spieler/608832"],
+    ["eve748319","Charly Alcaraz","MID",24,15000000,"/charly-alcaraz/profil/spieler/748319"],
+    ["eve475188","Kiernan Dewsbury-Hall","MID",8,40000000,"/kiernan-dewsbury-hall/profil/spieler/475188"],
+    ["eve936874","Tyrique George","FWD",19,25000000,"/tyrique-george/profil/spieler/936874"],
+    ["eve203460","Jack Grealish","FWD",10,20000000,"/jack-grealish/profil/spieler/203460","Manchester City"],
+    ["eve470607","Brennan Johnson","FWD",22,25000000,"/brennan-johnson/profil/spieler/470607"],
+    ["eve866655","Tyler Dibling","FWD",20,17000000,"/tyler-dibling/profil/spieler/866655"],
+    ["eve937941","Thierno Barry","FWD",11,35000000,"/thierno-barry/profil/spieler/937941"],
+    ["eve1122712","Braiden Graham","FWD",58,700000,"/braiden-graham/profil/spieler/1122712"]
+  ].map(([id, name, pos, number, value, profile, loanFrom]) => ({
+    id, name, pos, number, value, profile, loanFrom,
+    status: loanFrom ? "keep" : "undecided"
+  })),
+  stadium: "Hill Dickinson Stadium · Liverpool",
+  squadSource: "https://www.transfermarkt.com/everton-fc/kader/verein/29/saison_id/2026",
+  checkedOn: "11 November 2026"
+});
+
 const featuredTargets = [
   ["t0","Gianluigi Donnarumma","GK","Manchester City",45000000,"2026-06-03","/gianluigi-donnarumma/profil/spieler/315858"],
   ["t1","James Trafford","GK","Leeds United",35000000,"2026-10-07","/james-trafford/profil/spieler/566799"],

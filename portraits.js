@@ -236,7 +236,22 @@ const playerPhotos = new Map([
   ["cry500689","4/4f","Evann_Guessand_Cote_D'Ivoire_v_Ecuador_14_June_2026-28_(cropped).jpg","Bryan Berlin","CC BY-SA 4.0"],
   ["cry429983","c/cc","Jorgen_Strand_Larsen_France_v_Norway_26_June_26-152.jpg","Bryan Berlin","CC BY-SA 4.0"],
   ["cry420002","b/b5","Jean-Philippe_Mateta_France_v_Senegal_16_June_2026-408_(cropped).jpg","Bryan Berlin","CC BY-SA 4.0"],
-  ["cry340324","1/1b","1_Eddie_Nketiah_2018.jpg","Chensiyuan","CC BY-SA 4.0"]
+  ["cry340324","1/1b","1_Eddie_Nketiah_2018.jpg","Chensiyuan","CC BY-SA 4.0"],
+  ["eve130164","4/4f","Jordan_Pickford_England_v_Ghana_23_June_2026-316_(cropped).jpg","Bryan Berlin","CC BY-SA 4.0"],
+  ["eve357658","f/fa","Mark_Travers_2019.jpg","AFC Bournemouth","CC BY 3.0"],
+  ["eve661053","8/86","Celebration!_(54493257432)_(Jarrad_Branthwaite).jpg","Pete from Liverpool, UK","CC BY 2.0"],
+  ["eve173504","1/1c","James_Tarkowski_(Oct_2017).jpg","Jon Harris/Press Association","CC BY-SA 4.0"],
+  ["eve118534","d/d4","Michael_Keane_2017.jpg","@cfcunofficial (Chelsea Debs) London","CC BY-SA 2.0"],
+  ["eve404842","c/ca","Виталий_Миколенко_—_1182449_(cropped).jpg","Dynamomania.com","CC BY-SA 4.0"],
+  ["eve711544","e/e1","Jake_O'Brien_in_2024.png","Irish Football Fan TV","CC BY 3.0"],
+  ["eve285845","3/35","1_Ainsley_Maitland-Niles_2018_(cropped).jpg","Chensiyuan","CC BY-SA 4.0"],
+  ["eve538216","e/eb","Hayden_Hackney_16082025_(3).jpg","Timmy96","CC0"],
+  ["eve148367","4/4f","Christian_Nørgaard,_Brentford_F.C._footballer,_May_2022.jpg","Ardfern","CC BY-SA 4.0"],
+  ["eve748319","f/f9","Charly_Alcaraz_(cropped).jpg","Furnarius","CC BY-SA 4.0"],
+  ["eve475188","7/77","Kiernan_Dewsbury-Hall_FIFA_Club_World_Cup_final_extraction.jpg","The White House","Public domain"],
+  ["eve936874","7/7d","Tyrique_George_chelsea_gent_2024_warm_up.jpg","Oscar0123","CC BY-SA 4.0"],
+  ["eve203460","a/a4","ManCity20240722-017_(cropped).jpg","Hameltion","CC BY-SA 4.0"],
+  ["eve470607","d/dc","Brennan_Johnson_(cropped).jpg","OhNoNotYouAgain","CC BY-SA 4.0"]
 ].map(([id, path, file, author, license]) => {
   const name = encodeURIComponent(file).replace(/[()']/g, char => "%" + char.charCodeAt(0).toString(16).toUpperCase());
   return [id, {
