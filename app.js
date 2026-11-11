@@ -184,6 +184,8 @@ const squadPositions = [
   ["FWD", "Forwards"]
 ];
 
+const collapsedPositions = { squad: new Set(), market: new Set() };
+
 function positionSections(players, idPrefix, renderCard) {
   return squadPositions.map(([position, label]) => {
     const group = players.filter(p => p.pos === position).sort((a, b) =>
@@ -191,15 +193,36 @@ function positionSections(players, idPrefix, renderCard) {
     );
     if (!group.length) return "";
 
+    const groupId = `${idPrefix}-${position}`;
+    const expanded = !collapsedPositions[idPrefix].has(position);
     return `
-      <section class="squad-group" aria-labelledby="${idPrefix}-${position}">
+      <section class="squad-group" aria-labelledby="${groupId}">
         <header class="squad-group-heading">
-          <h3 id="${idPrefix}-${position}"><span>${position}</span> ${label}</h3>
-          <span class="squad-group-count">${group.length} ${group.length === 1 ? "player" : "players"}</span>
+          <h3 id="${groupId}">
+            <button type="button" class="position-toggle" data-position-toggle="${position}"
+              aria-expanded="${expanded}" aria-controls="${groupId}-players">
+              <span class="position-code">${position}</span> ${label}
+              <span class="squad-group-count">${group.length} ${group.length === 1 ? "player" : "players"}</span>
+              <span class="position-chevron" aria-hidden="true"></span>
+            </button>
+          </h3>
         </header>
-        <div class="player-grid">${group.map(player => renderCard(player)).join("")}</div>
+        <div class="player-grid" id="${groupId}-players"${expanded ? "" : " hidden"}>${group.map(player => renderCard(player)).join("")}</div>
       </section>`;
   }).join("");
+}
+
+for (const [tab, collapsed] of Object.entries(collapsedPositions)) {
+  $(`#${tab}Grid`).addEventListener("click", event => {
+    const button = event.target.closest("[data-position-toggle]");
+    if (!button) return;
+
+    const position = button.dataset.positionToggle;
+    const isExpanded = collapsed.delete(position);
+    if (!isExpanded) collapsed.add(position);
+    button.setAttribute("aria-expanded", isExpanded);
+    document.getElementById(button.getAttribute("aria-controls")).hidden = !isExpanded;
+  });
 }
 
 function renderSquad() {
@@ -230,8 +253,12 @@ function renderMarket() {
   updateStats();
 }
 function setTab(tab) {
+  const opening = !$(`#panel-${tab}`).classList.contains("active");
+  if (opening) collapsedPositions[tab]?.clear();
+
   document.querySelectorAll(".tab").forEach(b => b.classList.toggle("active", b.dataset.tab === tab));
   document.querySelectorAll(".panel").forEach(p => p.classList.toggle("active", p.id === "panel-" + tab));
+  if (tab === "squad" && opening) renderSquad();
   if (tab === "market") renderMarket();
   if (tab === "lineup") renderLineup();
 }

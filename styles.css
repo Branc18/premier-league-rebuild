@@ -9,11 +9,6 @@
 }
 
 .squad-group-heading {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  padding: 9px 12px;
   margin-bottom: 10px;
   background: linear-gradient(110deg, #29202a, var(--panel));
   border: 1px solid var(--line);
@@ -21,16 +16,44 @@
 }
 
 .squad-group-heading h3 {
-  display: flex;
-  align-items: center;
-  gap: 10px;
   margin: 0;
   font: 800 24px/1 'Barlow Condensed', sans-serif;
   letter-spacing: .5px;
   text-transform: uppercase;
 }
 
-.squad-group-heading h3 span {
+.position-toggle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 9px 12px;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  letter-spacing: inherit;
+  text-align: left;
+  text-transform: inherit;
+  cursor: pointer;
+}
+
+.position-toggle:hover { background: #ffffff0a; }
+.position-toggle:focus-visible { outline: 2px solid currentColor; outline-offset: -3px; }
+
+.position-chevron {
+  flex: none;
+  width: 8px;
+  height: 8px;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(45deg);
+}
+
+.position-toggle[aria-expanded="false"] .position-chevron { transform: rotate(-45deg); }
+.squad-group .player-grid[hidden] { display: none; }
+
+.position-code {
   min-width: 40px;
   padding: 4px 6px;
   background: #44212a;
@@ -40,6 +63,7 @@
 }
 
 .squad-group-count {
+  margin-left: auto;
   color: var(--muted);
   font-size: 10px;
   font-weight: 800;
