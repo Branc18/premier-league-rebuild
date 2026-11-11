@@ -514,7 +514,6 @@ const graphicDialog = $("#graphicDialog");
 const graphicPreview = $("#graphicPreview");
 const graphicDownload = $("#graphicDownload");
 const graphicCopy = $("#graphicCopy");
-const graphicCredits = $("#graphicCredits");
 const graphicStatus = $("#graphicStatus");
 let graphicRequest = 0;
 let graphicUrl;
@@ -530,7 +529,7 @@ $("#shareBtn").addEventListener("click", async () => {
   graphicDialog.showModal();
 
   try {
-    const { blob, creditsUrl } = await makeTeamGraphic({
+    const blob = await makeTeamGraphic({
       rows: team.rows,
       crestUrl: $(".club-badge").src,
       clubName: activeClub.name,
@@ -548,10 +547,6 @@ $("#shareBtn").addEventListener("click", async () => {
     if (request !== graphicRequest || !graphicDialog.open) return;
     graphicUrl = URL.createObjectURL(blob);
     graphicBlob = blob;
-    if (creditsUrl) {
-      graphicCredits.href = creditsUrl;
-      graphicCredits.hidden = false;
-    }
     graphicPreview.src = graphicUrl;
     graphicPreview.hidden = false;
     graphicDownload.href = graphicUrl;
@@ -585,8 +580,6 @@ graphicDialog.addEventListener("close", () => {
   graphicUrl = undefined;
   graphicBlob = undefined;
   graphicCopy.hidden = true;
-  graphicCredits.removeAttribute("href");
-  graphicCredits.hidden = true;
   graphicPreview.removeAttribute("src");
   graphicPreview.hidden = true;
   graphicDownload.removeAttribute("href");

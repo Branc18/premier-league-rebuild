@@ -189,6 +189,6 @@ async function makeTeamGraphic(team) {
   }
 
   return new Promise((resolve, reject) => {
-    canvas.toBlob(blob => blob ? resolve({ blob, creditsUrl }) : reject(new Error("PNG export failed")), "image/png");
+    canvas.toBlob(blob => blob ? resolve(blob) : reject(new Error("PNG export failed")), "image/png");
   });
 }
