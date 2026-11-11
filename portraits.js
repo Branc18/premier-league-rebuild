@@ -143,7 +143,31 @@ const playerPhotos = new Map([
   ["bre1086375","0/0a","Gustavo_Nunes_18102026_(4).jpg","Timmy96","CC0"],
   ["bre823231","b/b2","Dango_Ouattara_29112025_(1).jpg","Timmy96","CC0"],
   ["bre739443","f/fb","Igor_Thiago_Brazil_V_Morocco_13_June_2026-120_(cropped).jpg","Bryan Berlin","CC BY-SA 4.0"],
-  ["bre123682","4/47","Callum_Wilson_2023.png","TNT Sports","CC BY 3.0"]
+  ["bre123682","4/47","Callum_Wilson_2023.png","TNT Sports","CC BY 3.0"],
+  ["bha565093","c/cd","Bart_Verbruggen.png","AFC Bournemouth","CC BY 4.0"],
+  ["bha73564","1/1e","Jason_Steele_24012026_(1).jpg","Timmy96","CC0"],
+  ["bha892160","f/f4","Luka_Vuskovic_Croatia_v_Portugal_2_July_2026-020.jpg","Bryan Berlin","CC BY-SA 4.0"],
+  ["bha410708","2/23","Pascal_Struijk_15032025_(1)_(cropped).jpg","Timmy96","CC0"],
+  ["bha318508","1/15","Olivier_Boscagli_24012026_(1)_(cropped).jpg","Timmy96","CC0"],
+  ["bha438961","3/35","FC_RB_Salzburg_gegen_WSG_Swarowski_Tirol_(7._Dezember_2019)_62_(Michael_Svoboda).jpg","Werner100359","CC BY-SA 4.0"],
+  ["bha148153","5/58","BHA_5_v_Espanyol_1_pre_season_30_07_2022_03.jpg","jamesboyes","CC BY 2.0"],
+  ["bha369316","5/5e","Ferdi_Kadıoğlu_24012026_(1).jpg","Timmy96","CC0"],
+  ["bha429915","d/dc","Maxim_De_Cuyper_USMNT_v_Belgium_Mar_28_2026-79_(cropped).jpg","Bryan Berlin","CC BY-SA 4.0"],
+  ["bha750903","d/da","RC_Lens_-_FC_Nantes_(28-10-2023)_34.jpg","Supporterhéninois","CC0"],
+  ["bha415381","f/fa","FC_RB_Salzburg_gegen_Feyenoord_Rotterdam_(Testspiel_2022-07-09)_39_(cropped).jpg","Werner100359","CC BY-SA 4.0"],
+  ["bha867688","9/9f","Jack_Hinshelwood_24012026_(2).jpg","Timmy96","CC0"],
+  ["bha667287","a/a2","Yasin_Ayari_-_Sweden_-_Greece20_(cropped).jpg","Mikael Hervestad","CC BY-SA 4.0"],
+  ["bha996897","f/f9","Diego_Gomez_2023_(cropped).jpg","TheSoccerBoy","CC BY-SA 4.0"],
+  ["bha406634","0/00","2023.07.19_Yokohama_F._Marinos_-_Celtic_Glasgow_(6-4)_-_53062949186_(Matt_Oriley).jpg","pantkiewicz","CC BY-SA 2.0"],
+  ["bha82873","9/93","Team_Germany,_Ecuador_v_Germany_at_2026_Fifa_World_Cup_by_YantsImages_04_Pascal_Groß.jpg","YantsImages","CC BY-SA 4.0"],
+  ["bha504849","6/65","Kaoru_Mitoma_2026.jpg","Timmy96","CC BY-SA 4.0"],
+  ["bha1110406","c/ce","Ibrahim_Osman_(footballer,_born_2004).jpg","Werner100359","CC BY-SA 4.0"],
+  ["bha1012534","b/bb","Yankuba_Minteh_24012026_(1).jpg","Timmy96","CC0"],
+  ["bha703408","8/89","Femi_Azeez_04102025_(5).jpg","Timmy96","CC0"],
+  ["bha1060087","9/94","Charalampos_Kostoulas_24012026_(2).jpg","Timmy96","CC0"],
+  ["bha538977","6/62","Georginio_Rutter_(cropped).jpeg","Egghead06","CC BY-SA 4.0"],
+  ["bha888785","5/5a","Promise_David_Canada_v_Qatar_18_June_2026-018.jpg","Bryan Berlin","CC BY-SA 4.0"],
+  ["bha648046","8/8f","Evan_Ferguson_YantsImages_-_Asatur_Yesayants_626_(cropped).jpg","YantsImages","CC BY-SA 4.0"]
 ].map(([id, path, file, author, license]) => {
   const name = encodeURIComponent(file).replace(/[()']/g, char => "%" + char.charCodeAt(0).toString(16).toUpperCase());
   return [id, {

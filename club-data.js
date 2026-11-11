@@ -202,6 +202,48 @@ clubData.set("brentford", {
   checkedOn: "11 November 2026"
 });
 
+// Transfermarkt 2026/27 squad snapshot. Amounts are whole euros.
+clubData.set("brighton", {
+  squad: [
+    ["bha565093","Bart Verbruggen","GK",1,40000000,"/bart-verbruggen/profil/spieler/565093"],
+    ["bha73564","Jason Steele","GK",23,500000,"/jason-steele/profil/spieler/73564"],
+    ["bha406556","Tom McGill","GK",38,500000,"/tom-mcgill/profil/spieler/406556"],
+    ["bha892160","Luka Vušković","DEF",44,65000000,"/luka-vuskovic/profil/spieler/892160"],
+    ["bha410708","Pascal Struijk","DEF",4,22000000,"/pascal-struijk/profil/spieler/410708"],
+    ["bha318508","Olivier Boscagli","DEF",21,20000000,"/olivier-boscagli/profil/spieler/318508"],
+    ["bha438961","Michael Svoboda","DEF",30,5000000,"/michael-svoboda/profil/spieler/438961"],
+    ["bha148153","Lewis Dunk","DEF",5,3500000,"/lewis-dunk/profil/spieler/148153"],
+    ["bha369316","Ferdi Kadıoğlu","DEF",24,40000000,"/ferdi-kadioglu/profil/spieler/369316"],
+    ["bha429915","Maxim De Cuyper","DEF",29,30000000,"/maxim-de-cuyper/profil/spieler/429915"],
+    ["bha750903","Jaouen Hadjam","DEF",3,10000000,"/jaouen-hadjam/profil/spieler/750903"],
+    ["bha415381","Mats Wieffer","DEF",27,25000000,"/mats-wieffer/profil/spieler/415381"],
+    ["bha539252","Costinha","DEF",20,10000000,"/costinha/profil/spieler/539252"],
+    ["bha867688","Jack Hinshelwood","MID",8,35000000,"/jack-hinshelwood/profil/spieler/867688"],
+    ["bha948279","Chema Andrés","MID",14,24000000,"/chema-andres/profil/spieler/948279"],
+    ["bha667287","Yasin Ayari","MID",26,45000000,"/yasin-ayari/profil/spieler/667287"],
+    ["bha996897","Diego Gómez","MID",25,30000000,"/diego-gomez/profil/spieler/996897"],
+    ["bha1178758","Malick Yalcouyé","MID",35,22000000,"/malick-yalcouye/profil/spieler/1178758"],
+    ["bha406634","Matt O'Riley","MID",33,18000000,"/matt-oriley/profil/spieler/406634"],
+    ["bha82873","Pascal Groß","MID",13,2500000,"/pascal-gross/profil/spieler/82873"],
+    ["bha504849","Kaoru Mitoma","FWD",7,22000000,"/kaoru-mitoma/profil/spieler/504849"],
+    ["bha1110406","Ibrahim Osman","FWD",15,12000000,"/ibrahim-osman/profil/spieler/1110406"],
+    ["bha1012534","Yankuba Minteh","FWD",11,55000000,"/yankuba-minteh/profil/spieler/1012534"],
+    ["bha1421433","Zadok Yohanna","FWD",36,25000000,"/zadok-yohanna/profil/spieler/1421433"],
+    ["bha703408","Femi Azeez","FWD",39,15000000,"/femi-azeez/profil/spieler/703408"],
+    ["bha1060087","Charalampos Kostoulas","FWD",19,40000000,"/charalampos-kostoulas/profil/spieler/1060087"],
+    ["bha538977","Georginio Rutter","FWD",10,30000000,"/georginio-rutter/profil/spieler/538977"],
+    ["bha888785","Promise David","FWD",12,20000000,"/promise-david/profil/spieler/888785","Union Saint-Gilloise"],
+    ["bha950091","Stefanos Tzimas","FWD",9,18000000,"/stefanos-tzimas/profil/spieler/950091"],
+    ["bha648046","Evan Ferguson","FWD",28,15000000,"/evan-ferguson/profil/spieler/648046"]
+  ].map(([id, name, pos, number, value, profile, loanFrom]) => ({
+    id, name, pos, number, value, profile, loanFrom,
+    status: loanFrom ? "keep" : "undecided"
+  })),
+  stadium: "American Express Stadium · Brighton",
+  squadSource: "https://www.transfermarkt.com/brighton-amp-hove-albion/kader/verein/1237/saison_id/2026",
+  checkedOn: "11 November 2026"
+});
+
 const featuredTargets = [
   ["t0","Gianluigi Donnarumma","GK","Manchester City",45000000,"2026-06-03","/gianluigi-donnarumma/profil/spieler/315858"],
   ["t1","James Trafford","GK","Leeds United",35000000,"2026-10-07","/james-trafford/profil/spieler/566799"],
