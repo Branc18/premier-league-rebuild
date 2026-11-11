@@ -556,6 +556,49 @@ clubData.set("leeds-united", {
   checkedOn: "11 November 2026"
 });
 
+// Transfermarkt 2026/27 squad snapshot. Amounts are whole euros.
+clubData.set("liverpool", {
+  squad: [
+    ["liv502676","Giorgi Mamardashvili","GK",25,28000000,"/giorgi-mamardashvili/profil/spieler/502676"],
+    ["liv105470","Alisson","GK",1,15000000,"/alisson/profil/spieler/105470"],
+    ["liv486604","Vítězslav Jaroš","GK",56,5000000,"/vitezslav-jaros/profil/spieler/486604"],
+    ["liv226049","Freddie Woodman","GK",28,3000000,"/freddie-woodman/profil/spieler/226049"],
+    ["liv706815","Harvey Davies","GK",95,500000,"/harvey-davies/profil/spieler/706815"],
+    ["liv1004301","Jérémy Jacquet","DEF",5,65000000,"/jeremy-jacquet/profil/spieler/1004301"],
+    ["liv1086619","Giovanni Leoni","DEF",15,25000000,"/giovanni-leoni/profil/spieler/1086619"],
+    ["liv480267","Ronald Araújo","DEF",33,25000000,"/ronald-araujo/profil/spieler/480267","FC Barcelona"],
+    ["liv139208","Virgil van Dijk","DEF",4,15000000,"/virgil-van-dijk/profil/spieler/139208"],
+    ["liv256178","Joe Gomez","DEF",2,11000000,"/joe-gomez/profil/spieler/256178"],
+    ["liv730861","Milos Kerkez","DEF",6,35000000,"/milos-kerkez/profil/spieler/730861"],
+    ["liv338070","Konstantinos Tsimikas","DEF",21,4500000,"/konstantinos-tsimikas/profil/spieler/338070"],
+    ["liv670861","Luke Chambers","DEF",44,1000000,"/luke-chambers/profil/spieler/670861"],
+    ["liv484547","Jeremie Frimpong","DEF",30,30000000,"/jeremie-frimpong/profil/spieler/484547"],
+    ["liv624258","Conor Bradley","DEF",12,20000000,"/conor-bradley/profil/spieler/624258"],
+    ["liv478573","Ryan Gravenberch","MID",38,75000000,"/ryan-gravenberch/profil/spieler/478573"],
+    ["liv146310","Wataru Endo","MID",3,3000000,"/wataru-endo/profil/spieler/146310"],
+    ["liv534033","Alexis Mac Allister","MID",10,70000000,"/alexis-mac-allister/profil/spieler/534033"],
+    ["liv1045123","Trey Nyoni","MID",42,18000000,"/trey-nyoni/profil/spieler/1045123"],
+    ["liv845289","James McConnell","MID",53,1500000,"/james-mcconnell/profil/spieler/845289"],
+    ["liv451276","Dominik Szoboszlai","MID",8,100000000,"/dominik-szoboszlai/profil/spieler/451276"],
+    ["liv598577","Florian Wirtz","MID",7,85000000,"/florian-wirtz/profil/spieler/598577"],
+    ["liv708265","Bradley Barcola","FWD",29,100000000,"/bradley-barcola/profil/spieler/708265"],
+    ["liv434675","Cody Gakpo","FWD",18,75000000,"/cody-gakpo/profil/spieler/434675"],
+    ["liv1108466","Rio Ngumoha","FWD",73,50000000,"/rio-ngumoha/profil/spieler/1108466"],
+    ["liv935231","Víctor Muñoz","FWD",23,40000000,"/victor-munoz/profil/spieler/935231"],
+    ["liv341092","Federico Chiesa","FWD",14,10000000,"/federico-chiesa/profil/spieler/341092"],
+    ["liv349066","Alexander Isak","FWD",9,90000000,"/alexander-isak/profil/spieler/349066"],
+    ["liv709726","Hugo Ekitiké","FWD",22,80000000,"/hugo-ekitike/profil/spieler/709726"],
+    ["liv922462","Lewis Koumas","FWD",67,8000000,"/lewis-koumas/profil/spieler/922462"],
+    ["liv939290","Jayden Danns","FWD",76,800000,"/jayden-danns/profil/spieler/939290"]
+  ].map(([id, name, pos, number, value, profile, loanFrom]) => ({
+    id, name, pos, number, value, profile, loanFrom,
+    status: loanFrom ? "keep" : "undecided"
+  })),
+  stadium: "Anfield · Liverpool",
+  squadSource: "https://www.transfermarkt.com/fc-liverpool/kader/verein/31/saison_id/2026",
+  checkedOn: "11 November 2026"
+});
+
 const featuredTargets = [
   ["t0","Gianluigi Donnarumma","GK","Manchester City",45000000,"2026-06-03","/gianluigi-donnarumma/profil/spieler/315858"],
   ["t1","James Trafford","GK","Leeds United",35000000,"2026-10-07","/james-trafford/profil/spieler/566799"],
