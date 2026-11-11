@@ -429,3 +429,31 @@
 #marketTab.just-unlocked:not(.locked):not(.active) span {
   color: #a9f0bf;
 }
+
+.hero-city {
+  align-items: center;
+  column-gap: clamp(16px, 3vw, 40px);
+}
+.hero-city .hero-copy {
+  align-self: stretch;
+}
+.hero-stamp {
+  flex: none;
+  z-index: 1;
+  padding: .1em .26em .15em;
+  border: .07em double currentColor;
+  border-radius: 5px;
+  color: #ff4f58;
+  font: 900 clamp(32px, 5vw, 68px)/1 'Barlow Condensed', sans-serif;
+  letter-spacing: .07em;
+  transform: rotate(-12deg);
+}
+@media (max-width: 600px) {
+  .hero-city {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+  .hero-city .hero-copy {
+    grid-column: 1 / -1;
+  }
+}

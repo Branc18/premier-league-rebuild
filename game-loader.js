@@ -18,6 +18,10 @@ if (!activeClub || !activeClubData) {
   find("#clubName").textContent = activeClub.name.toUpperCase();
   find("#clubStadium").textContent = activeClubData.stadium.toUpperCase();
   find("#lineupHeading").textContent = `YOUR ${activeClub.shortName.toUpperCase()} XI.`;
+  if (activeClub.id === "manchester-city") {
+    find(".hero").classList.add("hero-city");
+    find("#cityStamp").hidden = false;
+  }
   const badge = find(".club-badge");
   badge.src = activeClub.badge;
   badge.alt = `${activeClub.name} crest`;

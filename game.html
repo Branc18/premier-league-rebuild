@@ -6,7 +6,7 @@
 <title>Premier League Rebuild — Club rebuild</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=15">
+<link rel="stylesheet" href="styles.css?v=16">
 </head>
 <body>
 <div class="app-shell game-loading" id="gameLoadStatus"><p role="status">Loading your rebuild…</p><a href="./">Back to club selection</a></div>
@@ -23,6 +23,7 @@
   <h1>REBUILD<br><em id="heroClubName"></em></h1>
   <p>Be the manager. Decide who goes and who stays. Buy new players and finalise your starting XI.</p>
  </div>
+ <span class="hero-stamp" id="cityStamp" hidden>GUILTY</span>
  <div class="hero-crest">
   <img class="club-badge" width="112" height="112" alt="">
   <div class="hero-record"><span>YOUR CLUB</span><strong id="clubName"></strong><small id="clubStadium"></small></div>
@@ -101,5 +102,5 @@
 <script src="club-data.js?v=17"></script>
 <script src="photo-credit-codes.js?v=1"></script>
 <script src="team-graphic.js?v=6"></script>
-<script src="game-loader.js?v=8"></script>
+<script src="game-loader.js?v=9"></script>
 </body></html>
