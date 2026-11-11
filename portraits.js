@@ -330,7 +330,28 @@ const playerPhotos = new Map([
   ["ips621193","e/ed","McAteer_220826.jpg","COYB123","CC BY 4.0"],
   ["ips743599","6/6e","Emersonn_220826.jpg","COYB123","CC BY 4.0"],
   ["ips411537","1/1b","Queen_Park_Rangers_v_Burnley_26042025_(7)_(Zian_Flemming).jpg","Timmy96","CC0"],
-  ["ips197642","f/f3","ChubaAkpom2024.jpg","Carlo Bruil Fotografie","CC BY 2.0"]
+  ["ips197642","f/f3","ChubaAkpom2024.jpg","Carlo Bruil Fotografie","CC BY 2.0"],
+  ["lee566799","1/1d","James_Trafford_England_v_Ghana_23_June_2026-027.jpg","Bryan Berlin","CC BY-SA 4.0"],
+  ["lee196813","3/3e","FC_Liefering_gegen_SK_Austria_Klagenfurt_(1._Juni_2019)_39.jpg","Werner100359","CC BY-SA 4.0"],
+  ["lee371851","c/ca","Jaka_Bijol_2021.jpg","Артем Гусев","CC BY-SA 3.0"],
+  ["lee297212","c/c9","Joe_Rodon_15032025_(4).jpg","Timmy96","CC0"],
+  ["lee192635","0/0e","Wales-Switzerland_match_at_Euro_2020_in_Baku_(cropped).jpg","Press Service of the President of the Republic of Azerbaijan","CC BY 4.0"],
+  ["lee362108","d/df","Gabriel_Gudmundsson_France_v_Sweden_6.30.26-046.jpg","Bryan Berlin","CC BY-SA 4.0"],
+  ["lee532775","4/4b","Bard_asse_ogcn_2425.png","Paté kroute","CC0"],
+  ["lee465717","c/c7","Jayden_Bogle_13092025_(4).jpg","Timmy96","CC0"],
+  ["lee413220","3/34","Manchester_United_v_Leicester_City,_2_April_2022_(21)_(cropped).jpg","Ardfern","CC BY-SA 4.0"],
+  ["lee392771","2/22","Ethan_Ampadu_With_Wales_2020_(cropped).jpg","Nickb1792","CC BY-SA 4.0"],
+  ["lee344069","c/c0","Anton_Stach_13092025_(1).jpg","Timmy96","CC0"],
+  ["lee381753","6/66","Iliya_Gruev_jr.jpg","Biso","CC BY 4.0"],
+  ["lee489359","f/f6","Ao_Tanaka_13092025_(1)_(cropped).jpg","Timmy96","CC0"],
+  ["lee346707","7/7c","Sean_Longstaff_2021-08-07_1.jpg","Mattythewhite","CC BY-SA 4.0"],
+  ["lee393323","e/eb","Brenden_Aaronson_Australia_v_USA_19_June_2026-69.jpg","Bryan Berlin","CC BY-SA 4.0"],
+  ["lee346890","2/22","FC_RB_Salzburg_gegen_FK_Austria_Wien_(2022-04-24)_68.jpg","Werner100359","CC BY-SA 4.0"],
+  ["lee279455","2/25","Harry_Wilson_04012026_(3).jpg","Timmy96","CC0"],
+  ["lee319301","0/08","Daniel_James_13092025_(5).jpg","Timmy96","CC0"],
+  ["lee306024","5/5e","Dominic_Calvert-Lewin_13092025_(5).jpg","Timmy96","CC0"],
+  ["lee314288","9/94","Youth_League_FC_Salzburg_gegen_Manchester_City_FC_(8._Februar_2017)_01.jpg","Werner100359","CC BY-SA 4.0"],
+  ["lee834742","6/6a","Mateo_Joseph_15032025_(2).jpg","Timmy96","CC0"]
 ].map(([id, path, file, author, license]) => {
   const name = encodeURIComponent(file).replace(/[()']/g, char => "%" + char.charCodeAt(0).toString(16).toUpperCase());
   return [id, {

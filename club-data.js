@@ -520,6 +520,42 @@ clubData.set("ipswich-town", {
   checkedOn: "11 November 2026"
 });
 
+// Transfermarkt 2026/27 squad snapshot. Amounts are whole euros.
+clubData.set("leeds-united", {
+  squad: [
+    ["lee566799","James Trafford","GK",1,35000000,"/james-trafford/profil/spieler/566799"],
+    ["lee196813","Michael Zetterer","GK",16,4000000,"/michael-zetterer/profil/spieler/196813"],
+    ["lee194386","Alex Cairns","GK",21,50000,"/alex-cairns/profil/spieler/194386"],
+    ["lee679423","Tarik Muharemović","DEF",5,40000000,"/tarik-muharemovic/profil/spieler/679423"],
+    ["lee371851","Jaka Bijol","DEF",15,20000000,"/jaka-bijol/profil/spieler/371851"],
+    ["lee297212","Joe Rodon","DEF",6,18000000,"/joe-rodon/profil/spieler/297212"],
+    ["lee192635","Nico Elvedi","DEF",30,12000000,"/nico-elvedi/profil/spieler/192635"],
+    ["lee362108","Gabriel Gudmundsson","DEF",3,25000000,"/gabriel-gudmundsson/profil/spieler/362108"],
+    ["lee532775","Melvin Bard","DEF",26,10000000,"/melvin-bard/profil/spieler/532775","OGC Nice"],
+    ["lee465717","Jayden Bogle","DEF",2,18000000,"/jayden-bogle/profil/spieler/465717"],
+    ["lee413220","James Justin","DEF",24,16000000,"/james-justin/profil/spieler/413220"],
+    ["lee392771","Ethan Ampadu","MID",4,35000000,"/ethan-ampadu/profil/spieler/392771"],
+    ["lee344069","Anton Stach","MID",18,32000000,"/anton-stach/profil/spieler/344069"],
+    ["lee381753","Ilia Gruev","MID",44,12000000,"/ilia-gruev/profil/spieler/381753"],
+    ["lee489359","Ao Tanaka","MID",22,15000000,"/ao-tanaka/profil/spieler/489359"],
+    ["lee346707","Sean Longstaff","MID",8,12000000,"/sean-longstaff/profil/spieler/346707"],
+    ["lee393323","Brenden Aaronson","MID",11,22000000,"/brenden-aaronson/profil/spieler/393323"],
+    ["lee346890","Noah Okafor","FWD",19,32000000,"/noah-okafor/profil/spieler/346890"],
+    ["lee939964","Jean-Mattéo Bahoya","FWD",23,25000000,"/jean-matteo-bahoya/profil/spieler/939964","Eintracht Frankfurt"],
+    ["lee279455","Harry Wilson","FWD",10,22000000,"/harry-wilson/profil/spieler/279455"],
+    ["lee319301","Daniel James","FWD",7,10000000,"/daniel-james/profil/spieler/319301"],
+    ["lee306024","Dominic Calvert-Lewin","FWD",9,25000000,"/dominic-calvert-lewin/profil/spieler/306024"],
+    ["lee314288","Lukas Nmecha","FWD",14,10000000,"/lukas-nmecha/profil/spieler/314288"],
+    ["lee834742","Mateo Joseph","FWD",null,3500000,"/mateo-joseph/profil/spieler/834742"]
+  ].map(([id, name, pos, number, value, profile, loanFrom]) => ({
+    id, name, pos, number, value, profile, loanFrom,
+    status: loanFrom ? "keep" : "undecided"
+  })),
+  stadium: "Elland Road · Leeds",
+  squadSource: "https://www.transfermarkt.com/leeds-united/kader/verein/399/saison_id/2026",
+  checkedOn: "11 November 2026"
+});
+
 const featuredTargets = [
   ["t0","Gianluigi Donnarumma","GK","Manchester City",45000000,"2026-06-03","/gianluigi-donnarumma/profil/spieler/315858"],
   ["t1","James Trafford","GK","Leeds United",35000000,"2026-10-07","/james-trafford/profil/spieler/566799"],
