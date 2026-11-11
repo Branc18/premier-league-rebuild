@@ -436,6 +436,51 @@ clubData.set("fulham", {
   checkedOn: "11 November 2026"
 });
 
+// Transfermarkt 2026/27 squad snapshot. Amounts are whole euros.
+clubData.set("hull-city", {
+  squad: [
+    ["hul554389","Konstantinos Tzolakis","GK",19,22000000,"/konstantinos-tzolakis/profil/spieler/554389"],
+    ["hul128899","Jack Butland","GK",1,1500000,"/jack-butland/profil/spieler/128899"],
+    ["hul308431","Dillon Phillips","GK",12,200000,"/dillon-phillips/profil/spieler/308431"],
+    ["hul1034853","Nobel Mendy","DEF",32,20000000,"/nobel-mendy/profil/spieler/1034853"],
+    ["hul1279984","Lucas Herrington","DEF",22,15000000,"/lucas-herrington/profil/spieler/1279984"],
+    ["hul746357","Charlie Hughes","DEF",4,10000000,"/charlie-hughes/profil/spieler/746357"],
+    ["hul121324","John Egan","DEF",15,1500000,"/john-egan/profil/spieler/121324"],
+    ["hul167268","Paddy McNair","DEF",17,1500000,"/paddy-mcnair/profil/spieler/167268"],
+    ["hul251912","Semi Ajayi","DEF",6,1000000,"/semi-ajayi/profil/spieler/251912"],
+    ["hul504581","Ryan Giles","DEF",3,16000000,"/ryan-giles/profil/spieler/504581"],
+    ["hul250478","Matt Targett","DEF",23,3000000,"/matt-targett/profil/spieler/250478"],
+    ["hul728733","Brooke Norton-Cuffy","DEF",18,15000000,"/brooke-norton-cuffy/profil/spieler/728733"],
+    ["hul413402","Lewie Coyle","DEF",2,2500000,"/lewie-coyle/profil/spieler/413402"],
+    ["hul473080","Regan Slater","MID",27,10000000,"/regan-slater/profil/spieler/473080"],
+    ["hul620313","Lucas Gourna-Douath","MID",29,8000000,"/lucas-gourna-douath/profil/spieler/620313"],
+    ["hul893658","Óscar Zambrano","MID",20,1500000,"/oscar-zambrano/profil/spieler/893658"],
+    ["hul964426","Christos Mouzakitis","MID",36,20000000,"/christos-mouzakitis/profil/spieler/964426"],
+    ["hul696589","Tim Iroegbunam","MID",42,15000000,"/tim-iroegbunam/profil/spieler/696589"],
+    ["hul923535","Jens Hjertø-Dahl","MID",14,10000000,"/jens-hjerto-dahl/profil/spieler/923535"],
+    ["hul524315","Hidemasa Morita","MID",5,6000000,"/hidemasa-morita/profil/spieler/524315"],
+    ["hul663264","Darko Gyabi","MID",24,2000000,"/darko-gyabi/profil/spieler/663264"],
+    ["hul535834","Eliot Matazo","MID",8,1500000,"/eliot-matazo/profil/spieler/535834"],
+    ["hul169416","Matt Crooks","MID",25,1000000,"/matt-crooks/profil/spieler/169416"],
+    ["hul258916","Kieran Dowell","MID",26,600000,"/kieran-dowell/profil/spieler/258916"],
+    ["hul475416","Sorba Thomas","FWD",7,14000000,"/sorba-thomas/profil/spieler/475416"],
+    ["hul687622","Elliot Stroud","FWD",21,8000000,"/elliot-stroud/profil/spieler/687622"],
+    ["hul857079","Mohamed Belloumi","FWD",10,18000000,"/mohamed-belloumi/profil/spieler/857079"],
+    ["hul670847","Mohamed-Ali Cho","FWD",50,15000000,"/mohamed-ali-cho/profil/spieler/670847"],
+    ["hul271495","Abdülkadir Ömür","FWD",33,1500000,"/abdulkadir-omur/profil/spieler/271495"],
+    ["hul1131161","Robinio Vaz","FWD",47,18000000,"/robinio-vaz/profil/spieler/1131161","AS Roma"],
+    ["hul1035765","Ilyas Ansah","FWD",28,15000000,"/ilyas-ansah/profil/spieler/1035765"],
+    ["hul503980","Joe Gelhardt","FWD",11,14000000,"/joe-gelhardt/profil/spieler/503980"],
+    ["hul298477","Oli McBurnie","FWD",9,7000000,"/oli-mcburnie/profil/spieler/298477"]
+  ].map(([id, name, pos, number, value, profile, loanFrom]) => ({
+    id, name, pos, number, value, profile, loanFrom,
+    status: loanFrom ? "keep" : "undecided"
+  })),
+  stadium: "MKM Stadium · Hull",
+  squadSource: "https://www.transfermarkt.com/hull-city/kader/verein/3008/saison_id/2026",
+  checkedOn: "11 November 2026"
+});
+
 const featuredTargets = [
   ["t0","Gianluigi Donnarumma","GK","Manchester City",45000000,"2026-06-03","/gianluigi-donnarumma/profil/spieler/315858"],
   ["t1","James Trafford","GK","Leeds United",35000000,"2026-10-07","/james-trafford/profil/spieler/566799"],
