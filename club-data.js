@@ -599,6 +599,41 @@ clubData.set("liverpool", {
   checkedOn: "11 November 2026"
 });
 
+// Transfermarkt 2026/27 squad snapshot. Amounts are whole euros.
+clubData.set("manchester-city", {
+  squad: [
+    ["mci315858","Gianluigi Donnarumma","GK",1,45000000,"/gianluigi-donnarumma/profil/spieler/315858"],
+    ["mci229604","Gerónimo Rulli","GK",28,5000000,"/geronimo-rulli/profil/spieler/229604"],
+    ["mci116648","Marcus Bettinelli","GK",13,300000,"/marcus-bettinelli/profil/spieler/116648"],
+    ["mci392757","Marc Guéhi","DEF",6,75000000,"/marc-guehi/profil/spieler/392757"],
+    ["mci258004","Rúben Dias","DEF",3,50000000,"/ruben-dias/profil/spieler/258004"],
+    ["mci763079","Abdukodir Khusanov","DEF",45,50000000,"/abdukodir-khusanov/profil/spieler/763079"],
+    ["mci1005575","Vitor Reis","DEF",22,30000000,"/vitor-reis/profil/spieler/1005575"],
+    ["mci475959","Joško Gvardiol","DEF",24,75000000,"/josko-gvardiol/profil/spieler/475959"],
+    ["mci743413","Nico O'Reilly","DEF",33,70000000,"/nico-oreilly/profil/spieler/743413"],
+    ["mci578391","Rayan Aït-Nouri","DEF",21,35000000,"/rayan-ait-nouri/profil/spieler/578391"],
+    ["mci601883","Matheus Nunes","DEF",27,45000000,"/matheus-nunes/profil/spieler/601883"],
+    ["mci701057","Rico Lewis","DEF",82,25000000,"/rico-lewis/profil/spieler/701057"],
+    ["mci567576","Elliot Anderson","MID",5,120000000,"/elliot-anderson/profil/spieler/567576"],
+    ["mci1097139","Ayyoub Bouaddi","MID",32,90000000,"/ayyoub-bouaddi/profil/spieler/1097139"],
+    ["mci648195","Enzo Fernández","MID",17,120000000,"/enzo-fernandez/profil/spieler/648195"],
+    ["mci51471","Mateo Kovačić","MID",8,10000000,"/mateo-kovacic/profil/spieler/51471"],
+    ["mci607223","Rayan Cherki","MID",10,110000000,"/rayan-cherki/profil/spieler/607223"],
+    ["mci406635","Phil Foden","MID",47,65000000,"/phil-foden/profil/spieler/406635"],
+    ["mci486049","Jérémy Doku","FWD",11,75000000,"/jeremy-doku/profil/spieler/486049"],
+    ["mci623570","Iliman Ndiaye","FWD",7,65000000,"/iliman-ndiaye/profil/spieler/623570"],
+    ["mci583255","Antoine Semenyo","FWD",42,80000000,"/antoine-semenyo/profil/spieler/583255"],
+    ["mci1082631","Allan","FWD",37,30000000,"/allan/profil/spieler/1082631"],
+    ["mci1187640","Ryan McAidoo","FWD",56,8000000,"/ryan-mcaidoo/profil/spieler/1187640"],
+    ["mci418560","Erling Haaland","FWD",9,220000000,"/erling-haaland/profil/spieler/418560"]
+  ].map(([id, name, pos, number, value, profile]) => ({
+    id, name, pos, number, value, profile, status: "undecided"
+  })),
+  stadium: "Etihad Stadium · Manchester",
+  squadSource: "https://www.transfermarkt.com/manchester-city/kader/verein/281/saison_id/2026",
+  checkedOn: "11 November 2026"
+});
+
 const featuredTargets = [
   ["t0","Gianluigi Donnarumma","GK","Manchester City",45000000,"2026-06-03","/gianluigi-donnarumma/profil/spieler/315858"],
   ["t1","James Trafford","GK","Leeds United",35000000,"2026-10-07","/james-trafford/profil/spieler/566799"],

@@ -379,7 +379,30 @@ const playerPhotos = new Map([
   ["liv341092","2/29","Federico_Chiesa_vs_Zenit_2021-10-20_(cropped2).jpg","Kirill Venediktov","CC BY-SA 3.0"],
   ["liv349066","3/32","Alexander_Isak_-_Sweden_-_Greece21_(cropped).jpg","Mikael Hervestad","CC BY-SA 4.0"],
   ["liv709726","4/49","Hugo_Ekitike_(PSG_2023)_(cropped2).jpg","Liondartois","CC BY-SA 4.0"],
-  ["liv922462","5/59","Lewis_Koumas.png","MilesaMFC","CC0"]
+  ["liv922462","5/59","Lewis_Koumas.png","MilesaMFC","CC0"],
+  ["mci315858","2/2d","Norway_Italy_-_June_2025_A_17_(Gianluigi_Donnarumma).jpg","MichaelEmilio","CC BY 4.0"],
+  ["mci229604","c/cf","Geronimo_Rulli_Argentina_v_Spain_19_July_2026-267_(cropped).jpg","Bryan Berlin","CC BY-SA 4.0"],
+  ["mci116648","e/eb","Marcus_Bettinelli_12-04-2014_1.jpg","Mattythewhite","CC BY-SA 3.0"],
+  ["mci392757","d/dd","Marc_Guehi_England_v_Panama_27_June_26-182.jpg","Bryan Berlin","CC BY-SA 4.0"],
+  ["mci258004","b/b5","Ruben_Dias_Croatia_v_Portugal_2_July_2026-228_(cropped).jpg","Bryan Berlin","CC BY-SA 4.0"],
+  ["mci763079","5/53","Abdukodir_Khusanov_(cropped).jpg","olympic.uz","CC BY-SA 4.0"],
+  ["mci1005575","6/6f","Vitor-Reis-Palmeiras-Sao-Paulo-ago24-2_(cropped).jpg","NullReason","CC BY-SA 4.0"],
+  ["mci475959","5/58","Josko_Gvardiol_Croatia_v_Portugal_2_July_2026-262.jpg","Bryan Berlin","CC BY-SA 4.0"],
+  ["mci743413","a/ad","Nico_O'Reilly_England_v_Ghana_23_June_2026-043_(cropped).jpg","Bryan Berlin","CC BY-SA 4.0"],
+  ["mci578391","7/7b","Rayan_Aït-Nouri_playing_for_Algeria_in_2024.jpg","Anneprudence","CC BY 4.0"],
+  ["mci601883","6/6e","Matheus_Nunes_USMNT_v_Portugal_Mar_31_2026-21_(cropped).jpg","Bryan Berlin","CC BY-SA 4.0"],
+  ["mci701057","0/0f","ManCity20240722-027.jpg","Hameltion","CC BY-SA 4.0"],
+  ["mci567576","5/52","Elliot_Anderson_England_v_Ghana_23_June_2026-059_(cropped).jpg","Bryan Berlin","CC BY-SA 4.0"],
+  ["mci1097139","e/e8","Ayyoub_Bouaddi_Morocco_v_Norway_7_June_2026-71_(cropped).jpg","Bryan Berlin","CC BY-SA 4.0"],
+  ["mci648195","1/10","Enzo_Fernandez_Argentina_v_Spain_19_July_2026-050_(cropped).jpg","Bryan Berlin","CC BY-SA 4.0"],
+  ["mci51471","9/98","Mateo_Kovacic_Croatia_v_Portugal_2_July_2026-132.jpg","Bryan Berlin","CC BY-SA 4.0"],
+  ["mci607223","9/97","Rayan_Cherki_France_v_Norway_26_June_26-114.jpg","Bryan Berlin","CC BY-SA 4.0"],
+  ["mci406635","5/53","2023-10-04_Fußball,_Männer,_UEFA_Champions_League,_RB_Leipzig_-_Manchester_City_FC_1DX_2613,_Phil_Foden.jpg","Steffen Prößdorf","CC BY-SA 4.0"],
+  ["mci486049","0/06","Jérémy_Doku_USMNT_v_Belgium_Mar_28_2026-27_(cropped).jpg","Bryan Berlin","CC BY-SA 4.0"],
+  ["mci623570","e/e8","Iliman_Ndiaye_France_v_Senegal_16_June_2026-243.jpg","Bryan Berlin","CC BY-SA 4.0"],
+  ["mci583255","5/51","Antoine_Semenyo_England_v_Ghana_23_June_2026-209_(cropped2).jpg","Bryan Berlin","CC BY-SA 4.0"],
+  ["mci1082631","3/3d","Allan-palmeiras-sport-ago-25-4.jpg","NullReason","CC BY-SA 4.0"],
+  ["mci418560","4/43","Erling_Haaland_Morocco_v_Norway_7_June_2026-51.jpg","Bryan Berlin","CC BY-SA 4.0"]
 ].map(([id, path, file, author, license]) => {
   const name = encodeURIComponent(file).replace(/[()']/g, char => "%" + char.charCodeAt(0).toString(16).toUpperCase());
   return [id, {
