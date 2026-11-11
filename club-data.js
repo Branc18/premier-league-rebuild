@@ -481,6 +481,45 @@ clubData.set("hull-city", {
   checkedOn: "11 November 2026"
 });
 
+// Transfermarkt 2026/27 squad snapshot. Amounts are whole euros.
+clubData.set("ipswich-town", {
+  squad: [
+    ["ips463527","Kjell Scherpen","GK",37,12000000,"/kjell-scherpen/profil/spieler/463527"],
+    ["ips208379","Christian Walton","GK",28,2500000,"/christian-walton/profil/spieler/208379"],
+    ["ips245625","Alex Palmer","GK",1,1000000,"/alex-palmer/profil/spieler/245625"],
+    ["ips61814","David Button","GK",27,50000,"/david-button/profil/spieler/61814"],
+    ["ips401320","Dara O'Shea","DEF",26,20000000,"/dara-oshea/profil/spieler/401320"],
+    ["ips693095","Jacob Greaves","DEF",24,17000000,"/jacob-greaves/profil/spieler/693095"],
+    ["ips272622","Issa Diop","DEF",6,10000000,"/issa-diop/profil/spieler/272622"],
+    ["ips364827","Cédric Kipré","DEF",4,3000000,"/cedric-kipre/profil/spieler/364827"],
+    ["ips596446","Leif Davis","DEF",3,25000000,"/leif-davis/profil/spieler/596446"],
+    ["ips991487","Abdoul Ouattara","DEF",42,18000000,"/abdoul-ouattara/profil/spieler/991487"],
+    ["ips351755","Darnell Furlong","DEF",2,2500000,"/darnell-furlong/profil/spieler/351755"],
+    ["ips357162","Florentino","MID",12,16000000,"/florentino/profil/spieler/357162"],
+    ["ips315145","Azor Matusiwa","MID",5,12000000,"/azor-matusiwa/profil/spieler/315145"],
+    ["ips401578","Exequiel Palacios","MID",25,25000000,"/exequiel-palacios/profil/spieler/401578"],
+    ["ips715558","Marcelino Núñez","MID",32,14000000,"/marcelino-nunez/profil/spieler/715558"],
+    ["ips245056","Saša Lukić","MID",23,10000000,"/sasa-lukic/profil/spieler/245056"],
+    ["ips458178","Jack Taylor","MID",14,2200000,"/jack-taylor/profil/spieler/458178"],
+    ["ips660867","Julio Enciso","MID",10,30000000,"/julio-enciso/profil/spieler/660867"],
+    ["ips530813","Anis Mehmeti","MID",33,13000000,"/anis-mehmeti/profil/spieler/530813"],
+    ["ips665390","Jaden Philogene","FWD",11,20000000,"/jaden-philogene/profil/spieler/665390"],
+    ["ips559794","Jack Clarke","FWD",47,20000000,"/jack-clarke/profil/spieler/559794"],
+    ["ips420931","Daizen Maeda","FWD",38,13000000,"/daizen-maeda/profil/spieler/420931"],
+    ["ips864121","Abdul Fatawu","FWD",7,23000000,"/abdul-fatawu/profil/spieler/864121"],
+    ["ips923504","Sindre Walle Egeli","FWD",8,15000000,"/sindre-walle-egeli/profil/spieler/923504"],
+    ["ips621193","Kasey McAteer","FWD",20,10000000,"/kasey-mcateer/profil/spieler/621193"],
+    ["ips743599","Emersonn","FWD",19,25000000,"/emersonn/profil/spieler/743599"],
+    ["ips411537","Zian Flemming","FWD",9,18000000,"/zian-flemming/profil/spieler/411537"],
+    ["ips197642","Chuba Akpom","FWD",29,3500000,"/chuba-akpom/profil/spieler/197642"]
+  ].map(([id, name, pos, number, value, profile]) => ({
+    id, name, pos, number, value, profile, status: "undecided"
+  })),
+  stadium: "Portman Road · Ipswich",
+  squadSource: "https://www.transfermarkt.com/ipswich-town/kader/verein/677/saison_id/2026",
+  checkedOn: "11 November 2026"
+});
+
 const featuredTargets = [
   ["t0","Gianluigi Donnarumma","GK","Manchester City",45000000,"2026-06-03","/gianluigi-donnarumma/profil/spieler/315858"],
   ["t1","James Trafford","GK","Leeds United",35000000,"2026-10-07","/james-trafford/profil/spieler/566799"],
