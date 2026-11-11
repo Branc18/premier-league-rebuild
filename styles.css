@@ -483,3 +483,18 @@
   .hero-trophy img { height: 84px; }
   .hero-trophy figcaption { font-size: 8px; }
 }
+
+.skip-market-dialog {
+  width: min(440px, calc(100% - 32px));
+  box-sizing: border-box;
+  margin: auto;
+  padding: 24px;
+  background: #191b20;
+  color: #f5f5f5;
+  border: 1px solid #41444d;
+  border-radius: 12px;
+  box-shadow: 0 18px 60px #0009;
+}
+.skip-market-dialog::backdrop { background: #08090bc9; }
+.skip-market-dialog p { margin: 0 0 20px; line-height: 1.5; }
+.skip-market-actions { display: flex; justify-content: flex-end; gap: 10px; }

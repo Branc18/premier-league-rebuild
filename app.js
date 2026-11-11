@@ -215,16 +215,31 @@ function renderMarket() {
   updateStats();
 }
 function setTab(tab) {
-  if (tab === "market" && !$("#marketTab").classList.contains("active") &&
-      !state.squad.some(p => p.status === "sell") &&
-      !confirm("You have not sold any players. Do you wish to proceed to the transfer market with no budget?")) return;
-
   document.querySelectorAll(".tab").forEach(b => b.classList.toggle("active", b.dataset.tab === tab));
   document.querySelectorAll(".panel").forEach(p => p.classList.toggle("active", p.id === "panel-" + tab));
   if (tab === "market") renderMarket();
   if (tab === "lineup") renderLineup();
 }
-document.querySelectorAll(".tab").forEach(b=>b.addEventListener("click",()=>setTab(b.dataset.tab)));
+const skipMarketDialog = $("#skipMarketDialog");
+$("#marketTab").addEventListener("click", () => {
+  if ($("#marketTab").classList.contains("active") || state.squad.some(p => p.status === "sell")) {
+    setTab("market");
+    return;
+  }
+
+  skipMarketDialog.returnValue = "";
+  skipMarketDialog.showModal();
+});
+skipMarketDialog.addEventListener("close", () => {
+  const tab = skipMarketDialog.returnValue;
+  if (tab === "lineup" || tab === "market") {
+    setTab(tab);
+    document.querySelector(`.tab[data-tab="${tab}"]`).focus();
+  }
+});
+document.querySelectorAll('.tab:not([data-tab="market"])').forEach(button => {
+  button.addEventListener("click", () => setTab(button.dataset.tab));
+});
 function removeFromLineup(playerId) {
   for (const slot of Object.keys(state.slots)) {
     if (state.slots[slot] === playerId) delete state.slots[slot];

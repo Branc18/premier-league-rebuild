@@ -6,7 +6,7 @@
 <title>Premier League Rebuild — Club rebuild</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=19">
+<link rel="stylesheet" href="styles.css?v=20">
 </head>
 <body>
 <div class="app-shell game-loading" id="gameLoadStatus"><p role="status">Loading your rebuild…</p><a href="./">Back to club selection</a></div>
@@ -47,7 +47,7 @@
 <main>
 <section id="panel-squad" class="panel active">
  <div class="section-head"><div><div class="eyebrow">THE DRESSING ROOM</div><h2>MAKE YOUR CALL.</h2><p>Everyone starts in your squad. Select Sell on the players you want to move on.</p></div><div class="head-actions"><button class="btn btn-ghost" id="resetBtn">RESET SAVE</button></div></div>
- <div class="notice"><b>TRANSFER BUDGET</b> Sell players to raise funds. You can also browse the market with a €0 budget.</div>
+ <div class="notice"><b>TRANSFER BUDGET</b> Sell players to raise funds. If you keep everyone, you can skip straight to your starting XI.</div>
  <p class="notice" id="migrationNotice" role="status" hidden></p>
  <div class="filters"><div class="search-wrap">⌕ <input id="squadSearch" placeholder="Search players..." aria-label="Search players"></div><div class="filter-group" id="positionFilters"><button class="filter active" data-filter="All">ALL</button><button class="filter" data-filter="GK">GK</button><button class="filter" data-filter="DEF">DEF</button><button class="filter" data-filter="MID">MID</button><button class="filter" data-filter="FWD">FWD</button></div><div class="filter-group"><button class="filter active" data-status="all">ALL</button><button class="filter" data-status="keep">KEPT</button><button class="filter" data-status="sell">FOR SALE</button></div></div>
  <div class="squad-groups" id="squadGrid"></div>
@@ -87,6 +87,15 @@
   <p id="arsenalTrophyCredit" hidden><a href="https://commons.wikimedia.org/wiki/File:Trophy_of_FA_Premier_League_in_Singapore,_2023.jpg">Trophy photo by Pangalau (cropped)</a> · <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a></p>
  </details>
 </main>
+<dialog id="skipMarketDialog" class="skip-market-dialog" aria-labelledby="skipMarketMessage">
+ <form method="dialog">
+  <p id="skipMarketMessage">You have not sold any players. Do you wish to skip the transfer market and create your starting XI?</p>
+  <div class="skip-market-actions">
+   <button class="btn btn-ghost" value="market">No</button>
+   <button class="btn btn-primary" value="lineup" autofocus>Yes</button>
+  </div>
+ </form>
+</dialog>
 <footer><span>PREMIER LEAGUE REBUILD <b>·</b> FAN-MADE PROJECT</span><span><a id="clubSquadSource">Transfermarkt squad</a> · <a href="https://www.transfermarkt.com/premier-league/startseite/wettbewerb/GB1">Premier League</a><span id="clubCheckedOn"></span></span></footer>
 </div>
 <div class="toast" id="toast" role="status"></div>
@@ -107,5 +116,5 @@
 <script src="club-data.js?v=21"></script>
 <script src="photo-credit-codes.js?v=1"></script>
 <script src="team-graphic.js?v=6"></script>
-<script src="game-loader.js?v=11"></script>
+<script src="game-loader.js?v=12"></script>
 </body></html>
