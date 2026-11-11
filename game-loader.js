@@ -6,6 +6,7 @@ if (!activeClub || !activeClubData) {
   location.replace(activeClub ? `./?club=${encodeURIComponent(activeClub.id)}` : "./");
 } else {
   const find = selector => document.querySelector(selector);
+  document.documentElement.dataset.club = activeClub.id;
   const clubHome = `./?club=${encodeURIComponent(activeClub.id)}`;
   document.title = `Premier League Rebuild — ${activeClub.name}`;
   find('meta[name="description"]').content = `Rebuild ${activeClub.name}. Decide who stays, sign players and pick your starting XI.`;
