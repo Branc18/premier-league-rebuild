@@ -22,6 +22,14 @@ if (!activeClub || !activeClubData) {
     find(".hero").classList.add("hero-city");
     find("#cityStamp").hidden = false;
   }
+  if (activeClub.id === "arsenal") {
+    find(".hero").classList.add("hero-arsenal");
+    const trophy = find("#arsenalTrophy");
+    const image = trophy.querySelector("img");
+    image.src = image.dataset.src;
+    trophy.hidden = false;
+    find("#arsenalTrophyCredit").hidden = false;
+  }
   const badge = find(".club-badge");
   badge.src = activeClub.badge;
   badge.alt = `${activeClub.name} crest`;
