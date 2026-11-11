@@ -146,6 +146,21 @@ document.addEventListener("load", e => {
   image.closest(".portrait-tile").classList.add("portrait-loaded");
 }, true);
 
+const marketKits = new Map(clubs.map(({ name, primary, secondary }) => {
+  const [red, green, blue] = primary.slice(1).match(/../g).map(hex => {
+    const channel = parseInt(hex, 16) / 255;
+    return channel <= 0.04045 ? channel / 12.92 : ((channel + 0.055) / 1.055) ** 2.4;
+  });
+  const luminance = 0.2126 * red + 0.7152 * green + 0.0722 * blue;
+  return [name, `--kit-primary:${primary};--kit-secondary:${secondary};--kit-number:${luminance > 0.179 ? "#000" : "#fff"}`];
+}));
+
+function shirtMarkup(player, marketCard) {
+  const kit = marketCard ? marketKits.get(player.club) : undefined;
+  const number = Number.isInteger(player.number) && player.number > 0 ? player.number : "＋";
+  return `<span class="shirt"${kit ? ` style="${kit}"` : ""}>${number}</span>`;
+}
+
 function card(p,marketCard=false){
   const status = p.status || "";
   const signed = marketCard && state.buys.some(player => player.id === p.id);
@@ -161,7 +176,7 @@ function card(p,marketCard=false){
       ? '<button class="action keep" data-choice="keep" data-id="'+p.id+'">KEEP</button><span class="action sell selected">FOR SALE ✓</span>'
       : '<span class="action keep selected">KEPT ✓</span><button class="action sell" data-choice="sell" data-id="'+p.id+'">SELL</button>';
   }
-return '<article class="player-card '+(marketCard?'market-card':status==="keep"?'kept':status==="sell"?'sold':'')+'">'+portraitMarkup(p, '<span class="shirt">'+(p.number||"＋")+'</span>')+'<div class="player-info"><span class="position">'+p.pos+' · '+(marketCard?p.club:activeClub.name.toUpperCase())+'</span><strong>'+p.name+'</strong><small>'+(marketCard?(signed?"SIGNED":hasValue(p)?"AVAILABLE TO BUY":"SIGNING UNAVAILABLE"):p.loanFrom?"ON LOAN FROM "+p.loanFrom.toUpperCase():status==="sell"?(hasValue(p)?"SALE VALUE ADDED TO BUDGET":"NO PROCEEDS ADDED"):"IN YOUR SQUAD")+'</small></div><div class="player-value"><strong>'+(hasValue(p)?money(p.value):"Unavailable")+'</strong><small><a href="'+transfermarkt+p.profile+'" target="_blank" rel="noopener">Transfermarkt</a>'+(p.valueDate?'<time datetime="'+p.valueDate+'">'+dateFormat.format(new Date(p.valueDate))+'</time>':'')+'</small></div><div class="card-actions">'+actions+'</div></article>'}
+return '<article class="player-card '+(marketCard?'market-card':status==="keep"?'kept':status==="sell"?'sold':'')+'">'+portraitMarkup(p, shirtMarkup(p, marketCard))+'<div class="player-info"><span class="position">'+p.pos+' · '+(marketCard?p.club:activeClub.name.toUpperCase())+'</span><strong>'+p.name+'</strong><small>'+(marketCard?(signed?"SIGNED":hasValue(p)?"AVAILABLE TO BUY":"SIGNING UNAVAILABLE"):p.loanFrom?"ON LOAN FROM "+p.loanFrom.toUpperCase():status==="sell"?(hasValue(p)?"SALE VALUE ADDED TO BUDGET":"NO PROCEEDS ADDED"):"IN YOUR SQUAD")+'</small></div><div class="player-value"><strong>'+(hasValue(p)?money(p.value):"Unavailable")+'</strong><small><a href="'+transfermarkt+p.profile+'" target="_blank" rel="noopener">Transfermarkt</a>'+(p.valueDate?'<time datetime="'+p.valueDate+'">'+dateFormat.format(new Date(p.valueDate))+'</time>':'')+'</small></div><div class="card-actions">'+actions+'</div></article>'}
 const squadPositions = [
   ["GK", "Goalkeepers"],
   ["DEF", "Defenders"],

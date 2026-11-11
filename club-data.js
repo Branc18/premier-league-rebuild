@@ -837,8 +837,13 @@ function rivalTransferTargets(activeClub) {
     if (club.id === activeClub.id) continue;
     for (const player of clubData.get(club.id)?.squad ?? []) {
       const key = playerKey(player);
-      if (!player.value || player.loanFrom || ownPlayers.has(key) || targets.has(key)) continue;
-      const { status, number, ...target } = player;
+      const featured = targets.get(key);
+      if (featured) {
+        if (featured.club === club.name) targets.set(key, { ...featured, number: player.number });
+        continue;
+      }
+      if (!player.value || player.loanFrom || ownPlayers.has(key)) continue;
+      const { status, ...target } = player;
       targets.set(key, { ...target, club: club.name });
     }
   }
