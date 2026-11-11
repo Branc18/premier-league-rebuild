@@ -398,6 +398,44 @@ clubData.set("everton", {
   checkedOn: "11 November 2026"
 });
 
+// Transfermarkt 2026/27 squad snapshot. Amounts are whole euros.
+clubData.set("fulham", {
+  squad: [
+    ["ful72476","Bernd Leno","GK",1,6000000,"/bernd-leno/profil/spieler/72476"],
+    ["ful127181","Benjamin Lecomte","GK",23,800000,"/benjamin-lecomte/profil/spieler/127181"],
+    ["ful817613","Alex Borto","GK",36,null,"/alex-borto/profil/spieler/817613"],
+    ["ful461883","Calvin Bassey","DEF",3,28000000,"/calvin-bassey/profil/spieler/461883"],
+    ["ful452483","David Affengruber","DEF",22,20000000,"/david-affengruber/profil/spieler/452483"],
+    ["ful260827","Joachim Andersen","DEF",5,16000000,"/joachim-andersen/profil/spieler/260827"],
+    ["ful494880","Jorge Cuenca","DEF",4,8000000,"/jorge-cuenca/profil/spieler/494880"],
+    ["ful392775","Ryan Sessegnon","DEF",30,22000000,"/ryan-sessegnon/profil/spieler/392775"],
+    ["ful349701","Antonee Robinson","DEF",33,22000000,"/antonee-robinson/profil/spieler/349701"],
+    ["ful262226","Timothy Castagne","DEF",21,8000000,"/timothy-castagne/profil/spieler/262226"],
+    ["ful206746","Kenny Tete","DEF",2,6000000,"/kenny-tete/profil/spieler/206746"],
+    ["ful333014","Sander Berge","MID",16,25000000,"/sander-berge/profil/spieler/333014"],
+    ["ful747951","Shea Charles","MID",19,25000000,"/shea-charles/profil/spieler/747951"],
+    ["ful242631","Alex Iwobi","MID",17,20000000,"/alex-iwobi/profil/spieler/242631"],
+    ["ful931838","Hugo Larsson","MID",15,23000000,"/hugo-larsson/profil/spieler/931838","Eintracht Frankfurt"],
+    ["ful646824","Manuel Ángel","MID",20,5000000,"/manuel-angel/profil/spieler/646824"],
+    ["ful226973","Harrison Reed","MID",6,1300000,"/harrison-reed/profil/spieler/226973"],
+    ["ful123275","Tom Cairney","MID",10,500000,"/tom-cairney/profil/spieler/123275"],
+    ["ful1011131","Josh King","MID",24,40000000,"/josh-king/profil/spieler/1011131"],
+    ["ful392765","Emile Smith Rowe","MID",32,17000000,"/emile-smith-rowe/profil/spieler/392765"],
+    ["ful948272","César Palacios","MID",8,12000000,"/cesar-palacios/profil/spieler/948272"],
+    ["ful900195","Kevin","FWD",11,25000000,"/kevin/profil/spieler/900195"],
+    ["ful661207","Oscar Bobb","FWD",14,28000000,"/oscar-bobb/profil/spieler/661207"],
+    ["ful935230","Gonzalo García","FWD",7,35000000,"/gonzalo-garcia/profil/spieler/935230"],
+    ["ful735571","Rodrigo Muniz","FWD",9,20000000,"/rodrigo-muniz/profil/spieler/735571"],
+    ["ful1069512","Jonah Kusi-Asare","FWD",18,5000000,"/jonah-kusi-asare/profil/spieler/1069512"]
+  ].map(([id, name, pos, number, value, profile, loanFrom]) => ({
+    id, name, pos, number, value, profile, loanFrom,
+    status: loanFrom ? "keep" : "undecided"
+  })),
+  stadium: "Craven Cottage · London",
+  squadSource: "https://www.transfermarkt.com/fc-fulham/kader/verein/931/saison_id/2026",
+  checkedOn: "11 November 2026"
+});
+
 const featuredTargets = [
   ["t0","Gianluigi Donnarumma","GK","Manchester City",45000000,"2026-06-03","/gianluigi-donnarumma/profil/spieler/315858"],
   ["t1","James Trafford","GK","Leeds United",35000000,"2026-10-07","/james-trafford/profil/spieler/566799"],

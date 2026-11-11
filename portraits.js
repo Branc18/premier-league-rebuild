@@ -251,7 +251,32 @@ const playerPhotos = new Map([
   ["eve475188","7/77","Kiernan_Dewsbury-Hall_FIFA_Club_World_Cup_final_extraction.jpg","The White House","Public domain"],
   ["eve936874","7/7d","Tyrique_George_chelsea_gent_2024_warm_up.jpg","Oscar0123","CC BY-SA 4.0"],
   ["eve203460","a/a4","ManCity20240722-017_(cropped).jpg","Hameltion","CC BY-SA 4.0"],
-  ["eve470607","d/dc","Brennan_Johnson_(cropped).jpg","OhNoNotYouAgain","CC BY-SA 4.0"]
+  ["eve470607","d/dc","Brennan_Johnson_(cropped).jpg","OhNoNotYouAgain","CC BY-SA 4.0"],
+  ["ful72476","2/29","Bernd_Leno_24052026_(2).jpg","Timmy96","CC0"],
+  ["ful127181","8/8c","Benjamin_Lecomte_13092025_(1).jpg","Timmy96","CC0"],
+  ["ful817613","2/20","Alex_Borto_09052026_(1).jpg","Timmy96","CC0"],
+  ["ful461883","f/f3","Calvin_Bassey_01112025_(1).jpg","Timmy96","CC0"],
+  ["ful260827","2/2e","Joachim_Andersen_22122024_(1).jpg","Timmy96","CC0"],
+  ["ful494880","5/54","Jorge_Cuenca_24082024.jpg","Timmy96","CC0"],
+  ["ful392775","2/24","Ryan_Sessegnon.jpg","Timmy96","CC BY-SA 4.0"],
+  ["ful349701","3/3a","Antonee_Robinson_Australia_v_USA_19_June_2026-24_(cropped).jpg","Bryan Berlin","CC BY-SA 4.0"],
+  ["ful262226","d/d9","Timothy_Castagne_USMNT_v_Belgium_Mar_28_2026-17_(cropped).jpg","Bryan Berlin","CC BY-SA 4.0"],
+  ["ful206746","0/0f","Kenny_Tete_04032026_(1)_(cropped).jpg","Timmy96","CC0"],
+  ["ful333014","6/60","Sander_Berge_France_v_Norway_26_June_26-025.jpg","Bryan Berlin","CC BY-SA 4.0"],
+  ["ful747951","e/e2","Shea_Charles_17102026_(2).jpg","Timmy96","CC0"],
+  ["ful242631","b/b4","Issa_Diop,_Alex_Iwobi_and_Antonee_Robinson_04032026_(1)_(cropped).jpg","Timmy96","CC0"],
+  ["ful931838","6/6a","Hugo_Larsson_07112026_(1).jpg","Timmy96","CC0"],
+  ["ful646824","0/06","Manuel_Ángel_17102026_(1).jpg","Timmy96","CC0"],
+  ["ful226973","6/6e","Harrison_Reed_04012026_(1).jpg","Timmy96","CC0"],
+  ["ful123275","9/93","Tom_Cairney_20042025_(3).jpg","Timmy96","CC0"],
+  ["ful1011131","0/0e","Josh_King_01112025_(1).jpg","Timmy96","CC0"],
+  ["ful392765","5/5e","Emile_Smith_Rowe.jpg","Quintin Soloviev","CC BY 4.0"],
+  ["ful948272","d/d9","César_Palacios_17102026_(3).jpg","Timmy96","CC0"],
+  ["ful900195","3/30","Kevin_01112025_(1).jpg","Timmy96","CC0"],
+  ["ful661207","c/cf","Oscar_Bobb_France_v_Norway_26_June_26-045.jpg","Bryan Berlin","CC BY-SA 4.0"],
+  ["ful935230","4/43","Gonzalo_García_17102026_(2).jpg","Timmy96","CC0"],
+  ["ful735571","8/82","Rodrigo_Muniz_24052026_(3).jpg","Timmy96","CC0"],
+  ["ful1069512","c/c1","Jonah_Kusi-Asare_09052026_(4).jpg","Timmy96","CC0"]
 ].map(([id, path, file, author, license]) => {
   const name = encodeURIComponent(file).replace(/[()']/g, char => "%" + char.charCodeAt(0).toString(16).toUpperCase());
   return [id, {
