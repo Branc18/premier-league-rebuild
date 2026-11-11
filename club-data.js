@@ -634,6 +634,42 @@ clubData.set("manchester-city", {
   checkedOn: "11 November 2026"
 });
 
+// Transfermarkt 2026/27 squad snapshot. Amounts are whole euros.
+clubData.set("newcastle-united", {
+  squad: [
+    ["new629773","Lukáš Horníček","GK",21,27000000,"/lukas-hornicek/profil/spieler/629773"],
+    ["new923757","Ewen Jaouen","GK",24,18000000,"/ewen-jaouen/profil/spieler/923757"],
+    ["new192080","Nick Pope","GK",1,3000000,"/nick-pope/profil/spieler/192080"],
+    ["new142389","Mark Gillespie","GK",29,100000,"/mark-gillespie/profil/spieler/142389"],
+    ["new521964","Malick Thiaw","DEF",12,50000000,"/malick-thiaw/profil/spieler/521964"],
+    ["new361093","Sven Botman","DEF",4,35000000,"/sven-botman/profil/spieler/361093"],
+    ["new134270","Dan Burn","DEF",33,4000000,"/dan-burn/profil/spieler/134270"],
+    ["new135343","Fabian Schär","DEF",5,3000000,"/fabian-schar/profil/spieler/135343"],
+    ["new670858","Lewis Hall","DEF",3,55000000,"/lewis-hall/profil/spieler/670858"],
+    ["new503981","Tino Livramento","DEF",2,45000000,"/tino-livramento/profil/spieler/503981"],
+    ["new519184","Amar Dedić","DEF",37,30000000,"/amar-dedic/profil/spieler/519184"],
+    ["new466805","Nico González","MID",6,50000000,"/nico-gonzalez/profil/spieler/466805"],
+    ["new975347","Aladji Bamba","MID",8,25000000,"/aladji-bamba/profil/spieler/975347"],
+    ["new503749","Jacob Ramsey","MID",41,35000000,"/jacob-ramsey/profil/spieler/503749"],
+    ["new922769","Lewis Miley","MID",67,30000000,"/lewis-miley/profil/spieler/922769"],
+    ["new1111063","Sean Steur","MID",14,22000000,"/sean-steur/profil/spieler/1111063"],
+    ["new333241","Joelinton","MID",7,20000000,"/joelinton/profil/spieler/333241"],
+    ["new340329","Joe Willock","MID",28,18000000,"/joe-willock/profil/spieler/340329"],
+    ["new1067904","Bazoumana Touré","FWD",17,50000000,"/bazoumana-toure/profil/spieler/1067904"],
+    ["new398065","Harvey Barnes","FWD",11,35000000,"/harvey-barnes/profil/spieler/398065"],
+    ["new583189","Anthony Elanga","FWD",19,35000000,"/anthony-elanga/profil/spieler/583189"],
+    ["new199527","Jacob Murphy","FWD",23,10000000,"/jacob-murphy/profil/spieler/199527"],
+    ["new724129","Matias Fernandez-Pardo","FWD",20,55000000,"/matias-fernandez-pardo/profil/spieler/724129"],
+    ["new609556","William Osula","FWD",10,32000000,"/william-osula/profil/spieler/609556"],
+    ["new388165","Yoane Wissa","FWD",9,25000000,"/yoane-wissa/profil/spieler/388165"]
+  ].map(([id, name, pos, number, value, profile]) => ({
+    id, name, pos, number, value, profile, status: "undecided"
+  })),
+  stadium: "St James' Park · Newcastle upon Tyne",
+  squadSource: "https://www.transfermarkt.com/newcastle-united/kader/verein/762/saison_id/2026",
+  checkedOn: "11 November 2026"
+});
+
 const featuredTargets = [
   ["t0","Gianluigi Donnarumma","GK","Manchester City",45000000,"2026-06-03","/gianluigi-donnarumma/profil/spieler/315858"],
   ["t1","James Trafford","GK","Leeds United",35000000,"2026-10-07","/james-trafford/profil/spieler/566799"],
