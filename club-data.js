@@ -705,6 +705,47 @@ clubData.set("nottingham-forest", {
   checkedOn: "11 November 2026"
 });
 
+// Transfermarkt 2026/27 squad snapshot. Amounts are whole euros.
+clubData.set("sunderland", {
+  squad: [
+    ["sun646991","Robin Roefs","GK",22,30000000,"/robin-roefs/profil/spieler/646991"],
+    ["sun605426","Melker Ellborg","GK",31,3000000,"/melker-ellborg/profil/spieler/605426"],
+    ["sun123536","Simon Moore","GK",21,75000,"/simon-moore/profil/spieler/123536"],
+    ["sun503686","Dan Ballard","DEF",5,25000000,"/dan-ballard/profil/spieler/503686"],
+    ["sun263236","Kevin Danso","DEF",4,20000000,"/kevin-danso/profil/spieler/263236","Tottenham Hotspur"],
+    ["sun353032","Omar Alderete","DEF",15,10000000,"/omar-alderete/profil/spieler/353032"],
+    ["sun282939","Luke O'Nien","DEF",13,700000,"/luke-onien/profil/spieler/282939"],
+    ["sun502065","Aji Alese","DEF",42,700000,"/aji-alese/profil/spieler/502065"],
+    ["sun1191444","Dayann Méthalie","DEF",6,25000000,"/dayann-methalie/profil/spieler/1191444"],
+    ["sun240692","Reinildo Mandava","DEF",17,4000000,"/reinildo-mandava/profil/spieler/240692"],
+    ["sun515544","Trai Hume","DEF",32,22000000,"/trai-hume/profil/spieler/515544"],
+    ["sun348026","Nordi Mukiele","DEF",20,18000000,"/nordi-mukiele/profil/spieler/348026"],
+    ["sun100986","Thomas Meunier","DEF",12,1500000,"/thomas-meunier/profil/spieler/100986"],
+    ["sun111455","Granit Xhaka","MID",34,8000000,"/granit-xhaka/profil/spieler/111455"],
+    ["sun1401779","Jules Ahoka","MID",29,7000000,"/jules-ahoka/profil/spieler/1401779"],
+    ["sun727089","Noah Sadiki","MID",27,40000000,"/noah-sadiki/profil/spieler/727089"],
+    ["sun876631","Habib Diarra","MID",19,35000000,"/habib-diarra/profil/spieler/876631"],
+    ["sun633992","Enzo Le Fée","MID",28,30000000,"/enzo-le-fee/profil/spieler/633992"],
+    ["sun277697","Alan Browne","MID",8,1300000,"/alan-browne/profil/spieler/277697"],
+    ["sun947411","Chris Rigg","MID",11,25000000,"/chris-rigg/profil/spieler/947411"],
+    ["sun743386","Malick Fofana","FWD",39,30000000,"/malick-fofana/profil/spieler/743386"],
+    ["sun903611","Nilson Angulo","FWD",10,20000000,"/nilson-angulo/profil/spieler/903611"],
+    ["sun696181","Romaine Mundle","FWD",14,5000000,"/romaine-mundle/profil/spieler/696181"],
+    ["sun1079078","Timur Tuterov","FWD",57,300000,"/timur-tuterov/profil/spieler/1079078"],
+    ["sun743384","Chemsdine Talbi","FWD",7,25000000,"/chemsdine-talbi/profil/spieler/743384"],
+    ["sun1322090","Jocelin Ta Bi","FWD",37,2500000,"/jocelin-ta-bi/profil/spieler/1322090"],
+    ["sun654412","Abdoullah Ba","FWD",46,1500000,"/abdoullah-ba/profil/spieler/654412"],
+    ["sun473169","Brian Brobbey","FWD",9,50000000,"/brian-brobbey/profil/spieler/473169"],
+    ["sun494237","Wilson Isidor","FWD",18,18000000,"/wilson-isidor/profil/spieler/494237"]
+  ].map(([id, name, pos, number, value, profile, loanFrom]) => ({
+    id, name, pos, number, value, profile, loanFrom,
+    status: loanFrom ? "keep" : "undecided"
+  })),
+  stadium: "Stadium of Light · Sunderland",
+  squadSource: "https://www.transfermarkt.com/afc-sunderland/kader/verein/289/saison_id/2026",
+  checkedOn: "11 November 2026"
+});
+
 const featuredTargets = [
   ["t0","Gianluigi Donnarumma","GK","Manchester City",45000000,"2026-06-03","/gianluigi-donnarumma/profil/spieler/315858"],
   ["t1","James Trafford","GK","Leeds United",35000000,"2026-10-07","/james-trafford/profil/spieler/566799"],
