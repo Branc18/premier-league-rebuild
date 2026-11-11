@@ -1,5 +1,7 @@
 // Player IDs match the squad and market data in app.js.
 // Sources and licenses were checked against each Wikimedia Commons file.
+// Keep published entries in order and append new entries. Shared graphics use these positions in their credits URLs.
+// Preserve an old entry at its original position when replacing a published photo.
 const playerPhotos = new Map([
   ["mu0","d/df","Senne_Lammens_USMNT_v_Belgium_Mar_28_2026-98_(cropped).jpg","Bryan Berlin","CC BY-SA 4.0"],
   ["mu1","d/d2","Karl_Darlow_13092025_(3).jpg","Timmy96","CC0"],

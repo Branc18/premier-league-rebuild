@@ -30,7 +30,8 @@ async function makeTeamGraphic(team) {
     Promise.all(players.map(player => loadGraphicPortrait(player.id)))
   ]);
   const photoById = new Map(players.map((player, index) => [player.id, portraits[index]]));
-  const credits = [...new Set(portraits.filter(Boolean).map(({ photo }) => photo.author + " · " + photo.license))];
+  const photoIds = players.filter((_, index) => portraits[index]).map(player => player.id);
+  const creditsUrl = photoIds.length ? photoCreditsUrl(photoIds) : "";
   const canvas = document.createElement("canvas");
   const width = 1080;
   const field = { x: 52, y: 308, w: 976, h: 776 };
@@ -38,7 +39,7 @@ async function makeTeamGraphic(team) {
   const transferRows = Math.max(1, team.signings.length, team.sales.length);
   const footerTop = transferTop + 111 + transferRows * 35;
   canvas.width = width;
-  canvas.height = footerTop + 92 + (credits.length ? 34 + Math.ceil(credits.length / 3) * 22 : 0);
+  canvas.height = footerTop + (creditsUrl ? 100 : 72);
   const ctx = canvas.getContext("2d");
 
   function box(x, y, w, h, radius, fill, stroke) {
@@ -182,14 +183,12 @@ async function makeTeamGraphic(team) {
     { size: 15, color: muted, weight: 800 });
   label("Fan-made  ·  Values in EUR", 1028, footerTop + 28,
     { size: 14, color: muted, align: "right" });
-  if (credits.length) {
-    label("CROPPED PHOTOS  ·  WIKIMEDIA COMMONS  ·  FULL SOURCE LINKS ON THE GAME PAGE", 52, footerTop + 63,
-      { size: 13, color: gold, weight: 800 });
-    credits.forEach((credit, index) => label(credit, 52 + index % 3 * 329,
-      footerTop + 87 + Math.floor(index / 3) * 22, { size: 13, color: muted, maxWidth: 318 }));
+  if (creditsUrl) {
+    label("Photo credits · " + creditsUrl, 52, footerTop + 63,
+      { size: 18, color: gold, maxWidth: 976 });
   }
 
   return new Promise((resolve, reject) => {
-    canvas.toBlob(blob => blob ? resolve(blob) : reject(new Error("PNG export failed")), "image/png");
+    canvas.toBlob(blob => blob ? resolve({ blob, creditsUrl }) : reject(new Error("PNG export failed")), "image/png");
   });
 }
