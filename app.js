@@ -282,7 +282,7 @@ $("#marketTab").addEventListener("click", () => {
 });
 skipMarketDialog.addEventListener("close", () => {
   const tab = skipMarketDialog.returnValue;
-  if (tab === "lineup" || tab === "market") {
+  if (tab === "lineup" || tab === "squad") {
     setTab(tab);
     document.querySelector(`.tab[data-tab="${tab}"]`).focus();
   }
