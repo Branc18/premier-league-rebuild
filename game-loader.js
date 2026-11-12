@@ -23,6 +23,16 @@ if (!activeClub || !activeClubData) {
     find(".hero").classList.add("hero-city");
     find("#cityStamp").hidden = false;
   }
+  if (activeClub.id === "manchester-united") {
+    const portrait = find("#unitedManager");
+    const image = portrait.querySelector("img");
+    image.addEventListener("load", () => {
+      find(".hero").classList.add("hero-united");
+      portrait.hidden = false;
+      find("#unitedManagerCredit").hidden = false;
+    }, { once: true });
+    image.src = image.dataset.src;
+  }
   if (activeClub.id === "arsenal") {
     find(".hero").classList.add("hero-arsenal");
     const trophy = find("#arsenalTrophy");

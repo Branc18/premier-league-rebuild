@@ -454,11 +454,11 @@
   color: #a9f0bf;
 }
 
-.hero-city, .hero-arsenal {
+.hero-city, .hero-arsenal, .hero-united {
   align-items: center;
   column-gap: clamp(16px, 3vw, 40px);
 }
-.hero-city .hero-copy, .hero-arsenal .hero-copy {
+.hero-city .hero-copy, .hero-arsenal .hero-copy, .hero-united .hero-copy {
   align-self: stretch;
 }
 .hero-stamp {
@@ -473,11 +473,11 @@
   transform: rotate(-12deg);
 }
 @media (max-width: 600px) {
-  .hero-city, .hero-arsenal {
+  .hero-city, .hero-arsenal, .hero-united {
     display: grid;
     grid-template-columns: auto minmax(0, 1fr);
   }
-  .hero-city .hero-copy, .hero-arsenal .hero-copy {
+  .hero-city .hero-copy, .hero-arsenal .hero-copy, .hero-united .hero-copy {
     grid-column: 1 / -1;
   }
 }
@@ -538,3 +538,24 @@
 #marketSquadLimit[hidden] { display: none; }
 .sign-limit-tooltip { display: inline-flex; cursor: help; }
 .sign-limit-tooltip .buy-btn:disabled { pointer-events: none; }
+
+.hero-manager {
+  flex: 0 1 clamp(125px, 20vw, 245px);
+  min-width: 0;
+  margin: 0;
+  z-index: 1;
+}
+.hero-manager img {
+  display: block;
+  width: 100%;
+  height: clamp(145px, 20vw, 240px);
+  object-fit: cover;
+  object-position: center 27%;
+  filter: saturate(.68) contrast(1.06);
+  mask-image: radial-gradient(ellipse at 50% 42%, #000 36%, transparent 73%);
+}
+@media (max-width: 600px) {
+  .hero-united .hero-crest { min-width: 0; }
+  .hero-manager { width: clamp(80px, 25vw, 135px); }
+  .hero-manager img { height: clamp(100px, 30vw, 140px); }
+}
