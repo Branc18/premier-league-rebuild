@@ -38,9 +38,13 @@ function owned(game = state) {
   return game.squad.filter(p => p.status !== "sell").concat(game.buys);
 }
 
+function squadIsFull(game = state) {
+  return owned(game).length >= maxSquad;
+}
+
 function canSign(p, game = state) {
   return hasValue(p) &&
-    budget(game) >= p.value && owned(game).length < maxSquad && !game.buys.some(x => x.id === p.id);
+    budget(game) >= p.value && !squadIsFull(game) && !game.buys.some(x => x.id === p.id);
 }
 
 const formations = {
@@ -120,6 +124,7 @@ function updateStats() {
   const available = money(budget());
   $("#budgetStat").textContent = available;
   $("#marketBudget").textContent = available;
+  $("#marketSquadLimit").hidden = !squadIsFull();
   $("#squadStat").innerHTML = owned().length + " <i>/ " + maxSquad + "</i>";
   $("#soldStat").textContent = state.squad.filter(p => p.status === "sell").length;
   $("#spendStat").textContent = money(spend());
@@ -166,9 +171,12 @@ function card(p,marketCard=false){
   const signed = marketCard && state.buys.some(player => player.id === p.id);
   let actions;
   if (marketCard) {
+    const signButton = `<button type="button" class="buy-btn" data-buy="${p.id}" ${canSign(p) ? "" : "disabled"}>SIGN PLAYER</button>`;
     actions = signed
       ? `<button type="button" class="action" data-undo-signing="${p.id}">UNDO SIGNING</button>`
-      : `<button type="button" class="buy-btn" data-buy="${p.id}" ${canSign(p) ? "" : "disabled"}>SIGN PLAYER</button>`;
+      : squadIsFull()
+        ? `<span class="sign-limit-tooltip" title="Sell players to make room in your squad before signing anyone.">${signButton}</span>`
+        : signButton;
   } else if (p.loanFrom) {
     actions = "";
   } else {

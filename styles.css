@@ -534,3 +534,7 @@
 :root:is([data-club="fulham"], [data-club="newcastle-united"]) .buy-btn:disabled {
   box-shadow: none;
 }
+
+#marketSquadLimit[hidden] { display: none; }
+.sign-limit-tooltip { display: inline-flex; cursor: help; }
+.sign-limit-tooltip .buy-btn:disabled { pointer-events: none; }
