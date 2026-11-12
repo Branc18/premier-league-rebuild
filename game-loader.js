@@ -7,12 +7,10 @@ if (!activeClub || !activeClubData) {
 } else {
   const find = selector => document.querySelector(selector);
   document.documentElement.dataset.club = activeClub.id;
-  const clubHome = `./?club=${encodeURIComponent(activeClub.id)}`;
   document.title = `Premier League Rebuild — ${activeClub.name}`;
   find('meta[name="description"]').content = `Rebuild ${activeClub.name}. Decide who stays, sign players and pick your starting XI.`;
   document.documentElement.style.setProperty("--red", activeClub.primary);
   document.documentElement.style.setProperty("--red2", activeClub.secondary);
-  find(".change-club").href = clubHome;
   find("#gameSeason").textContent = `SEASON ${leagueSeason}`;
   find(".hero").dataset.club = activeClub.shortName.toUpperCase();
   find("#heroClubName").textContent = `${activeClub.shortName.toUpperCase()}.`;

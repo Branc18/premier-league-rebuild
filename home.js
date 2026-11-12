@@ -38,7 +38,12 @@ document.querySelector("#directorySeason").textContent = `SEASON ${leagueSeason}
 document.querySelector("#clubAvailability").textContent =
   `${clubs.length} clubs · ${playableClubs.length} ready to play`;
 
-const requested = clubs.find(club => club.id === new URLSearchParams(location.search).get("club"));
+const homeUrl = new URL(location.href);
+const requested = clubs.find(club => club.id === homeUrl.searchParams.get("club"));
+if (homeUrl.searchParams.has("club")) {
+  homeUrl.searchParams.delete("club");
+  history.replaceState(history.state, "", homeUrl);
+}
 if (requested && !clubData.has(requested.id)) {
   const notice = document.querySelector("#clubNotice");
   notice.textContent = `${requested.name} is coming soon. Its squad data is being prepared.`;
