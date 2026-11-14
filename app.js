@@ -561,17 +561,36 @@ let graphicRequest = 0;
 let graphicUrl;
 let graphicBlob;
 
-$("#shareBtn").addEventListener("click", async () => {
-  const team = lineupTeam();
-  if (!team.complete) return;
+async function openGraphic(kind, build) {
+  $("#graphicHeading").textContent = `YOUR ${kind.toUpperCase()} GRAPHIC`;
+  graphicDownload.download = `${activeClub.id}-${kind === "team" ? "rebuild" : "season"}.png`;
+  graphicPreview.alt = kind === "team" ? "Your Starting XI and rebuild details" : "Your season result and final league table";
 
   const request = ++graphicRequest;
   graphicStatus.hidden = false;
-  graphicStatus.textContent = "Building your team graphic…";
+  graphicStatus.textContent = `Building your ${kind} graphic…`;
   graphicDialog.showModal();
 
   try {
-    const blob = await makeTeamGraphic({
+    const blob = await build();
+    if (request !== graphicRequest || !graphicDialog.open) return;
+    graphicUrl = URL.createObjectURL(blob);
+    graphicBlob = blob;
+    graphicPreview.src = graphicUrl;
+    graphicPreview.hidden = false;
+    graphicDownload.href = graphicUrl;
+    graphicDownload.hidden = false;
+    graphicCopy.hidden = false;
+    graphicStatus.hidden = true;
+  } catch {
+    if (request === graphicRequest) graphicStatus.textContent = "The graphic could not be generated. Close this window and try again.";
+  }
+}
+
+$("#shareBtn").addEventListener("click", () => {
+  const team = lineupTeam();
+  if (!team.complete) return;
+  openGraphic("team", () => makeTeamGraphic({
       rows: team.rows,
       crestUrl: $(".club-badge").src,
       clubName: activeClub.name,
@@ -585,25 +604,13 @@ $("#shareBtn").addEventListener("click", async () => {
         name: player.name,
         fee: hasValue(player) ? money(player.value) : "No proceeds"
       }))
-    });
-    if (request !== graphicRequest || !graphicDialog.open) return;
-    graphicUrl = URL.createObjectURL(blob);
-    graphicBlob = blob;
-    graphicPreview.src = graphicUrl;
-    graphicPreview.hidden = false;
-    graphicDownload.href = graphicUrl;
-    graphicDownload.hidden = false;
-    graphicCopy.hidden = false;
-    graphicStatus.hidden = true;
-  } catch {
-    if (request === graphicRequest) graphicStatus.textContent = "The graphic could not be generated. Close this window and try again.";
-  }
+  }));
 });
 
 graphicCopy.addEventListener("click", async () => {
   if (!graphicBlob) return;
   const request = graphicRequest;
-  let message = "Team graphic copied to clipboard.";
+  let message = "Graphic copied to clipboard.";
 
   try {
     await navigator.clipboard.write([new ClipboardItem({ "image/png": graphicBlob })]);
@@ -663,6 +670,7 @@ function renderSeason() {
     : `${played} / ${season.fixtures.length} matchdays played`;
   $("#seasonNext").disabled = complete;
   $("#seasonAll").disabled = complete;
+  $("#shareSeasonBtn").hidden = !complete;
   $("#seasonTable").innerHTML = table.map((row, index) =>
     `<tr class="${row.id === activeClub.id ? "season-your-club " : ""}${index === 0 && complete ? "season-champion" : index < 6 ? "season-top-six" : index >= table.length - 3 ? "season-relegation" : ""}">
       <td>${index + 1}${index === 0 && complete ? '<span class="season-visually-hidden"> Champion</span>' : index < 6 ? '<span class="season-visually-hidden"> Top six</span>' : index >= table.length - 3 ? '<span class="season-visually-hidden"> Relegation zone</span>' : ""}</td><th scope="row">${seasonName(row.id)}</th><td>${row.played}</td>
@@ -760,6 +768,20 @@ $("#seasonAll").addEventListener("click", () => {
   showMatchday(season.results.length - 1);
   showSeasonOutcome();
 });
+$("#shareSeasonBtn").addEventListener("click", () => {
+  if (!season || season.results.length !== season.fixtures.length) return;
+  const standings = seasonEngine.table(season);
+  const index = standings.findIndex(row => row.id === activeClub.id);
+  openGraphic("season", () => makeSeasonGraphic({
+    club: activeClub,
+    crestUrl: $(".club-badge").src,
+    season: leagueSeason,
+    position: ordinalPosition(index + 1),
+    finish: standings[index],
+    standings: standings.map(row => ({ ...row, name: seasonName(row.id) }))
+  }));
+});
+
 function showSeasonOutcome() {
   if (season.results.length !== season.fixtures.length) return;
   const standings = seasonEngine.table(season);

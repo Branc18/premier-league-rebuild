@@ -192,3 +192,57 @@ async function makeTeamGraphic(team) {
     canvas.toBlob(blob => blob ? resolve(blob) : reject(new Error("PNG export failed")), "image/png");
   });
 }
+
+async function makeSeasonGraphic({ club, crestUrl, season, position, finish, standings }) {
+  const [crest] = await Promise.all([
+    loadGraphicImage(crestUrl),
+    document.fonts.load("800 64px 'Barlow Condensed'")
+  ]);
+  const canvas = document.createElement("canvas");
+  canvas.width = 1080;
+  canvas.height = 1320;
+  const ctx = canvas.getContext("2d");
+  const fill = (color, x, y, w, h) => { ctx.fillStyle = color; ctx.fillRect(x, y, w, h); };
+  function label(value, x, y, size, color = "#f4f4f2", align = "left") {
+    ctx.fillStyle = color;
+    ctx.font = `800 ${size}px "Barlow Condensed", sans-serif`;
+    ctx.textAlign = align;
+    ctx.textBaseline = "middle";
+    ctx.fillText(value, x, y);
+  }
+
+  fill("#101114", 0, 0, 1080, 1320);
+  const gradient = ctx.createLinearGradient(0, 0, 1080, 280);
+  gradient.addColorStop(0, "#202229");
+  gradient.addColorStop(1, club.primary + "55");
+  ctx.fillStyle = gradient;
+  ctx.fillRect(0, 0, 1080, 280);
+  fill(club.primary, 0, 0, 1080, 8);
+  label(`PREMIER LEAGUE REBUILD  /  SEASON ${season}`, 44, 42, 24, "#e5c477");
+  label(club.name.toUpperCase(), 44, 103, 57);
+  label(`FINISHED ${position.toUpperCase()}`, 44, 170, 64, "#e5c477");
+  label(`${finish.points} POINTS   ·   ${finish.wins} W   ${finish.draws} D   ${finish.losses} L`, 44, 236, 36);
+  if (crest) {
+    const scale = 122 / Math.max(crest.width, crest.height);
+    ctx.drawImage(crest, 946 - crest.width * scale / 2, 128 - crest.height * scale / 2,
+      crest.width * scale, crest.height * scale);
+  }
+
+  label("FINAL LEAGUE TABLE", 44, 318, 32);
+  const columns = [68, 122, 570, 637, 704, 771, 838, 905, 972, 1023];
+  ["#", "CLUB", "P", "W", "D", "L", "GF", "GA", "GD", "PTS"].forEach((heading, i) =>
+    label(heading, columns[i], 362, 22, "#b9bec8", i < 2 ? "left" : "right"));
+  standings.forEach((row, i) => {
+    const y = 380 + i * 43;
+    const accent = i === 0 ? "#e5c477" : i < 6 ? "#73d6a0" : i >= standings.length - 3 ? "#f48891" : null;
+    const own = row.id === club.id;
+    fill(own ? "#35303a" : i % 2 ? "#24272d" : "#191b20", 44, y, 992, 42);
+    if (accent) fill(accent, 44, y, 5, 42);
+    [i + 1, row.name, row.played, row.wins, row.draws, row.losses, row.gf, row.ga, row.gf - row.ga, row.points]
+      .forEach((value, col) => label(value, columns[col], y + 21, 24,
+        own ? "#f4da9a" : "#f4f4f2", col < 2 ? "left" : "right"));
+  });
+  label("SIMULATED SEASON", 44, 1280, 22, "#b9bec8");
+  return new Promise((resolve, reject) => canvas.toBlob(
+    blob => blob ? resolve(blob) : reject(new Error("Could not encode season graphic")), "image/png"));
+}
