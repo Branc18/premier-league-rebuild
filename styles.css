@@ -599,4 +599,4 @@
 .tabs { flex-wrap: wrap; }
 
 .season-panel .section-head { flex-wrap: wrap; gap: 12px; }
-.season-panel .head-actions { margin-left: auto; }
+#shareSeasonBtn { margin-left: auto; }
