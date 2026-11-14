@@ -600,3 +600,5 @@
 
 .season-panel .section-head { flex-wrap: wrap; gap: 12px; }
 #shareSeasonBtn { margin-left: auto; }
+
+main:has(#panel-season.active) > :is(#valuationNote, #photo-credits) { display: none; }
