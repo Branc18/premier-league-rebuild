@@ -6,7 +6,7 @@
 <title>Premier League Rebuild — Club rebuild</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=32">
+<link rel="stylesheet" href="styles.css?v=33">
 </head>
 <body>
 <div class="app-shell game-loading" id="gameLoadStatus"><p role="status">Loading your rebuild…</p><a href="./">Back to club selection</a></div>
@@ -141,11 +141,18 @@
  </div>
  <details id="seasonResults" hidden><summary>Latest matchday results</summary><ul id="seasonMatchday"></ul></details>
 </dialog>
+<dialog id="seasonOutcome" class="skip-market-dialog season-outcome" aria-labelledby="seasonOutcomeHeading" aria-describedby="seasonOutcomeSummary">
+ <div class="eyebrow">FINAL STANDINGS</div>
+ <h2 id="seasonOutcomeHeading"></h2>
+ <p id="seasonOutcomeSummary"></p>
+ <p id="seasonOutcomeRecord"></p>
+ <form method="dialog"><button class="btn btn-primary" autofocus>VIEW FINAL TABLE</button></form>
+</dialog>
 <script src="season.js?v=1"></script>
 <script src="portraits.js?v=27"></script>
 <script src="clubs.js?v=20"></script>
 <script src="club-data.js?v=22"></script>
 <script src="photo-credit-codes.js?v=1"></script>
 <script src="team-graphic.js?v=6"></script>
-<script src="game-loader.js?v=23"></script>
+<script src="game-loader.js?v=24"></script>
 </body></html>

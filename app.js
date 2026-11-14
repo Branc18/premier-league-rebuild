@@ -686,19 +686,19 @@ function renderSeason() {
   $("#seasonResults").hidden = last < 0;
 }
 
-function showMatchday(index) {
+function showMatchday(index, animate = false) {
   const feed = $("#seasonFixtures");
   const match = feed.children[index];
   if (!match) return;
   const left = match.offsetLeft - feed.firstElementChild.offsetLeft;
-  feed.scrollTo({ left, behavior: "instant" });
+  feed.scrollTo({ left, behavior: animate && !matchMedia("(prefers-reduced-motion: reduce)").matches ? "smooth" : "instant" });
   updateMatchNavigation();
 }
 
 const matchFeed = $("#seasonFixtures");
 function moveMatchday(direction) {
   const index = Math.round(matchFeed.scrollLeft / matchFeed.clientWidth);
-  showMatchday(index + direction);
+  showMatchday(index + direction, true);
 }
 $("#seasonPreviousCard").addEventListener("click", () => moveMatchday(-1));
 $("#seasonNextCard").addEventListener("click", () => moveMatchday(1));
@@ -734,17 +734,33 @@ $("#seasonBtn").addEventListener("click", () => {
 
 $("#seasonNext").addEventListener("click", () => {
   const matchday = season.results.length;
+  const previousLeft = matchFeed.scrollLeft;
   seasonEngine.advance(season);
   saveSeason();
   renderSeason();
-  showMatchday(matchday);
+  matchFeed.scrollTo({ left: previousLeft, behavior: "instant" });
+  showMatchday(matchday, true);
+  showSeasonOutcome();
 });
 $("#seasonAll").addEventListener("click", () => {
   while (season.results.length < season.fixtures.length) seasonEngine.advance(season);
   saveSeason();
   renderSeason();
   showMatchday(season.results.length - 1);
+  showSeasonOutcome();
 });
+function showSeasonOutcome() {
+  if (season.results.length !== season.fixtures.length) return;
+  const standings = seasonEngine.table(season);
+  const index = standings.findIndex(row => row.id === activeClub.id);
+  const { points, wins, draws, losses } = standings[index];
+  const heading = index === 0 ? "Champion!" : index >= standings.length - 3 ? "Relegated" : index < 6 ? "Top-six finish!" : "Season complete";
+  $("#seasonOutcomeHeading").textContent = heading;
+  $("#seasonOutcomeSummary").textContent = `${activeClub.name} finished ${index + 1} of ${standings.length} with ${points} points.`;
+  $("#seasonOutcomeRecord").textContent = `${wins} wins · ${draws} draws · ${losses} losses`;
+  $("#seasonOutcome").showModal();
+}
+
 $("#seasonReset").addEventListener("click", () => {
   if (!confirm("Reset this simulated season and its results?")) return;
   try { localStorage.removeItem(seasonKey); }
