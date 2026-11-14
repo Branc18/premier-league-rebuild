@@ -6,7 +6,7 @@
 <title>Premier League Rebuild — Club rebuild</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=36">
+<link rel="stylesheet" href="styles.css?v=37">
 </head>
 <body>
 <div class="app-shell game-loading" id="gameLoadStatus"><p role="status">Loading your rebuild…</p><a href="./">Back to club selection</a></div>
@@ -91,12 +91,12 @@
 <section id="panel-season" class="panel season-panel" aria-labelledby="seasonHeading">
  <header class="section-head">
   <div><div class="eyebrow">MANAGER MODE</div><h2 id="seasonHeading">SEASON SIMULATION</h2><p id="seasonProgress" role="status"></p></div>
+  <div class="head-actions"><button class="btn btn-primary" id="shareSeasonBtn" type="button" aria-haspopup="dialog" hidden>SHARE SEASON</button></div>
  </header>
  <p class="season-note">Play 38 league matches, home and away. Your starting XI is locked in for this season.</p>
  <div class="season-actions">
   <button class="btn btn-primary" id="seasonNext">NEXT MATCH</button>
   <button class="btn btn-ghost" id="seasonAll">SIMULATE REMAINING SEASON</button>
-  <button class="btn btn-primary" id="shareSeasonBtn" type="button" aria-haspopup="dialog" hidden>SHARE SEASON</button>
   <button class="btn btn-ghost" id="seasonReset">RESET SEASON</button>
  </div>
  <p class="notice" id="seasonStorage" hidden>Season progress could not be saved on this device.</p>
