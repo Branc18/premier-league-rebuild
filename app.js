@@ -763,12 +763,44 @@ $("#seasonNext").addEventListener("click", () => {
   }
   showSeasonOutcome();
 });
+const seasonProcessing = $("#seasonProcessing");
+seasonProcessing.addEventListener("cancel", event => event.preventDefault());
+
 $("#seasonAll").addEventListener("click", () => {
-  while (season.results.length < season.fixtures.length) seasonEngine.advance(season);
-  saveSeason();
-  renderSeason();
-  showMatchday(season.results.length - 1);
-  showSeasonOutcome();
+  const firstRound = season.results.length;
+  const total = season.fixtures.length;
+  if (seasonProcessing.open || firstRound >= total) return;
+
+  const progress = $("#seasonProcessingProgress");
+  const status = $("#seasonProcessingStatus");
+  const duration = 4500;
+  const started = performance.now();
+  progress.max = total;
+  progress.value = firstRound;
+  status.textContent = `Processing matchday ${firstRound + 1} of ${total}…`;
+  seasonProcessing.showModal();
+
+  function simulateFrame(now) {
+    const elapsed = Math.min(1, (now - started) / duration);
+    const target = firstRound + Math.floor((total - firstRound) * elapsed);
+    while (season.results.length < target) seasonEngine.advance(season);
+    progress.value = season.results.length;
+    const message = `Processing matchday ${Math.min(season.results.length + 1, total)} of ${total}…`;
+    if (status.textContent !== message) status.textContent = message;
+
+    if (elapsed < 1) {
+      requestAnimationFrame(simulateFrame);
+      return;
+    }
+
+    saveSeason();
+    renderSeason();
+    showMatchday(total - 1);
+    seasonProcessing.close();
+    showSeasonOutcome();
+  }
+
+  requestAnimationFrame(simulateFrame);
 });
 $("#shareSeasonBtn").addEventListener("click", () => {
   if (!season || season.results.length !== season.fixtures.length) return;
