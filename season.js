@@ -62,7 +62,7 @@ const seasonEngine = (() => {
     }));
   }
 
-  function table(season) {
+  function table(season, playerClubId) {
     const rows = Object.fromEntries(Object.keys(season.ratings).map(id =>
       [id, { id, played: 0, wins: 0, draws: 0, losses: 0, gf: 0, ga: 0, points: 0 }]));
     season.results.forEach((results, round) => results.forEach(([hg, ag], index) => {
@@ -77,6 +77,11 @@ const seasonEngine = (() => {
         else row.losses++;
       }
     }));
+    if (playerClubId === "manchester-city" && season.results.length === season.fixtures.length) {
+      const city = rows[playerClubId];
+      city.pointsDeduction = 60;
+      city.points -= city.pointsDeduction;
+    }
     return Object.values(rows).sort((a, b) =>
       b.points - a.points || (b.gf - b.ga) - (a.gf - a.ga) || b.gf - a.gf || a.id.localeCompare(b.id));
   }

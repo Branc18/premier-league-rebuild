@@ -242,7 +242,7 @@ async function makeSeasonGraphic({ club, crestUrl, season, position, finish, sta
       .forEach((value, col) => label(value, columns[col], y + 21, 24,
         own ? "#f4da9a" : "#f4f4f2", col < 2 ? "left" : "right"));
   });
-  label("SIMULATED SEASON", 44, 1280, 22, "#b9bec8");
+  label(finish.pointsDeduction ? `SIMULATED SEASON · −${finish.pointsDeduction} POINTS DEDUCTED` : "SIMULATED SEASON", 44, 1280, 22, "#b9bec8");
   return new Promise((resolve, reject) => canvas.toBlob(
     blob => blob ? resolve(blob) : reject(new Error("Could not encode season graphic")), "image/png"));
 }

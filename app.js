@@ -663,11 +663,13 @@ function ordinalPosition(position) {
 function renderSeason() {
   const played = season.results.length;
   const complete = played === season.fixtures.length;
-  const table = seasonEngine.table(season);
+  const table = seasonEngine.table(season, activeClub.id);
   const rank = table.findIndex(row => row.id === activeClub.id) + 1;
   $("#seasonProgress").textContent = complete
     ? `Season complete · Finished ${ordinalPosition(rank)} with ${table[rank - 1].points} points`
     : `${played} / ${season.fixtures.length} matchdays played`;
+  const deduction = table[rank - 1].pointsDeduction;
+  $("#seasonPenalty").hidden = !deduction;
   $("#seasonNext").disabled = complete;
   $("#seasonAll").disabled = complete;
   $("#shareSeasonBtn").hidden = !complete;
@@ -770,7 +772,7 @@ $("#seasonAll").addEventListener("click", () => {
 });
 $("#shareSeasonBtn").addEventListener("click", () => {
   if (!season || season.results.length !== season.fixtures.length) return;
-  const standings = seasonEngine.table(season);
+  const standings = seasonEngine.table(season, activeClub.id);
   const index = standings.findIndex(row => row.id === activeClub.id);
   openGraphic("season", () => makeSeasonGraphic({
     club: activeClub,
@@ -784,14 +786,15 @@ $("#shareSeasonBtn").addEventListener("click", () => {
 
 function showSeasonOutcome() {
   if (season.results.length !== season.fixtures.length) return;
-  const standings = seasonEngine.table(season);
+  const standings = seasonEngine.table(season, activeClub.id);
   const index = standings.findIndex(row => row.id === activeClub.id);
-  const { points, wins, draws, losses } = standings[index];
+  const { points, wins, draws, losses, pointsDeduction } = standings[index];
   const heading = index === 0 ? "Champion!" : index >= standings.length - 3 ? "Relegated" : index < 6 ? "Top-six finish!" : "Season complete";
   const trophy = $("#seasonTrophy");
   trophy.hidden = index !== 0;
   if (index === 0) trophy.querySelector("img").src = $("#arsenalTrophy img").dataset.src;
-  $("#seasonOutcomeHeading").textContent = heading;
+  $("#seasonOutcomeHeading").textContent = pointsDeduction ? `Uh oh! ${heading}` : heading;
+  $("#seasonOutcomePenalty").hidden = !pointsDeduction;
   $("#seasonOutcomeSummary").textContent = `${activeClub.name} finished ${ordinalPosition(index + 1)} with ${points} points.`;
   $("#seasonOutcomeRecord").textContent = `${wins} wins · ${draws} draws · ${losses} losses`;
   $("#seasonOutcome").showModal();
