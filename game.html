@@ -6,7 +6,7 @@
 <title>Premier League Rebuild — Club rebuild</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=29">
+<link rel="stylesheet" href="styles.css?v=30">
 </head>
 <body>
 <div class="app-shell game-loading" id="gameLoadStatus"><p role="status">Loading your rebuild…</p><a href="./">Back to club selection</a></div>
@@ -59,7 +59,7 @@
  <div class="market-summary"><span id="marketCount">TRANSFER TARGETS</span><span>SELECT A PLAYER TO SIGN</span></div><div class="squad-groups" id="marketGrid"></div>
 </section>
 <section id="panel-lineup" class="panel">
- <div class="section-head"><div><div class="eyebrow">TACTICAL BOARD</div><h2 id="lineupHeading">YOUR STARTING XI.</h2><p>Drag players by their grip to a matching position, or select a player and then a slot.</p></div><div class="head-actions"><button class="btn btn-primary" id="shareBtn" type="button" aria-haspopup="dialog" aria-describedby="shareNotice" disabled>↗ SHARE TEAM</button></div></div>
+ <div class="section-head"><div><div class="eyebrow">TACTICAL BOARD</div><h2 id="lineupHeading">YOUR STARTING XI.</h2><p>Drag players by their grip to a matching position, or select a player and then a slot.</p></div><div class="head-actions"><button class="btn btn-primary" id="shareBtn" type="button" aria-haspopup="dialog" aria-describedby="shareNotice" disabled>↗ SHARE TEAM</button><button class="btn btn-primary" id="seasonBtn" type="button" aria-haspopup="dialog" disabled>SIMULATE SEASON</button></div></div>
  <div class="lineup-toolbar"><label>FORMATION <select id="formation">
    <option>3-4-3</option><option>3-5-2</option>
    <hr>
@@ -112,10 +112,31 @@
  <p class="graphic-status" id="graphicStatus" role="status"></p>
  <img class="graphic-preview" id="graphicPreview" alt="Your Starting XI on a football pitch with your formation, budget, and transfers" hidden>
 </dialog>
+<dialog id="seasonDialog" class="season-dialog" aria-labelledby="seasonHeading">
+ <header class="section-head">
+  <div><div class="eyebrow">MANAGER MODE</div><h2 id="seasonHeading">SEASON SIMULATION</h2><p id="seasonProgress" role="status"></p></div>
+  <form method="dialog"><button class="btn btn-ghost" autofocus>CLOSE</button></form>
+ </header>
+ <p class="season-note">Play 38 league matches, home and away. Your starting XI is locked in for this season.</p>
+ <div class="season-actions">
+  <button class="btn btn-primary" id="seasonNext">NEXT MATCH</button>
+  <button class="btn btn-ghost" id="seasonAll">SIMULATE REMAINING SEASON</button>
+  <button class="btn btn-ghost" id="seasonReset">RESET SEASON</button>
+ </div>
+ <p class="notice" id="seasonStorage" hidden>Season progress could not be saved on this device.</p>
+ <div class="season-columns">
+  <section><h3>LEAGUE TABLE</h3><div class="season-table-wrap" tabindex="0" role="region" aria-label="League table">
+   <table><thead><tr><th>#</th><th>Club</th><th>P</th><th>W</th><th>D</th><th>L</th><th>GF</th><th>GA</th><th>GD</th><th>Pts</th></tr></thead><tbody id="seasonTable"></tbody></table>
+  </div></section>
+  <section><h3>YOUR FIXTURES</h3><ol id="seasonFixtures" class="season-fixtures"></ol></section>
+ </div>
+ <details id="seasonResults" hidden><summary>Latest matchday results</summary><ul id="seasonMatchday"></ul></details>
+</dialog>
+<script src="season.js?v=1"></script>
 <script src="portraits.js?v=27"></script>
 <script src="clubs.js?v=20"></script>
 <script src="club-data.js?v=22"></script>
 <script src="photo-credit-codes.js?v=1"></script>
 <script src="team-graphic.js?v=6"></script>
-<script src="game-loader.js?v=20"></script>
+<script src="game-loader.js?v=21"></script>
 </body></html>

@@ -528,6 +528,7 @@ function renderLineup() {
 
   $("#lineupCount").textContent = `${team.starters.length} / ${team.total} STARTING`;
   $("#shareBtn").disabled = !team.complete;
+  updateSeasonButton(team);
   $("#shareNotice").textContent = team.complete
     ? "Open your team graphic to copy or download it."
     : `Fill all ${team.total} starting slots to share your team.`;
@@ -629,5 +630,99 @@ $("#photoCreditList").innerHTML = [...initialSquad, ...market].filter(player => 
   const { source, author, license } = playerPhotos.get(player.id);
   return `<li><a href="${source}" target="_blank" rel="noopener">${player.name}</a> · ${author} · ${license}</li>`;
 }).join("");
+
+const seasonKey = saveKey + ":season";
+let season = null;
+try {
+  const savedSeason = JSON.parse(localStorage.getItem(seasonKey));
+  if (savedSeason?.version === 1 && savedSeason.fixtures?.length === 38 &&
+      Array.isArray(savedSeason.results) && savedSeason.ratings?.[activeClub.id]) season = savedSeason;
+} catch {}
+
+const seasonDialog = $("#seasonDialog");
+const seasonClubs = new Map(clubs.map(club => [club.id, club]));
+const seasonName = id => seasonClubs.get(id).name;
+function updateSeasonButton(team) {
+  $("#seasonBtn").disabled = !season && !team.complete;
+  $("#seasonBtn").textContent = season ? "VIEW SEASON" : "SIMULATE SEASON";
+}
+
+function renderSeason() {
+  const played = season.results.length;
+  const complete = played === season.fixtures.length;
+  const table = seasonEngine.table(season);
+  const rank = table.findIndex(row => row.id === activeClub.id) + 1;
+  $("#seasonProgress").textContent = complete
+    ? `Season complete · Finished ${rank} of ${table.length} with ${table[rank - 1].points} points`
+    : `${played} / ${season.fixtures.length} matchdays played`;
+  $("#seasonNext").disabled = complete;
+  $("#seasonAll").disabled = complete;
+  $("#seasonTable").innerHTML = table.map((row, index) =>
+    `<tr class="${row.id === activeClub.id ? "season-your-club" : ""}">
+      <td>${index + 1}</td><th scope="row">${seasonName(row.id)}</th><td>${row.played}</td>
+      <td>${row.wins}</td><td>${row.draws}</td><td>${row.losses}</td>
+      <td>${row.gf}</td><td>${row.ga}</td><td>${row.gf - row.ga}</td><td>${row.points}</td>
+    </tr>`).join("");
+  $("#seasonFixtures").innerHTML = season.fixtures.map((round, index) => {
+    const matchIndex = round.findIndex(pair => pair.includes(activeClub.id));
+    const [home, away] = round[matchIndex];
+    const isHome = home === activeClub.id;
+    const result = season.results[index]?.[matchIndex];
+    const score = result ? (isHome ? result : result.slice().reverse()).join("–") : "—";
+    return `<li${index === played ? ' class="season-next-fixture"' : ""}>
+      <span>${index + 1}</span><span>${seasonName(isHome ? away : home)} <small>${isHome ? "H" : "A"}</small></span><strong>${score}</strong></li>`;
+  }).join("");
+  const last = season.results.length - 1;
+  if (last >= 0) {
+    const round = season.fixtures[last];
+    $("#seasonMatchday").innerHTML = round.map(([home, away], i) =>
+      `<li>${seasonName(home)} <strong>${season.results[last][i].join("–")}</strong> ${seasonName(away)}</li>`).join("");
+  } else {
+    $("#seasonMatchday").textContent = "";
+  }
+  $("#seasonResults").hidden = last < 0;
+}
+
+function saveSeason() {
+  try {
+    localStorage.setItem(seasonKey, JSON.stringify(season));
+    $("#seasonStorage").hidden = true;
+  } catch {
+    $("#seasonStorage").hidden = false;
+  }
+}
+
+$("#seasonBtn").addEventListener("click", () => {
+  if (!season) {
+    const team = lineupTeam();
+    if (!team.complete) return;
+    season = seasonEngine.create(clubs, activeClub.id, team.starters.map(slot => slot.player),
+      id => clubData.get(id).squad, crypto.getRandomValues(new Uint32Array(1))[0]);
+    saveSeason();
+    updateSeasonButton(team);
+  }
+  renderSeason();
+  seasonDialog.showModal();
+});
+
+$("#seasonNext").addEventListener("click", () => {
+  seasonEngine.advance(season);
+  saveSeason();
+  renderSeason();
+});
+$("#seasonAll").addEventListener("click", () => {
+  while (season.results.length < season.fixtures.length) seasonEngine.advance(season);
+  saveSeason();
+  renderSeason();
+});
+$("#seasonReset").addEventListener("click", () => {
+  if (!confirm("Reset this simulated season and its results?")) return;
+  try { localStorage.removeItem(seasonKey); }
+  catch { toast("Season save could not be cleared."); return; }
+  season = null;
+  seasonDialog.close();
+  updateSeasonButton(lineupTeam());
+  if ($("#seasonBtn").disabled) $("#formationSelect")?.focus();
+});
 
 renderSquad();renderMarket();renderLineup();
