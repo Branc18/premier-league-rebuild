@@ -37,7 +37,7 @@ if (!activeClub || !activeClubData) {
   find("#graphicDownload").download = `${activeClub.id}-rebuild.png`;
 
   const script = document.createElement("script");
-  script.src = "app.js?v=37";
+  script.src = "app.js?v=38";
   script.addEventListener("load", () => {
     find("#gameShell").hidden = false;
     find("#gameLoadStatus").hidden = true;

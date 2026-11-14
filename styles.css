@@ -567,7 +567,7 @@
 .match-club img { width: clamp(44px, 10vw, 80px); height: clamp(44px, 10vw, 80px); object-fit: contain; }
 .match-club strong { font: 800 clamp(16px, 3vw, 30px)/1.05 'Barlow Condensed'; overflow-wrap: anywhere; }
 .match-score { font: 900 clamp(32px, 7vw, 74px)/1 'Barlow Condensed'; white-space: nowrap; }
-.season-dialog summary { cursor: pointer; padding: 10px 0; }
+.season-panel summary { cursor: pointer; padding: 10px 0; }
 
 .season-standings h3 { margin-top: 0; }
 .season-match-nav { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 6px; margin-top: 8px; }
@@ -595,3 +595,5 @@
 
 .season-trophy { margin: 8px 0 16px; }
 .season-trophy figcaption a { color: inherit; }
+
+.tabs { flex-wrap: wrap; }

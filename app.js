@@ -261,6 +261,7 @@ function renderMarket() {
   updateStats();
 }
 function setTab(tab) {
+  if (tab === "season" && !season && !lineupTeam().complete) return;
   const opening = !$(`#panel-${tab}`).classList.contains("active");
   if (opening) collapsedPositions[tab]?.clear();
 
@@ -269,6 +270,7 @@ function setTab(tab) {
   if (tab === "squad" && opening) renderSquad();
   if (tab === "market") renderMarket();
   if (tab === "lineup") renderLineup();
+  if (tab === "season") openSeason();
 }
 const skipMarketDialog = $("#skipMarketDialog");
 $("#marketTab").addEventListener("click", () => {
@@ -639,12 +641,10 @@ try {
       Array.isArray(savedSeason.results) && savedSeason.ratings?.[activeClub.id]) season = savedSeason;
 } catch {}
 
-const seasonDialog = $("#seasonDialog");
 const seasonClubs = new Map(clubs.map(club => [club.id, club]));
 const seasonName = id => seasonClubs.get(id).name;
 function updateSeasonButton(team) {
   $("#seasonBtn").disabled = !season && !team.complete;
-  $("#seasonBtn").textContent = season ? "VIEW SEASON" : "SIMULATE SEASON";
 }
 
 function ordinalPosition(position) {
@@ -724,7 +724,7 @@ function saveSeason() {
   }
 }
 
-$("#seasonBtn").addEventListener("click", () => {
+function openSeason() {
   if (!season) {
     const team = lineupTeam();
     if (!team.complete) return;
@@ -734,9 +734,8 @@ $("#seasonBtn").addEventListener("click", () => {
     updateSeasonButton(team);
   }
   renderSeason();
-  seasonDialog.showModal();
   showMatchday(Math.min(season.results.length, season.fixtures.length - 1));
-});
+}
 
 $("#seasonNext").addEventListener("click", () => {
   const matchday = season.results.length;
@@ -781,9 +780,8 @@ $("#seasonReset").addEventListener("click", () => {
   try { localStorage.removeItem(seasonKey); }
   catch { toast("Season save could not be cleared."); return; }
   season = null;
-  seasonDialog.close();
-  updateSeasonButton(lineupTeam());
-  if ($("#seasonBtn").disabled) $("#formationSelect")?.focus();
+  setTab("lineup");
+  $('.tab[data-tab="lineup"]').focus();
 });
 
 renderSquad();renderMarket();renderLineup();
