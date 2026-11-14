@@ -773,6 +773,10 @@ $("#seasonAll").addEventListener("click", () => {
 
   const progress = $("#seasonProcessingProgress");
   const status = $("#seasonProcessingStatus");
+  const captions = ["Painting the lines…", "Putting up the nets…", "Warming up the subs…",
+    "Cooking the books…", "Checking with VAR…", "Blowing the final whistle…"];
+  const caption = $("#seasonProcessingCaption");
+  caption.textContent = captions[0];
   const duration = 4500;
   const started = performance.now();
   progress.max = total;
@@ -782,6 +786,8 @@ $("#seasonAll").addEventListener("click", () => {
 
   function simulateFrame(now) {
     const elapsed = Math.min(1, (now - started) / duration);
+    const nextCaption = captions[Math.min(captions.length - 1, Math.floor(elapsed * captions.length))];
+    if (caption.textContent !== nextCaption) caption.textContent = nextCaption;
     const target = firstRound + Math.floor((total - firstRound) * elapsed);
     while (season.results.length < target) seasonEngine.advance(season);
     progress.value = season.results.length;
