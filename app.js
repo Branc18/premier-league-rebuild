@@ -767,6 +767,9 @@ function showSeasonOutcome() {
   const index = standings.findIndex(row => row.id === activeClub.id);
   const { points, wins, draws, losses } = standings[index];
   const heading = index === 0 ? "Champion!" : index >= standings.length - 3 ? "Relegated" : index < 6 ? "Top-six finish!" : "Season complete";
+  const trophy = $("#seasonTrophy");
+  trophy.hidden = index !== 0;
+  if (index === 0) trophy.querySelector("img").src = $("#arsenalTrophy img").dataset.src;
   $("#seasonOutcomeHeading").textContent = heading;
   $("#seasonOutcomeSummary").textContent = `${activeClub.name} finished ${ordinalPosition(index + 1)} with ${points} points.`;
   $("#seasonOutcomeRecord").textContent = `${wins} wins · ${draws} draws · ${losses} losses`;

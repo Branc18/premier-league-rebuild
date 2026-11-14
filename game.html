@@ -6,7 +6,7 @@
 <title>Premier League Rebuild — Club rebuild</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=34">
+<link rel="stylesheet" href="styles.css?v=35">
 </head>
 <body>
 <div class="app-shell game-loading" id="gameLoadStatus"><p role="status">Loading your rebuild…</p><a href="./">Back to club selection</a></div>
@@ -144,6 +144,10 @@
 <dialog id="seasonOutcome" class="skip-market-dialog season-outcome" aria-labelledby="seasonOutcomeHeading" aria-describedby="seasonOutcomeSummary">
  <div class="eyebrow">FINAL STANDINGS</div>
  <h2 id="seasonOutcomeHeading"></h2>
+ <figure id="seasonTrophy" class="hero-trophy season-trophy" hidden>
+  <img width="500" height="667" alt="Premier League trophy with red ribbons">
+  <figcaption><a href="https://commons.wikimedia.org/wiki/File:Trophy_of_FA_Premier_League_in_Singapore,_2023.jpg">Photo by Pangalau (cropped)</a> · <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a></figcaption>
+ </figure>
  <p id="seasonOutcomeSummary"></p>
  <p id="seasonOutcomeRecord"></p>
  <form method="dialog"><button class="btn btn-primary" autofocus>VIEW FINAL TABLE</button></form>
@@ -154,5 +158,5 @@
 <script src="club-data.js?v=22"></script>
 <script src="photo-credit-codes.js?v=1"></script>
 <script src="team-graphic.js?v=6"></script>
-<script src="game-loader.js?v=26"></script>
+<script src="game-loader.js?v=27"></script>
 </body></html>

@@ -592,3 +592,6 @@
   .season-matches { display: flex; flex-direction: column; min-height: 0; }
   .season-fixtures { flex: 1 0 0; height: auto; min-height: 235px; }
 }
+
+.season-trophy { margin: 8px 0 16px; }
+.season-trophy figcaption a { color: inherit; }
