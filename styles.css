@@ -559,7 +559,7 @@
 .season-matches h3 { font: 800 23px 'Barlow Condensed'; margin: 0 0 4px; }
 .season-matches .season-note { margin-bottom: 8px; }
 .season-fixtures { height: clamp(235px, 49dvh, 440px); padding: 0; margin: 0; display: flex; overflow-x: auto; overflow-y: hidden; overscroll-behavior-x: contain; scroll-snap-type: x mandatory; list-style: none; border: 1px solid var(--line); }
-.match-screen { flex: 0 0 100%; min-width: 0; scroll-snap-align: start; scroll-snap-stop: always; display: grid; align-content: center; gap: 20px; padding: 14px; text-align: center; background: radial-gradient(ellipse at center, #293b32, #161d1a 80%); }
+.match-screen { flex: 0 0 100%; min-width: 0; scroll-snap-align: start; scroll-snap-stop: always; display: grid; align-content: center; gap: 20px; padding: 14px; text-align: center; background: radial-gradient(ellipse at center, color-mix(in srgb, var(--red) 28%, #191b20), color-mix(in srgb, var(--red2) 12%, #101114) 85%); }
 .match-screen.season-next-fixture { color: var(--white); }
 .match-label { color: #e8c77d; font-size: 10px; font-weight: 800; letter-spacing: .1em; }
 .match-scoreboard { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; gap: clamp(8px, 3vw, 28px); }

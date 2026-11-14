@@ -740,6 +740,12 @@ $("#seasonNext").addEventListener("click", () => {
   renderSeason();
   matchFeed.scrollTo({ left: previousLeft, behavior: "instant" });
   showMatchday(matchday, true);
+  if (!matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    matchFeed.children[matchday].querySelector(".match-scoreboard").animate(
+      [{ opacity: .35, transform: "translateX(28px)" }, { opacity: 1, transform: "translateX(0)" }],
+      { duration: 360, easing: "ease-out" }
+    );
+  }
   showSeasonOutcome();
 });
 $("#seasonAll").addEventListener("click", () => {
