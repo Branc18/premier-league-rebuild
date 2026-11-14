@@ -658,8 +658,8 @@ function renderSeason() {
   $("#seasonNext").disabled = complete;
   $("#seasonAll").disabled = complete;
   $("#seasonTable").innerHTML = table.map((row, index) =>
-    `<tr class="${row.id === activeClub.id ? "season-your-club" : ""}">
-      <td>${index + 1}</td><th scope="row">${seasonName(row.id)}</th><td>${row.played}</td>
+    `<tr class="${row.id === activeClub.id ? "season-your-club " : ""}${index === 0 && complete ? "season-champion" : index < 6 ? "season-top-six" : index >= table.length - 3 ? "season-relegation" : ""}">
+      <td>${index + 1}${index === 0 && complete ? '<span class="season-visually-hidden"> Champion</span>' : index < 6 ? '<span class="season-visually-hidden"> Top six</span>' : index >= table.length - 3 ? '<span class="season-visually-hidden"> Relegation zone</span>' : ""}</td><th scope="row">${seasonName(row.id)}</th><td>${row.played}</td>
       <td>${row.wins}</td><td>${row.draws}</td><td>${row.losses}</td>
       <td>${row.gf}</td><td>${row.ga}</td><td>${row.gf - row.ga}</td><td>${row.points}</td>
     </tr>`).join("");
@@ -690,8 +690,23 @@ function showMatchday(index) {
   const feed = $("#seasonFixtures");
   const match = feed.children[index];
   if (!match) return;
-  const top = match.getBoundingClientRect().top - feed.getBoundingClientRect().top + feed.scrollTop - feed.clientTop;
-  feed.scrollTo({ top, behavior: "instant" });
+  const left = match.offsetLeft - feed.firstElementChild.offsetLeft;
+  feed.scrollTo({ left, behavior: "instant" });
+  updateMatchNavigation();
+}
+
+const matchFeed = $("#seasonFixtures");
+function moveMatchday(direction) {
+  const index = Math.round(matchFeed.scrollLeft / matchFeed.clientWidth);
+  showMatchday(index + direction);
+}
+$("#seasonPreviousCard").addEventListener("click", () => moveMatchday(-1));
+$("#seasonNextCard").addEventListener("click", () => moveMatchday(1));
+matchFeed.addEventListener("scroll", updateMatchNavigation);
+function updateMatchNavigation() {
+  const index = Math.round(matchFeed.scrollLeft / matchFeed.clientWidth);
+  $("#seasonPreviousCard").disabled = index === 0;
+  $("#seasonNextCard").disabled = index >= matchFeed.children.length - 1;
 }
 
 function saveSeason() {
