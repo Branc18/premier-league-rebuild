@@ -647,13 +647,19 @@ function updateSeasonButton(team) {
   $("#seasonBtn").textContent = season ? "VIEW SEASON" : "SIMULATE SEASON";
 }
 
+function ordinalPosition(position) {
+  const suffix = position % 100 >= 11 && position % 100 <= 13
+    ? "th" : ({ 1: "st", 2: "nd", 3: "rd" }[position % 10] ?? "th");
+  return position + suffix;
+}
+
 function renderSeason() {
   const played = season.results.length;
   const complete = played === season.fixtures.length;
   const table = seasonEngine.table(season);
   const rank = table.findIndex(row => row.id === activeClub.id) + 1;
   $("#seasonProgress").textContent = complete
-    ? `Season complete · Finished ${rank} of ${table.length} with ${table[rank - 1].points} points`
+    ? `Season complete · Finished ${ordinalPosition(rank)} with ${table[rank - 1].points} points`
     : `${played} / ${season.fixtures.length} matchdays played`;
   $("#seasonNext").disabled = complete;
   $("#seasonAll").disabled = complete;
@@ -762,7 +768,7 @@ function showSeasonOutcome() {
   const { points, wins, draws, losses } = standings[index];
   const heading = index === 0 ? "Champion!" : index >= standings.length - 3 ? "Relegated" : index < 6 ? "Top-six finish!" : "Season complete";
   $("#seasonOutcomeHeading").textContent = heading;
-  $("#seasonOutcomeSummary").textContent = `${activeClub.name} finished ${index + 1} of ${standings.length} with ${points} points.`;
+  $("#seasonOutcomeSummary").textContent = `${activeClub.name} finished ${ordinalPosition(index + 1)} with ${points} points.`;
   $("#seasonOutcomeRecord").textContent = `${wins} wins · ${draws} draws · ${losses} losses`;
   $("#seasonOutcome").showModal();
 }
