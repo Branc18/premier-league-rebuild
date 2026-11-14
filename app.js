@@ -666,11 +666,14 @@ function renderSeason() {
   $("#seasonFixtures").innerHTML = season.fixtures.map((round, index) => {
     const matchIndex = round.findIndex(pair => pair.includes(activeClub.id));
     const [home, away] = round[matchIndex];
-    const isHome = home === activeClub.id;
     const result = season.results[index]?.[matchIndex];
-    const score = result ? (isHome ? result : result.slice().reverse()).join("–") : "—";
-    return `<li${index === played ? ' class="season-next-fixture"' : ""}>
-      <span>${index + 1}</span><span>${seasonName(isHome ? away : home)} <small>${isHome ? "H" : "A"}</small></span><strong>${score}</strong></li>`;
+    const isNext = index === played;
+    const club = id => `<div class="match-club"><img src="${seasonClubs.get(id).badge}" alt="" width="80" height="80" loading="lazy"><strong>${seasonName(id)}</strong></div>`;
+    return `<li class="match-screen${isNext ? " season-next-fixture" : ""}" aria-label="Matchday ${index + 1}">
+      <div class="match-label">MATCHDAY ${index + 1} / ${season.fixtures.length} · ${home === activeClub.id ? "HOME" : "AWAY"}</div>
+      <div class="match-scoreboard">${club(home)}<strong class="match-score">${result ? result.join("–") : "VS"}</strong>${club(away)}</div>
+      <div class="match-label">${result ? "FULL TIME" : isNext ? "NEXT FIXTURE" : "UPCOMING"}</div>
+    </li>`;
   }).join("");
   const last = season.results.length - 1;
   if (last >= 0) {
@@ -681,6 +684,14 @@ function renderSeason() {
     $("#seasonMatchday").textContent = "";
   }
   $("#seasonResults").hidden = last < 0;
+}
+
+function showMatchday(index) {
+  const feed = $("#seasonFixtures");
+  const match = feed.children[index];
+  if (!match) return;
+  const top = match.getBoundingClientRect().top - feed.getBoundingClientRect().top + feed.scrollTop - feed.clientTop;
+  feed.scrollTo({ top, behavior: "instant" });
 }
 
 function saveSeason() {
@@ -703,17 +714,21 @@ $("#seasonBtn").addEventListener("click", () => {
   }
   renderSeason();
   seasonDialog.showModal();
+  showMatchday(Math.min(season.results.length, season.fixtures.length - 1));
 });
 
 $("#seasonNext").addEventListener("click", () => {
+  const matchday = season.results.length;
   seasonEngine.advance(season);
   saveSeason();
   renderSeason();
+  showMatchday(matchday);
 });
 $("#seasonAll").addEventListener("click", () => {
   while (season.results.length < season.fixtures.length) seasonEngine.advance(season);
   saveSeason();
   renderSeason();
+  showMatchday(season.results.length - 1);
 });
 $("#seasonReset").addEventListener("click", () => {
   if (!confirm("Reset this simulated season and its results?")) return;

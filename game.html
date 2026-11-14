@@ -6,7 +6,7 @@
 <title>Premier League Rebuild — Club rebuild</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=30">
+<link rel="stylesheet" href="styles.css?v=31">
 </head>
 <body>
 <div class="app-shell game-loading" id="gameLoadStatus"><p role="status">Loading your rebuild…</p><a href="./">Back to club selection</a></div>
@@ -124,12 +124,18 @@
   <button class="btn btn-ghost" id="seasonReset">RESET SEASON</button>
  </div>
  <p class="notice" id="seasonStorage" hidden>Season progress could not be saved on this device.</p>
+ <section class="season-matches" aria-labelledby="seasonFixturesHeading">
+  <h3 id="seasonFixturesHeading">MATCHDAYS</h3>
+  <p class="season-note">Scroll to move through your fixtures.</p>
+  <ol id="seasonFixtures" class="season-fixtures" tabindex="0" aria-label="Matchdays"></ol>
+ </section>
+ <details class="season-standings"><summary>League table</summary>
  <div class="season-columns">
   <section><h3>LEAGUE TABLE</h3><div class="season-table-wrap" tabindex="0" role="region" aria-label="League table">
    <table><thead><tr><th>#</th><th>Club</th><th>P</th><th>W</th><th>D</th><th>L</th><th>GF</th><th>GA</th><th>GD</th><th>Pts</th></tr></thead><tbody id="seasonTable"></tbody></table>
   </div></section>
-  <section><h3>YOUR FIXTURES</h3><ol id="seasonFixtures" class="season-fixtures"></ol></section>
  </div>
+ </details>
  <details id="seasonResults" hidden><summary>Latest matchday results</summary><ul id="seasonMatchday"></ul></details>
 </dialog>
 <script src="season.js?v=1"></script>
@@ -138,5 +144,5 @@
 <script src="club-data.js?v=22"></script>
 <script src="photo-credit-codes.js?v=1"></script>
 <script src="team-graphic.js?v=6"></script>
-<script src="game-loader.js?v=21"></script>
+<script src="game-loader.js?v=22"></script>
 </body></html>
